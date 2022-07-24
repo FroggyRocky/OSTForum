@@ -1,0 +1,23 @@
+.commonPagination {
+    list-style: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: var(--family-text);
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 19px;
+    color: #525252;
+}
+
+.commonPagination > li {
+    margin-left: 30px;
+    cursor: pointer;
+}
+
+.commonPagination__activePage {
+    line-height: 24px;
+    text-decoration: underline;
+    font-weight: 700;
+    -webkit-text-stroke: 1px #000000;
+}
