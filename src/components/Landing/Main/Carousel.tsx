@@ -1,9 +1,10 @@
 import styled from "styled-components";
-import bg from '../../../assets/cardBg.png'
 import activeArr from '../../../assets/activeArr.svg'
 import unactiveArr from '../../../assets/unactiveArr.svg'
 import {useState} from "react";
 import {Link} from 'react-router-dom'
+import {useAppSelector} from "../../../redux/hooks/hooks";
+import bg from '../../../assets/cardBg.png'
 
 const Wrapper = styled.div`
   overflow-x: hidden;
@@ -19,11 +20,13 @@ const CarouselWindow = styled.div`
   justify-content: space-between;
   gap: 30px;
 `
-const Card = styled.div<{offSet?:string | number}>`
+const Card = styled.div<{offSet?:string | number, imgSrc:string}>`
   width: 570px;
   height: 288px;
-  background-image: url(${bg});
-  background-size: contain;
+  background-image: url("${({imgSrc}) => imgSrc}");
+  background-size:cover;
+  background-position: center;
+  background-repeat: no-repeat;
   background-color: rgba(0, 0, 0, 0.9);
   border-radius: 15px;
   flex-shrink: 0;
@@ -56,30 +59,11 @@ const Controls = styled.div`
 type Props = {};
 export const Carousel = (props: Props) => {
 
+    const articlesData = useAppSelector(state => state.articles.articles)
+
+
     const [offSet,setOffSet] = useState(0)
 
-    const articlesData = [
-        {
-            header:'Article header 1',
-            id:1
-        },
-        {
-            header:'Article header 2',
-            id:2
-        },
-        {
-            header:'Article header 3',
-            id:3
-        },
-        {
-            header:'Article header 4',
-            id:4
-        },
-        {
-            header:'Article header 5',
-            id:5
-        },
-    ]
 
     const PAGEWIDTH = 100
 
@@ -98,7 +82,8 @@ export const Carousel = (props: Props) => {
     }
 
     const Articles = articlesData.map(el => {
-        return <Link key={el.id} to={`/article/${el.id}`}><Card offSet={offSet}>
+        return <Link key={el.id} to={`/article/${el.id}`}>
+            <Card imgSrc={el.mainImg} offSet={offSet}>
             <p>{el.header}</p>
         </Card>
         </Link>

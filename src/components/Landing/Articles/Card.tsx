@@ -1,30 +1,34 @@
 import styled from "styled-components";
 import {Flex} from '../../commonStyles/Flex.styled'
 import {IoTimeOutline} from 'react-icons/io5'
-import flag from '../../../assets/instFlag.png';
-import imageEx from '../../../assets/ArticleCardBg.png'
+import inst from '../../../assets/instFlag.png';
+import fb from '../../../assets/instFlag.png';
 import {StatisticsPanel} from "../../common/StatisticsPanel";
 
 type CardImage = {
-    src?:string
-    alt:string
+    src?: string
+    alt: string
 }
 const Container = styled.div`
   background-color: white;
   border-radius: 15px;
+  width: 570px;
 `
 const CardImage = styled.img<CardImage>`
-src: ${({src}) => src};
-  alt:${({alt}) => alt};
-  width:100%;
+  src: ${({src}) => src};
+  alt: ${({alt}) => alt};
+  width: 100%;
+  height: 288px;
   margin: 0;
+  border-radius: 15px 15px 0 0;
 `
 const Info = styled.div`
-    padding: 20px;
+  padding: 20px;
   position: relative;
 `
 const Text = styled.div`
-max-width: 486px;
+  max-width: 486px;
+
   & h1 {
     font-family: var(--family-text);
     font-weight: 700;
@@ -32,6 +36,7 @@ max-width: 486px;
     line-height: 25px;
     color: #58649C;
   }
+
   & p {
     font-family: var(--family-text);
     font-weight: 400;
@@ -42,11 +47,11 @@ max-width: 486px;
   }
 `
 const Flag = styled.img`
-src:${({src}) => src};
-  alt:${({alt}) => alt};
-  position:absolute;
-  top:-5px;
-  right:0;
+  src: ${({src}) => src};
+  alt: ${({alt}) => alt};
+  position: absolute;
+  top: -5px;
+  right: 0;
   margin: 0;
   flex-shrink: 0;
 `
@@ -60,23 +65,47 @@ const Date = styled(Flex)`
 `
 
 
-type Props = {};
+type Props = {
+ category:string,
+    mainImg:string,
+    header:string,
+    description:string,
+    views:number,
+    likes:number,
+    dislikes:number,
+    comments:number,
+    createdAt:string
+};
 
 export const Card = (props: Props) => {
+    const chooseFlag = () => {
+        switch (props.category) {
+            case 'facebook':
+                return inst;
+            case 'instagram':
+                return fb;
+            default:
+                break;
+        }
+    }
+
     return <Container>
-        <CardImage src={imageEx} alt='Article_head_image' />
+        <CardImage src={props.mainImg} alt='Article_head_image'/>
         <Info>
-            <Flag src={flag} alt="flag" />
-        <Text>
-        <h1>Article's Header</h1>
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Alias animi consequuntur earum fuga</p>
-        </Text>
-        <Flex justifyContent='space-between'>
-            <Date>
-                <IoTimeOutline style={{marginRight:'4px'}} color='#58649C' />{'Yesterday'}
-            </Date>
-            <StatisticsPanel views={10} comments={30} likes={40} dislikes={20} />
-        </Flex>
+            <Flag src={chooseFlag()} alt="flag"/>
+            <Text>
+                <h1>{props.header}</h1>
+                <p>
+                    {props.description}
+                </p>
+            </Text>
+            <Flex justifyContent='space-between'>
+                <Date>
+                    <IoTimeOutline style={{marginRight: '4px'}} color='#58649C'/>{'Yesterday'}
+                </Date>
+                <StatisticsPanel views={props.views} comments={props.comments} likes={props.likes}
+                                 dislikes={props.dislikes}/>
+            </Flex>
         </Info>
     </Container>
 };

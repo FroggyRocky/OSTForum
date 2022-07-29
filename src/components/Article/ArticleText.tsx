@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import image from '../../assets/articleContentImg.png'
 
 const Container = styled.div`
   width: 100%;
@@ -9,7 +8,9 @@ const Container = styled.div`
 const Content = styled.div`
   padding: 40px;
   font-family: var(--family-text);
-
+& > h1, h2, h3 {
+  margin: 40px 0 20px 0;
+}
   & > h1 {
     font-weight: 700;
     font-size: 30px;
@@ -22,6 +23,13 @@ const Content = styled.div`
     font-size: 18px;
     line-height: 32px;
     color: #525252;
+    & > img {
+      width: 100%;
+      height: 100%;
+      margin: 20px 0;
+      border-radius: 15px;
+      display: block;
+    }
   }
 
   & > h2 {
@@ -42,32 +50,20 @@ const Content = styled.div`
   & > img {
     width: 100%;
     height: 100%;
+    margin: 20px 0;
+    border-radius: 15px;
+    display: block;
   }
 `
 
-type Props = {};
+type Props = {
+    text:string
+};
 export const ArticleText = (props: Props) => {
+
     return <Container>
-        <Content>
-            <h1>Как заменить музыку на видео: пошаговый гайд</h1>
-            <p>
-                Для работы воспользуемся профессиональным инструментом Adobe Premiere PRO. Этот софт существует в
-                бесплатной версии как для Windows, так и для MacOS. Если используете другую программу (DaVinci, Canva,
-                Crello) — суть не поменяется.
-                Для начала возьмем классический креатив под условно-бесплатный трафик. Исходный вариант выглядит так:
-                <a href="#">https://youtube.com/shorts/cAjf1_9qVuA?feature=share</a>
-                Открываем Premiere и выбираем «New Project».
-            </p>
-            <img src={image} alt=""/>
-            <h2>Как заменить музыку</h2>
-            <p>
-                Для работы воспользуемся профессиональным инструментом Adobe Premiere PRO. Этот софт существует в
-                бесплатной версии как для Windows, так и для MacOS. Если используете другую программу (DaVinci, Canva,
-                Crello) — суть не поменяется.
-                Для начала возьмем классический креатив под условно-бесплатный трафик. Исходный вариант выглядит так:
-                <a href="#">https://youtube.com/shorts/cAjf1_9qVuA?feature=share</a>
-                Открываем Premiere и выбираем «New Project».
-            </p>
+        <Content dangerouslySetInnerHTML={{__html:props.text}}>
+
         </Content>
     </Container>
 };

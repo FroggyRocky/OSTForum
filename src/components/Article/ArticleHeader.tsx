@@ -24,35 +24,38 @@ width: 100%;
   background-color: rgba(88, 100, 156, 0.5);
   position: relative;
   border-radius: 20px 20px 0 0;
-  & > span {
-    color: white;
-    font-family: var(--family-header);
-    font-weight: 700;
-    font-size: 92px;
-    line-height: 90px;
-    text-shadow: 0px 4px 5px rgba(0, 0, 0, 0.25);
-    padding: 20px;
-  }
+
 `
-const HeaderText = styled.p`
+const Header = styled.div`
+  color: white;
+  font-family: var(--family-header);
+  font-weight: 700;
+  font-size: 92px;
+  line-height: 90px;
+  text-shadow: 0px 4px 5px rgba(0, 0, 0, 0.25);
+  padding: 20px;
+`
+const Description = styled.p`
 background-color: white;
   padding: 20px;
   border-radius: 0 0 15px 15px;
 `
 
 type Props = {
-
+header:string,
+    description:string
 };
 export const ArticleHeader = (props: Props) => {
     return   <HeaderContainer>
         <HeaderBg image={image}>
             <ImageBackDrop>
-                <span>Article's Header</span>
+                <Header>
+                    <span>{props.header}</span>
+                </Header>
             </ImageBackDrop>
         </HeaderBg>
-        <HeaderText>Этот мануал поможет вам быстро адаптировать видеокреативы на другое ГЕО. Будет актуально для
-            тех, кто готовил ролики на РУ, а теперь вынужден заходить в бурж. В статье рассмотрим способы
-            поменять В статье рассмотрим способы енять оменять
-        </HeaderText>
+        <Description>
+            {props.description}
+        </Description>
     </HeaderContainer>
 };

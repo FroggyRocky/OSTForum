@@ -2,6 +2,7 @@ import styled from "styled-components";
 import {IoArrowRedo, IoChevronDown, IoEyeSharp, IoThumbsDown, IoThumbsUp} from 'react-icons/io5'
 import avatarEx from '../../assets/avatarEx.png'
 import {Flex} from "../commonStyles/Flex.styled";
+import {CommentsType} from "../../redux/articles/articleTypes";
 
 const Container = styled.div`
   width: 100%;
@@ -116,36 +117,19 @@ const StyledTextArea = styled.div`
     margin-top: 20px;
   }
 `
-type Props = {};
+type Props = {
+commentsData:CommentsType[],
+    views:number,
+    likes:number,
+    dislikes:number
+};
 export const ArticleComments = (props: Props) => {
 
-    const commentsData = [
-        {
-            id: 1,
-            name: 'Maria',
-            imgSrc: avatarEx,
-            publishingData: new Date('2021-07-10'),
-            comment:'Comment of the user 1'
-        },
-        {
-            id: 2,
-            name: 'Henry',
-            imgSrc: avatarEx,
-            publishingData: new Date('2022-07-10'),
-            comment:'Comment of the user 2'
-        },
-        {
-            id: 3,
-            name: 'Robert',
-            imgSrc: avatarEx,
-            publishingData: new Date('2022-07-10'),
-            comment:'Comment of the user 2'
-        },
-    ]
 
-    const comments = commentsData.map(el => {
+
+    const comments = props.commentsData.map(el => {
         const date = new Date()
-        const date2 = new Date(el.publishingData)
+        const date2 = new Date(el.createdAt)
         let dateDifference: number | string = Math.floor((date.getTime() - date2.getTime()) / (1000 * 3600 * 24));
         if(dateDifference === 0) {
             dateDifference = 'Today'
@@ -169,14 +153,14 @@ export const ArticleComments = (props: Props) => {
         }
         return <Card key={el.id}>
             <CardContent>
-                <Avatar src={el.imgSrc} />
+                <Avatar src={el.user.avatar} />
 <Info>
     <header>
-        <h1>{el.name}</h1>
+        <h1>{el.user.name}</h1>
         <span>&nbsp;|&nbsp;{dateDifference + ' ago'}</span>
     </header>
     <main>
-        <p>{el.comment}</p>
+        <p>{el.text}</p>
     </main>
 </Info>
             </CardContent>
@@ -187,22 +171,22 @@ export const ArticleComments = (props: Props) => {
     return <Container>
         <Content>
             <Actions justifyContent='space-between' alignItems='center'>
-                <h1>Comments ({2}) <IoChevronDown/></h1>
+                <h1>Comments ({props.commentsData.length}) <IoChevronDown/></h1>
                 <Flex>
                     <Action color='#58649C'>
                         <IoArrowRedo size={19} color='#58649C'/>
                     </Action>
                     <Action color='#58649C'>
                         <IoEyeSharp size={19} color='#58649C'/>
-                        <span>{30}</span>
+                        <span>{props.views}</span>
                     </Action>
                     <Action color='#6FCB57'>
                         <IoThumbsUp size={19} />
-                        <span>{10}</span>
+                        <span>{props.likes}</span>
                     </Action>
                     <Action color='#F05050'>
                         <IoThumbsDown size={19}/>
-                        <span>{20}</span>
+                        <span>{props.dislikes}</span>
                     </Action>
                 </Flex>
             </Actions>

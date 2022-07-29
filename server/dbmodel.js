@@ -4,16 +4,32 @@ const {DataTypes} = require("sequelize");
 const Articles = db.define('articles', {
     header:DataTypes.TEXT,
     text:DataTypes.TEXT,
-    articleDescription:DataTypes.STRING(100),
+    description:DataTypes.STRING(100),
     mainImg:DataTypes.STRING,
-    likes:DataTypes.INTEGER,
-    dislikes:DataTypes.INTEGER,
-    views:DataTypes.INTEGER,
+    usersLiked: {
+        type:DataTypes.ARRAY(DataTypes.INTEGER),
+        defaultValue:0
+    }, // ID OF USERS WHO LIKED THE ARTICLE
+    usersDisliked:{
+        type:DataTypes.ARRAY(DataTypes.INTEGER),
+        defaultValue:0
+    }, // ID OF USERS WHO DISLIKED THE ARTICLE
+    usersViewed:{
+        type:DataTypes.ARRAY(DataTypes.INTEGER),
+        defaultValue:0
+    }, // ID OF USERS WHO LIKED VIEWED THE ARTICLE,
+    keys:DataTypes.ARRAY(DataTypes.STRING)
 })
 const Comments = db.define('comments', {
     text:DataTypes.STRING(100),
-    likes:DataTypes.INTEGER,
-    dislikes:DataTypes.INTEGER,
+    usersLiked:{
+        type:DataTypes.ARRAY(DataTypes.INTEGER),
+        defaultValue:0
+    }, // ID OF USERS WHO LIKED THE COMMENT
+    usersDisliked:{
+        type:DataTypes.ARRAY(DataTypes.INTEGER),
+        defaultValue:0
+    }, // ID OF USERS WHO LIKED THE COMMENT
 })
 
 const Users = db.define('users', {
@@ -23,16 +39,34 @@ const Users = db.define('users', {
     timestamps: false,
 })
 
-Articles.hasMany(Comments);
-Comments.hasOne(Articles);
+//article's topics
+const Categories = db.define('categories', {
+    name:DataTypes.STRING
+}, {
+    timestamps:false
+})
+const Keys = db.define('keys', {
+    name:DataTypes.STRING
+}, {
+    timestamps:false
+})
+
+
 Users.hasMany(Articles);
-Articles.hasOne(Users)
+Articles.belongsTo(Users)
 Users.hasMany(Comments);
-Comments.hasOne(Users)
+Comments.belongsTo(Users)
+Articles.hasMany(Comments);
+Comments.belongsTo(Articles);
+Categories.hasMany(Articles)
+Articles.belongsTo(Categories)
+
 
 
 module.exports = {
     Articles,
     Comments,
-    Users
+    Users,
+    Categories,
+    Keys
 }

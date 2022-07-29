@@ -26,9 +26,10 @@ const Main = styled(Content)`
 `
 const Navigation = styled(Flex)`
   width: 60%;
-    & > span {
-      
-    }
+
+  & > span {
+
+  }
 `
 
 
@@ -47,7 +48,7 @@ export function Header(props: {}) {
                     <span>Knowledge</span>
                     <span>Vacancies</span>
                 </Navigation>
-               <Search />
+                <Search/>
                 <Avatar/>
             </Main>
         </Wrapper>

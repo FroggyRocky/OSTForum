@@ -9,6 +9,9 @@ import {Image} from "../commonStyles/Image.styled";
 import {Articles} from "./Articles/Articles";
 import {Wrapper} from "../commonStyles/Wrapper.styled";
 import {Footer} from "../Footer/Footer";
+import {useAppDispatch} from "../../redux/hooks/hooks";
+import {useEffect} from "react";
+import {fetchArticles} from "../../redux/articles/articlesActions";
 
 const FirstPageWrapper = styled.div`
   position: relative;
@@ -17,6 +20,12 @@ const FirstPageWrapper = styled.div`
 
 type Props = {};
 export const Landing = (props: Props) => {
+
+    const dispatch = useAppDispatch()
+    useEffect(() => {
+        dispatch(fetchArticles())
+    }, [])
+
     return <div>
         <FirstPageWrapper>
             <Image pointerEvents='none' position='absolute' zIndex='5' src={curtain} alt='curtain'/>
