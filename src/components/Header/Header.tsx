@@ -1,9 +1,15 @@
+import React, { useEffect} from "react";
 import styled from "styled-components";
-import {IoLogoTux} from 'react-icons/io5'
+import {ReactComponent as Logo} from '../../assets/logo.svg'
 import {Flex} from '../commonStyles/Flex.styled'
 import {Search} from "./Search";
 import {Avatar} from "./Avatar";
 import {Content} from "../commonStyles/Content.styled";
+import {Link} from "react-router-dom";
+import {DashboardWidgets} from "./DashboardWidgets";
+import {useAppDispatch, useAppSelector} from "../../redux/hooks/hooks";
+import {fetchAccountData} from "../../redux/user/userThunks";
+import {UserType} from "../../redux/user/userType";
 
 const Wrapper = styled(Flex)`
   width: 100%;
@@ -13,6 +19,14 @@ const Wrapper = styled(Flex)`
   justify-content: center;
   z-index: 15;
   position: relative;
+`
+const LogoText = styled.span`
+  font-family: var(--family-header);
+  font-weight: 700;
+  font-size: 30px;
+  color: #58649C;
+  margin-left: 20px;
+  
 `
 const Main = styled(Content)`
   font-family: var(--family-text);
@@ -28,17 +42,31 @@ const Navigation = styled(Flex)`
   width: 60%;
 
   & > span {
-
+cursor: pointer;
   }
 `
 
+type Props = {
 
-export function Header(props: {}) {
+}
 
-    return (
-        <Wrapper>
+export function Header(props: Props) {
+
+    const user:UserType | null = useAppSelector(state => state.user.user)
+    const dipsatch = useAppDispatch()
+    useEffect(() => {
+        const token = window.localStorage.getItem('MyClickToken')
+        if(token) {
+            dipsatch(fetchAccountData())
+        }
+    }, [])
+
+    return <Wrapper>
             <Main>
-                <IoLogoTux style={{backgroundColor: 'rgba(246, 251, 255, 0.5)'}}/>
+                <Flex>
+                <Logo style={{backgroundColor: 'rgba(246, 251, 255, 0.5)', width:'35px', height:'35px'}}/>
+                    <LogoText>MY CLICK</LogoText>
+                </Flex>
                 <Navigation justifyContent='space-between' alignItems='center'>
                     <span>Articles</span>
                     <span>Affiliate Programs</span>
@@ -48,10 +76,16 @@ export function Header(props: {}) {
                     <span>Knowledge</span>
                     <span>Vacancies</span>
                 </Navigation>
-                <Search/>
-                <Avatar/>
-            </Main>
+                {!Object.entries(user) &&  <Search/>}
+                <Flex justifyContent='space-between'>
+                    {Object.entries(user) && <DashboardWidgets />}
+                <Link to={`/login/${process.env.REACT_APP_SECRET_LOGIN_LINK}`}>
+                    {Object.entries(user) ? <Avatar avatar={user.avatar}/> :
+                        <Avatar />
+                    }
+                </Link>
+                </Flex>
+        </Main>
         </Wrapper>
-    )
 }
 

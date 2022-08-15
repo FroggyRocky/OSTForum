@@ -17,7 +17,7 @@ const CarouselWindow = styled.div`
   width: 100%;
   display: flex;
   text-align: start;
-  justify-content: space-between;
+  justify-content: center;
   gap: 30px;
 `
 const Card = styled.div<{offSet?:string | number, imgSrc:string}>`

@@ -1,6 +1,6 @@
 import {Categories} from "./Categories";
 import imageEx from '../../../assets/cardBg.png'
-import {CardWithPrice} from "./Cards/CardWithPrice";
+import {CardWithPrice} from "../../common/Cards/CardWithPrice";
 
 type Props = {};
 export const Affiliate = (props: Props) => {

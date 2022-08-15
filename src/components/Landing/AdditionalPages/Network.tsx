@@ -1,6 +1,6 @@
 import imageEx from "../../../assets/cardBg.png";
 import {Categories} from "./Categories";
-import {CardWithRegistration} from "./Cards/CardWithRegistration";
+import {CardWithRegistration} from "../../common/Cards/CardWithRegistration";
 
 type Props = {};
 

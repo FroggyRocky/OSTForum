@@ -19,10 +19,13 @@ body {
 }
 a {
   text-decoration: none;
+  font-family: var(--family-text);
+  
 }
-h1,h2,h3 {
-  margin: 0;
-}
+  h1,h2,h3,h4,h5,h6 {
+    margin:0;
+    padding:0;
+  }
 `
 const Container = styled.div`
   background: #D9E3EC;

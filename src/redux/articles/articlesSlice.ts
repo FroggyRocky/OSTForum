@@ -5,7 +5,7 @@ import {ArticlesPreviewType, ArticleType} from "./articleTypes";
 const initialState = {
     articles: [] as Array<ArticlesPreviewType>,
     currentArticle: null as ArticleType | null,
-
+    createdArticle:{}
 }
 
 export const articleSlice = createSlice({

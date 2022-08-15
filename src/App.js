@@ -6,6 +6,9 @@ import {Article} from "./components/Article/Article";
 import {Affiliate} from "./components/Landing/AdditionalPages/Affiliate";
 import {Network} from "./components/Landing/AdditionalPages/Network";
 import {Cases} from "./components/Landing/AdditionalPages/Cases";
+import {Login} from "./components/Login/Login";
+import {AccountDashboard} from "./components/AccountDashboard/AccountDashboard";
+
 
 
 function App() {
@@ -20,13 +23,11 @@ function App() {
                 </Route>
                 <Route path='' element={<Layout/>}>
                     <Route path='/affiliate' element={<Affiliate/>}/>
-                </Route>
-                <Route path='' element={<Layout/>}>
                     <Route path='/network' element={<Network/>}/>
-                </Route>
-                <Route path='' element={<Layout/>}>
                     <Route path='/cases' element={<Cases/>}/>
+                    <Route path={`/login/${process.env.REACT_APP_SECRET_LOGIN_LINK}`} element={<Login /> } />
                 </Route>
+                <Route path={`/dashboard/*`} element={<AccountDashboard /> }/>
             </Routes>
         </div>
     );

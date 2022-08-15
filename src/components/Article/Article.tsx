@@ -72,8 +72,8 @@ export const Article = (props: Props) => {
                         <IoChevronDown/>
                     </ContentWidget>
                     <ArticleText text={currentArticle.text}/>
-                    <ArticleComments views={currentArticle.usersViewed.length} likes={currentArticle.usersLiked.length}
-                                     dislikes={currentArticle.usersDisliked.length} commentsData={currentArticle.comments}/>
+                    <ArticleComments views={currentArticle.usersViewed?.length || 0} likes={currentArticle.usersLiked?.length || 0}
+                                     dislikes={currentArticle.usersDisliked?.length || 0} commentsData={currentArticle.comments}/>
                     <TgButton/>
                 </Content>
                 :

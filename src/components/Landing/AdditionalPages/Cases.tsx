@@ -1,6 +1,6 @@
 import {Categories} from "./Categories";
 import imageEx from "../../../assets/cardBg.png";
-import {CardWithStatistics} from "./Cards/CardWithStatistics";
+import {CardWithStatistics} from "../../common/Cards/CardWithStatistics";
 
 type Props = {};
 export const Cases = (props: Props) => {

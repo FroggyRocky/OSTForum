@@ -62,8 +62,10 @@ type Props = {
 export const ArticleText = (props: Props) => {
 
     return <Container>
-        <Content dangerouslySetInnerHTML={{__html:props.text}}>
+        <Content >
+<div dangerouslySetInnerHTML={{__html:props.text}}>
 
+</div>
         </Content>
     </Container>
 };

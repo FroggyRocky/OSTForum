@@ -4,6 +4,7 @@ import {IoTimeOutline} from 'react-icons/io5'
 import inst from '../../../assets/instFlag.png';
 import fb from '../../../assets/instFlag.png';
 import {StatisticsPanel} from "../../common/StatisticsPanel";
+import {NavLink} from "react-router-dom";
 
 type CardImage = {
     src?: string
@@ -61,11 +62,11 @@ const Date = styled(Flex)`
   font-size: 16px;
   line-height: 15px;
   color: #58649C;
-
 `
 
 
 type Props = {
+    id:number,
  category:string,
     mainImg:string,
     header:string,
@@ -78,6 +79,7 @@ type Props = {
 };
 
 export const Card = (props: Props) => {
+
     const chooseFlag = () => {
         switch (props.category) {
             case 'facebook':
@@ -89,10 +91,10 @@ export const Card = (props: Props) => {
         }
     }
 
-    return <Container>
+    return <NavLink to={`/article/${props.id}`}><Container>
         <CardImage src={props.mainImg} alt='Article_head_image'/>
         <Info>
-            <Flag src={chooseFlag()} alt="flag"/>
+            {props.category && <Flag src={chooseFlag()} alt="flag"/>}
             <Text>
                 <h1>{props.header}</h1>
                 <p>
@@ -108,4 +110,5 @@ export const Card = (props: Props) => {
             </Flex>
         </Info>
     </Container>
+    </NavLink>
 };

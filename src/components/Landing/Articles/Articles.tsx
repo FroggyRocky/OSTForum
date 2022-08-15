@@ -32,9 +32,9 @@ type Props = {};
 export const Articles = (props: Props) => {
     const articlesData = useAppSelector(state => state.articles.articles)
     const articles = articlesData.map(el => {
-        return <Card key={el.id} header={el.header} mainImg={el.mainImg} description={el.description}
-                     dislikes={el.usersDisliked.length} likes={el.usersLiked.length} views={el.usersViewed.length}
-                     category={el.category.name} comments={el.comments.length} createdAt={el.createdAt}/>
+        return <Card key={el.id} header={el.header} mainImg={el.mainImg} description={el.description} id={el.id}
+                     dislikes={el.usersDisliked?.length || 0} likes={el.usersLiked?.length || 0} views={el.usersViewed?.length || 0}
+                     category={el.category?.name || ''} comments={el.comments?.length || 0} createdAt={el.createdAt}/>
     })
     return (
         <div style={{padding: '128px 0 60px 0'}}>

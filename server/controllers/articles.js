@@ -6,7 +6,7 @@ class Articles {
             attributes: {exclude: ['updatedAt', 'userId', 'text']},
             include: [
                 {
-                    model: db.Comments,
+                    model: db.Comments
                 },
                 {
                     model: db.Categories,
@@ -41,6 +41,25 @@ class Articles {
                 ]
             })
             res.send(article)
+        } catch (e) {
+            console.log(e)
+            res.sendStatus(500)
+        }
+    }
+
+    async createArticle(req, res) {
+        try {
+            const accountId = req.accountId
+            const data = {
+                ...req.body,
+
+            }
+            const response = await db.Articles.create(data, {
+                where: {
+                    userId: accountId
+                }
+            })
+            res.status(200).send(response)
         } catch (e) {
             console.log(e)
             res.sendStatus(500)

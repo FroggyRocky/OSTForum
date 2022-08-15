@@ -1,6 +1,13 @@
-
+@font-face {
+  font-family: GothamPro;
+  src: url(assets/fonts/gothampro.ttf);
+}
+@font-face {
+  font-family: RoadRadio;
+  src: url(assets/fonts/roadradio_bold.otf);
+}
 :root {
   --family-header:'RoadRadio', sens-serif;
-  --family-text:'Gotham Pro', sans-serif;
+  --family-text:'GothamPro', sans-serif;
   --bg-main: #D9E3EC;
 }

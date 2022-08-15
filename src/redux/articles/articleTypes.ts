@@ -1,8 +1,5 @@
-export interface UserType {
-    id:number,
-    name:string,
-    avatar:string
-}
+import {UserType} from "../user/userType";
+
 export interface CategoryType {
     id:number,
     name:string
@@ -31,4 +28,10 @@ export interface ArticlesPreviewType {
 export interface ArticleType extends ArticlesPreviewType{
     text:string,
     user:UserType,
+}
+export interface  CreatedArticleType {
+    header:string,
+    description:string,
+    mainImg:string,
+    images:Array<string>
 }

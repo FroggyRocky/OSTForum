@@ -8,33 +8,30 @@ const Articles = db.define('articles', {
     mainImg:DataTypes.STRING,
     usersLiked: {
         type:DataTypes.ARRAY(DataTypes.INTEGER),
-        defaultValue:0
     }, // ID OF USERS WHO LIKED THE ARTICLE
     usersDisliked:{
         type:DataTypes.ARRAY(DataTypes.INTEGER),
-        defaultValue:0
     }, // ID OF USERS WHO DISLIKED THE ARTICLE
     usersViewed:{
         type:DataTypes.ARRAY(DataTypes.INTEGER),
-        defaultValue:0
     }, // ID OF USERS WHO LIKED VIEWED THE ARTICLE,
+    categories:DataTypes.STRING,
     keys:DataTypes.ARRAY(DataTypes.STRING)
 })
 const Comments = db.define('comments', {
     text:DataTypes.STRING(100),
     usersLiked:{
         type:DataTypes.ARRAY(DataTypes.INTEGER),
-        defaultValue:0
     }, // ID OF USERS WHO LIKED THE COMMENT
     usersDisliked:{
         type:DataTypes.ARRAY(DataTypes.INTEGER),
-        defaultValue:0
     }, // ID OF USERS WHO LIKED THE COMMENT
 })
 
 const Users = db.define('users', {
     name:DataTypes.STRING(50),
-    avatar:DataTypes.STRING
+    password:DataTypes.STRING(60),
+    avatar:DataTypes.STRING,
 }, {
     timestamps: false,
 })
