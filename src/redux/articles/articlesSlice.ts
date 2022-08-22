@@ -1,24 +1,35 @@
 import {createSlice, PayloadAction} from '@reduxjs/toolkit'
-import {ArticlesPreviewType, ArticleType} from "./articleTypes";
+import {IArticle, IArticlesPreview, ICreatedArticle} from "./articleTypes";
 
 
 const initialState = {
-    articles: [] as Array<ArticlesPreviewType>,
-    currentArticle: null as ArticleType | null,
-    createdArticle:{}
+    articles: [] as Array<IArticlesPreview>,
+    currentArticle: null as IArticle | null,
+    createdArticle: {},
+    isArticleCreating: false,
+    isArticleCreated: undefined as boolean | undefined
 }
 
 export const articleSlice = createSlice({
-    name: 'articles',
+    name: 'article',
     initialState,
     reducers: {
-        setArticles(state, action: PayloadAction<ArticleType[]>) {
+        setArticles(state, action: PayloadAction<IArticle[]>) {
             state.articles = action.payload
         },
-        setCurrentArticle(state, action:PayloadAction<ArticleType>) {
+        setCurrentArticle(state, action: PayloadAction<IArticle>) {
             state.currentArticle = action.payload
+        },
+        setArticleCreatingState(state, action: PayloadAction<boolean>) {
+            state.isArticleCreating = action.payload
+        },
+        setArticleCreatedState(state, action: PayloadAction<boolean | undefined>) {
+            state.isArticleCreated = action.payload
+        },
+        setCreatedArticle(state, action: PayloadAction<ICreatedArticle>) {
+            state.createdArticle = action.payload
         }
     }
 })
 
-export default articleSlice.reducer
+export const {setArticleCreatedState, setArticleCreatingState} = articleSlice.actions

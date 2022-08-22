@@ -2,7 +2,7 @@ import {H1} from '../../commonStyles/h1.styled'
 import styled from 'styled-components'
 import {IoDocumentText} from "react-icons/io5";
 import {Flex} from "../../commonStyles/Flex.styled";
-import {ArticlesPreviewType} from "../../../redux/articles/articleTypes";
+import {IArticlesPreview} from "../../../redux/articles/articleTypes";
 import {AccountArticleCard} from "../../common/Cards/AccountArticleCard";
 import {Link} from "react-router-dom";
 import {Content} from "../../commonStyles/Content.styled";
@@ -32,7 +32,7 @@ const Button = styled.button`
 `
 
 type Props = {
-    articlesData: ArticlesPreviewType[]
+    articlesData: IArticlesPreview[]
 };
 export const AccountArticles = (props: Props) => {
     const articles = props.articlesData.map(el => {

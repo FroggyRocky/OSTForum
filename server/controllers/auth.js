@@ -5,27 +5,30 @@ const jwt = require('jsonwebtoken')
 
 
 class Auth {
-    async register(req, res) {
-        const {login, password} = req.body
-        console.log(password)
-        bcrypt.genSalt(10, (err, salt) => {
-            bcrypt.hash(password, salt, (err, hash) => {
-                if (err) {
-                    console.log(err);
-                    res.sendStatus(500)
-                } else {
-                    db.Users.update({
-                        password: hash
-                    }, {
-                        where: {
-                            id: 1
-                        }
-                    })
-                    res.sendStatus(200)
-                }
-            })
-        });
-    }
+    // async register(req, res) {
+    //     try {
+    //         const {login, password} = req.body
+    //         bcrypt.genSalt(10, (err, salt) => {
+    //             bcrypt.hash(password, salt, (err, hash) => {
+    //                 if (err) {
+    //                     console.log(err);
+    //                     res.sendStatus(500)
+    //                 } else {
+    //                     db.Users.update({
+    //                         password: hash
+    //                     }, {
+    //                         where: {
+    //                             id: 1
+    //                         }
+    //                     })
+    //                     res.sendStatus(200)
+    //                 }
+    //             })
+    //         });
+    //     } catch (e) {
+    //         console.log(e)
+    //     }
+    // }
 
     async login(req, res) {
         try {
@@ -45,10 +48,9 @@ class Auth {
             }
         } catch (e) {
             console.log(e)
-            res.sendStatus(401)
+            res.status(403).send(new Error('You\'ve provided wrong password or login'))
         }
     }
-
     async authenticateToken(req, res, next) {
         try {
             const authHeader = req.headers['xxx-auth-token']
@@ -58,6 +60,16 @@ class Auth {
         } catch (e) {
             console.log(e)
             res.sendStatus(401)
+        }
+    }
+    async compileConfigs(req, res) {
+        try {
+            const categories = await db.Categories.findAll()
+            const keys = await db.Keys.findAll()
+            res.status(200).send({categories:categories, keys:keys})
+        } catch (e) {
+            res.sendStatus(500)
+            console.log(e)
         }
     }
 }

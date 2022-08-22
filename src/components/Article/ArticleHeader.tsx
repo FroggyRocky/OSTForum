@@ -1,4 +1,4 @@
-import image from "../../assets/ArticleCardBg.png";
+
 import styled from "styled-components";
 
 const HeaderContainer = styled.div`
@@ -44,10 +44,11 @@ background-color: white;
 type Props = {
 header:string,
     description:string
+    articleCoverImg:string
 };
 export const ArticleHeader = (props: Props) => {
     return   <HeaderContainer>
-        <HeaderBg image={image}>
+        <HeaderBg image={props.articleCoverImg}>
             <ImageBackDrop>
                 <Header>
                     <span>{props.header}</span>

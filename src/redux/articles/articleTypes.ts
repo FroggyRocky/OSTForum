@@ -1,37 +1,42 @@
-import {UserType} from "../user/userType";
+import {IUser} from "../user/userType";
 
-export interface CategoryType {
-    id:number,
-    name:string
+export interface ICategory {
+    id: number,
+    name: string
 }
-export interface CommentsType {
-    id:number,
-    text:string,
-    usersLiked:Array<number>
-    usersDisliked:Array<number>
-    createdAt:string,
-    user:UserType // comment creator
+
+export interface IComments {
+    id: number,
+    text: string,
+    usersLiked: Array<number>
+    usersDisliked: Array<number>
+    createdAt: string,
+    user: IUser // comment creator
 }
-export interface ArticlesPreviewType {
-    id:number,
-    header:string,
-    description:string,
-    mainImg:string,
-    keys:Array<string>,
-    usersLiked:Array<number>
-    usersDisliked:Array<number>
-    usersViewed:Array<number>
-    createdAt:string,
-    comments:Array<CommentsType>,
-    category:CategoryType,
+
+export interface IArticlesPreview {
+    id: number,
+    header: string,
+    description: string,
+    mainImg: string,
+    keys: Array<string>,
+    usersLiked: Array<number>
+    usersDisliked: Array<number>
+    usersViewed: Array<number>
+    createdAt: string,
+    comments: Array<IComments>,
+    category: ICategory,
 }
-export interface ArticleType extends ArticlesPreviewType{
-    text:string,
-    user:UserType,
+
+export interface IArticle extends IArticlesPreview {
+    text: string,
+    user: IUser,
 }
-export interface  CreatedArticleType {
-    header:string,
-    description:string,
-    mainImg:string,
-    images:Array<string>
+
+export interface ICreatedArticle {
+    header: string,
+    description: string,
+    mainImg: string,
+    text: string,
+    category: string
 }

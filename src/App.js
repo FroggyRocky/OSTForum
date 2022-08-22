@@ -1,4 +1,5 @@
 import './App.css';
+import React, {useEffect} from 'react'
 import {Landing} from "./components/Landing/Landing";
 import {Layout} from './Layout'
 import {Route, Routes} from 'react-router-dom'
@@ -8,12 +9,19 @@ import {Network} from "./components/Landing/AdditionalPages/Network";
 import {Cases} from "./components/Landing/AdditionalPages/Cases";
 import {Login} from "./components/Login/Login";
 import {AccountDashboard} from "./components/AccountDashboard/AccountDashboard";
-
-
+import {useAppDispatch, useAppSelector} from "./redux/hooks/hooks";
+import {auth} from "./redux/auth/authThunks";
+import {Loader} from "./components/common/Loader";
 
 function App() {
 
+    const dispatch = useAppDispatch()
+    const isInitialized = useAppSelector(state => state.auth.isInitialized)
+useEffect(() => {
+    dispatch(auth())
+}, [])
 
+if(!isInitialized) return <Loader/>
     return (
         <div className="App">
             <Routes>
@@ -25,9 +33,9 @@ function App() {
                     <Route path='/affiliate' element={<Affiliate/>}/>
                     <Route path='/network' element={<Network/>}/>
                     <Route path='/cases' element={<Cases/>}/>
-                    <Route path={`/login/${process.env.REACT_APP_SECRET_LOGIN_LINK}`} element={<Login /> } />
+                    <Route path={`/login/${process.env.REACT_APP_SECRET_LOGIN_LINK}`} element={<Login/>}/>
                 </Route>
-                <Route path={`/dashboard/*`} element={<AccountDashboard /> }/>
+                <Route path={`/dashboard/*`} element={<AccountDashboard/>}/>
             </Routes>
         </div>
     );

@@ -1,11 +1,14 @@
 import {combineReducers, configureStore} from '@reduxjs/toolkit'
-import articles from './articles/articlesSlice'
-import user from './user/userSlice'
+import {articleSlice} from './articles/articlesSlice'
+import {userSlice} from './user/userSlice'
 import {currentCreatedArticle} from "./currentEditedArticle/currentEditedArticleSlice";
+import {authSlice} from "./auth/authSlice";
+
 const rootReducer = combineReducers({
-    articles: articles,
-    user:user,
-    currentEditedArticle:currentCreatedArticle.reducer
+    articles: articleSlice.reducer,
+    user:userSlice.reducer,
+    currentEditedArticle:currentCreatedArticle.reducer,
+    auth:authSlice.reducer
 })
 
 export const store = configureStore({

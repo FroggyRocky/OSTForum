@@ -5,6 +5,7 @@ import {Card} from './Card'
 import {Pagination} from "../../common/Pagination";
 import {TgButton} from "../../common/TgButton";
 import {useAppSelector} from "../../../redux/hooks/hooks";
+import {useState} from "react";
 
 const TopicsContainer = styled(Flex)`
   padding: 0 0 41px 0;
@@ -31,9 +32,14 @@ const Topic = styled.span`
 type Props = {};
 export const Articles = (props: Props) => {
     const articlesData = useAppSelector(state => state.articles.articles)
-    const articles = articlesData.map(el => {
+    const articlesPerPageLimit = 2
+    const [currentPage, setCurrentPage] = useState(0)
+    const endIndex = (currentPage + 1) * articlesPerPageLimit
+    const startIndex = endIndex - articlesPerPageLimit
+    const articles = articlesData.slice(startIndex, endIndex).map(el => {
         return <Card key={el.id} header={el.header} mainImg={el.mainImg} description={el.description} id={el.id}
-                     dislikes={el.usersDisliked?.length || 0} likes={el.usersLiked?.length || 0} views={el.usersViewed?.length || 0}
+                     dislikes={el.usersDisliked?.length || 0} likes={el.usersLiked?.length || 0}
+                     views={el.usersViewed?.length || 0}
                      category={el.category?.name || ''} comments={el.comments?.length || 0} createdAt={el.createdAt}/>
     })
     return (
@@ -51,7 +57,9 @@ export const Articles = (props: Props) => {
                     {articles}
                     <TgButton/>
                 </Flex>
-                <Pagination/>
+                {articlesData.length !== 0 &&
+                    <Pagination changePage={setCurrentPage} currentPage={currentPage} limit={articlesPerPageLimit}
+                                totalItems={articlesData.length}/>}
             </Content>
         </div>
     );

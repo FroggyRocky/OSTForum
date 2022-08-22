@@ -10,9 +10,11 @@ import {ArticleComments} from "./ArticleComments";
 import {TgButton} from "../common/TgButton";
 import {useEffect} from "react";
 import {useAppDispatch, useAppSelector} from "../../redux/hooks/hooks";
-import {fetchCurrentArticle} from "../../redux/articles/articlesActions";
-import {ArticleType} from "../../redux/articles/articleTypes";
-
+import {fetchCurrentArticle} from "../../redux/articles/articlesThunks";
+import {IArticle} from "../../redux/articles/articleTypes";
+import {Loader} from "../common/Loader";
+import {calcDate} from "../common/services/calcDate";
+import defaultCover from "../../assets/ArticleCardBg.png";
 
 const StyledPath = styled.div`
   font-family: var(--family-text);
@@ -50,7 +52,7 @@ type Props = {};
 
 export const Article = (props: Props) => {
     const dispatch = useAppDispatch()
-    const currentArticle: ArticleType | null = useAppSelector(state => state.articles.currentArticle)
+    const currentArticle: IArticle | null = useAppSelector(state => state.articles.currentArticle)
 
     const {id} = useParams()
     useEffect(() => {
@@ -63,21 +65,26 @@ export const Article = (props: Props) => {
         {
             currentArticle ? <Content>
                     <StyledPath>
-                        <p><Link to='/'>Home</Link>{' > '}<Link to='/'>Articles</Link> {' > '} Article's Header</p>
-                        <p><IoTimeOutline/> {'Yesterday'}</p>
+                        <p><Link to='/'> Home </Link>{' > '}<Link to='/'> Articles </Link> {' > '} Article's Header</p>
+                        <Flex>
+                            <IoTimeOutline size={15} style={{marginRight: '5px'}}/>{calcDate(currentArticle.createdAt)} ago
+                        </Flex>
                     </StyledPath>
-                    <ArticleHeader header={currentArticle.header} description={currentArticle.description}/>
+                    <ArticleHeader header={currentArticle.header} description={currentArticle.description}
+                                   articleCoverImg={currentArticle.mainImg || defaultCover}/>
                     <ContentWidget alignItems='center' justifyContent='end'>
                         <span>Content</span>
                         <IoChevronDown/>
                     </ContentWidget>
                     <ArticleText text={currentArticle.text}/>
-                    <ArticleComments views={currentArticle.usersViewed?.length || 0} likes={currentArticle.usersLiked?.length || 0}
-                                     dislikes={currentArticle.usersDisliked?.length || 0} commentsData={currentArticle.comments}/>
+                    <ArticleComments views={currentArticle.usersViewed?.length || 0}
+                                     likes={currentArticle.usersLiked?.length || 0}
+                                     dislikes={currentArticle.usersDisliked?.length || 0}
+                                     commentsData={currentArticle.comments}/>
                     <TgButton/>
                 </Content>
-                :
-                <p>Loading...</p>
+                : <Loader/>
+
         }
     </Wrapper>
 };

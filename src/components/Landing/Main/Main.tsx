@@ -1,11 +1,11 @@
 import styled from "styled-components";
 import {Carousel} from "./Carousel";
 import {IoChevronForwardOutline} from "react-icons/io5";
-import {Articles} from "../Articles/Articles";
 
 const Wrapper = styled.div`
   padding:102px 0 0px 0;
   text-align: center;
+  height: 100vh;
 `
 const H1 = styled.h1`
 font-family: var(--family-header);

@@ -18,7 +18,7 @@ export const Avatar = (props: Props) => {
     return (
         <Flex>
             {props.avatar ? <Img src={props.avatar} alt='avatar' />  : <IoPersonOutline/> }
-            <IoChevronDownOutline/>
+            {/*<IoChevronDownOutline/>*/}
         </Flex>
     );
 };

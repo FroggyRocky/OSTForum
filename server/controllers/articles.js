@@ -50,6 +50,7 @@ class Articles {
     async createArticle(req, res) {
         try {
             const accountId = req.accountId
+            console.log(req.body, accountId)
             const data = {
                 ...req.body,
 

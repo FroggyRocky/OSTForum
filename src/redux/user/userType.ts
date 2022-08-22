@@ -1,11 +1,10 @@
+import {IArticlesPreview} from "../articles/articleTypes";
 
-import {ArticlesPreviewType} from "../articles/articleTypes";
 
-
-export interface UserType {
+export interface IUser {
     id:number,
     name:string,
     login:string,
     avatar:string,
-    articles:ArticlesPreviewType[]
+    articles:IArticlesPreview[]
 }

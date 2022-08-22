@@ -5,6 +5,9 @@ import youtube from '../../assets/youtube.png'
 import tg from '../../assets/tg.png'
 import inst from '../../assets/inst.png'
 import vk from '../../assets/vk.png'
+import {ReactComponent as Logo} from '../../assets/logo.svg'
+import {LogoText} from "../commonStyles/Logo.styled";
+
 
 const Wrapper = styled.div`
   font-family: var(--family-text);
@@ -35,13 +38,17 @@ list-style: none;
 `
 
 type Props = {};
+
 export const Footer = (props: Props) => {
     return (
         <Wrapper>
             <Content style={{padding:'60px 0'}}>
         <Flex justifyContent='space-between' alignItems='start'>
             <StyledLogo>
-                <h1>LOGO</h1>
+                <Flex>
+                    <Logo style={{backgroundColor: 'rgba(246, 251, 255, 0.5)', width:'35px', height:'35px'}}/>
+                    <LogoText>MY CLICK</LogoText>
+                </Flex>
                     <p>Slogan of the company</p>
             </StyledLogo>
             <Flex gap='70px' alignItems='start' >

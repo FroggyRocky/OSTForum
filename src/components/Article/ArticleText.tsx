@@ -17,20 +17,25 @@ const Content = styled.div`
     line-height: 30px;
     color: #58649C;
   }
-
+& > ul > li {
+  font-weight: 700;
+  margin-left: 1.2%;
+}
   & > p {
     font-weight: 400;
     font-size: 18px;
     line-height: 32px;
-    color: #525252;
-    & > img {
+   color: #525252;
+  }
+    & > figure pre img {
       width: 100%;
       height: 100%;
       margin: 20px 0;
       border-radius: 15px;
       display: block;
+      padding-right: 15px;
+      object-fit: contain;
     }
-  }
 
   & > h2 {
     font-weight: 700;
@@ -47,13 +52,7 @@ const Content = styled.div`
     line-height: 32px;
   }
 
-  & > img {
-    width: 100%;
-    height: 100%;
-    margin: 20px 0;
-    border-radius: 15px;
-    display: block;
-  }
+
 `
 
 type Props = {
@@ -62,10 +61,8 @@ type Props = {
 export const ArticleText = (props: Props) => {
 
     return <Container>
-        <Content >
-<div dangerouslySetInnerHTML={{__html:props.text}}>
+        <Content dangerouslySetInnerHTML={{__html:props.text}}>
 
-</div>
         </Content>
     </Container>
 };

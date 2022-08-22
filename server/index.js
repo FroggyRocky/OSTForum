@@ -7,13 +7,12 @@ const morgan = require('morgan')
 const bodyParser = require('body-parser')
 const articleRouter = require('./routers/articles.router')
 const authRouter = require('./routers/auth.router')
-const authController = require('./controllers/auth')
 const userRouter = require('./routers/user.router')
 const s3Router = require('./routers/s3.router')
 const cors = require('cors')
 const fileUpload = require('express-fileupload')
 const corsOptions = {
-    origin:'http://localhost:3000',
+    origin:'*',
     credentials:true,
 }
 app.use(bodyParser.json())
@@ -30,8 +29,8 @@ db.authenticate()
 
 app.use('/api', articleRouter);
 app.use('/api', authRouter);
-app.use('/api', authController.authenticateToken, userRouter)
-app.use('/api',s3Router)
+app.use('/api', userRouter)
+app.use('/api', s3Router)
 
  // db.sync({alter:true});
  // db.sync({force:true})

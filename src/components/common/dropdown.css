@@ -1,0 +1,23 @@
+.dropDown__dropDown {
+    background: rgba(255, 255, 255, 0.6);
+    position: absolute;
+    width: 200px;
+    border-radius: 8px;
+    z-index: 5;
+font-family: var(--family-text);
+font-size: 20px;
+    line-height: 18px;
+    margin-top: 10px;
+    color: black;
+}
+
+.dropDown__optionContainer {
+    padding: 10px 5px;
+    width: 100%;
+}
+.dropDown__optionContainer:hover, .dropDown__optionContainer_active {
+    background-color: #58649C;
+    cursor: pointer;
+    color: white;
+    border-radius: 10px;
+}

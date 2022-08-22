@@ -1,10 +1,12 @@
 import styled from "styled-components";
-import activeArr from '../../../assets/activeArr.svg'
-import unactiveArr from '../../../assets/unactiveArr.svg'
-import {useState} from "react";
+import {ReactComponent as ActiveArrLeft} from '../../../assets/activeArrLeft.svg'
+import {ReactComponent as UnactiveArrLeft} from '../../../assets/unactiveArrLeft.svg'
+import {ReactComponent as ActiveArrRight} from '../../../assets/activeArrRight.svg'
+import {ReactComponent as UnactiveArrRight} from '../../../assets/unactiveArrRight.svg'
+import {useEffect, useRef, useState} from "react";
 import {Link} from 'react-router-dom'
 import {useAppSelector} from "../../../redux/hooks/hooks";
-import bg from '../../../assets/cardBg.png'
+
 
 const Wrapper = styled.div`
   overflow-x: hidden;
@@ -13,18 +15,25 @@ const Wrapper = styled.div`
   min-width: 1358px;
   margin: auto auto;
 `
-const CarouselWindow = styled.div`
-  width: 100%;
+const CarouselContainer = styled.div`
+width: 75%;
+  margin: auto auto;
+`
+const CarouselWindow = styled.div<{offSet?: string | number}>`
+  width: 1200px;
   display: flex;
   text-align: start;
   justify-content: center;
   gap: 30px;
+  margin: auto auto;
+   transform: translateX(${({offSet}) => offSet + '%'});
+  transition: transform 900ms ease-in-out;
 `
-const Card = styled.div<{offSet?:string | number, imgSrc:string}>`
+const Card = styled.div<{ imgSrc: string }>`
   width: 570px;
   height: 288px;
   background-image: url("${({imgSrc}) => imgSrc}");
-  background-size:cover;
+  background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
   background-color: rgba(0, 0, 0, 0.9);
@@ -32,9 +41,7 @@ const Card = styled.div<{offSet?:string | number, imgSrc:string}>`
   flex-shrink: 0;
   display: flex;
   flex-direction: column;
-  transform: translateX(${({offSet}) => offSet + '%' || 0});
-  transition: transform 900ms ease-in-out;
-  
+
 
   & > p {
     font-family: var(--family-text);
@@ -55,47 +62,77 @@ const Controls = styled.div`
   align-items: center;
 `
 
-
 type Props = {};
 export const Carousel = (props: Props) => {
 
+    const [isFirstArticleVisible, setFirstArticleVisibility] = useState<boolean>()
+    const [isLastArticleVisible, setLastArticleVisibility] = useState<boolean>()
+    const lastArticleRef = useRef() as React.MutableRefObject<HTMLAnchorElement>;
+    const firstArticleRef = useRef() as React.MutableRefObject<HTMLAnchorElement>;
+    const observerFramesRef = useRef() as React.MutableRefObject<HTMLDivElement>
+    const [offSet, setOffSet] = useState(0)
     const articlesData = useAppSelector(state => state.articles.articles)
+    const PAGEWIDTH = 70
 
+    const observerOptions = {
+        root:observerFramesRef.current,
+        threshold:1.0,
+    }
+    useEffect(() => {
+        const firstArticleObserver = new IntersectionObserver((entries) => {
+            setFirstArticleVisibility(entries[0].isIntersecting)
+        }, observerOptions)
+        const lastArticleObserver = new IntersectionObserver((entries) => {
+            setLastArticleVisibility(entries[0].isIntersecting)
+        }, observerOptions)
+        if (firstArticleRef.current || lastArticleRef.current) {
+            firstArticleObserver.observe(firstArticleRef.current);
+            lastArticleObserver.observe(lastArticleRef.current)
+        }
+    }, [firstArticleRef, lastArticleRef, offSet])
 
-    const [offSet,setOffSet] = useState(0)
-
-
-    const PAGEWIDTH = 100
-
-    function handleLeftClick() {
-        setOffSet(prev => {
-            const newOffSet = Math.min(prev + PAGEWIDTH, 100)
-            return newOffSet
-        })
+    function handleLeftClick(e:any) {
+        if(e.detail === 1) {
+            setOffSet(prev => prev + PAGEWIDTH)
+        }
     }
 
-    function handleRightClick() {
-        setOffSet(prev => {
-            const maxOffSet = -(PAGEWIDTH * (articlesData.length - 2)) //2 as carousel windows fits 2 articles
-            return Math.max(prev - PAGEWIDTH, maxOffSet)
-        })
+    function handleRightClick(e:any) {
+        if(e.detail === 1) {
+            setOffSet(prev => prev - PAGEWIDTH)
+        }
     }
 
-    const Articles = articlesData.map(el => {
-        return <Link key={el.id} to={`/article/${el.id}`}>
-            <Card imgSrc={el.mainImg} offSet={offSet}>
-            <p>{el.header}</p>
-        </Card>
-        </Link>
+    const Articles = articlesData.map((el, index) => {
+        if (index === +articlesData.length - 1) {
+            return <Link ref={lastArticleRef} key={el.id} to={`/article/${el.id}`}>
+                <Card id={`${el.id}`} imgSrc={el.mainImg} >
+                    <p>{el.header}</p>
+                </Card>
+            </Link>
+        } else if (index === 0) {
+            return <Link ref={firstArticleRef} key={el.id} to={`/article/${el.id}`}>
+                <Card id={`${el.id}`} imgSrc={el.mainImg}>
+                    <p>{el.header}</p>
+                </Card>
+            </Link>
+        } else {
+            return <Link key={el.id} to={`/article/${el.id}`}>
+                <Card id={`${el.id}`} imgSrc={el.mainImg}>
+                    <p>{el.header}</p>
+                </Card>
+            </Link>
+        }
     })
-
     return <Wrapper>
-        <CarouselWindow>
+        <CarouselContainer ref={observerFramesRef}>
+        <CarouselWindow offSet={offSet}>
             {Articles}
         </CarouselWindow>
+        </CarouselContainer>
         <Controls>
-            <img src={unactiveArr} onClick={handleLeftClick} alt="unactive_arriw"/>
-            <img src={activeArr} onClick={handleRightClick} alt="active_arrow"/>
+            {isFirstArticleVisible ? <UnactiveArrLeft/> : <ActiveArrLeft onClick={handleLeftClick}/>}
+            {isLastArticleVisible ? <UnactiveArrRight/> : <ActiveArrRight onClick={handleRightClick}/>}
         </Controls>
     </Wrapper>
 };

@@ -2,7 +2,7 @@ import styled from "styled-components";
 import {IoArrowRedo, IoChevronDown, IoEyeSharp, IoThumbsDown, IoThumbsUp} from 'react-icons/io5'
 import avatarEx from '../../assets/avatarEx.png'
 import {Flex} from "../commonStyles/Flex.styled";
-import {CommentsType} from "../../redux/articles/articleTypes";
+import {IComments} from "../../redux/articles/articleTypes";
 
 const Container = styled.div`
   width: 100%;
@@ -118,7 +118,7 @@ const StyledTextArea = styled.div`
   }
 `
 type Props = {
-commentsData:CommentsType[],
+commentsData:IComments[],
     views:number,
     likes:number,
     dislikes:number

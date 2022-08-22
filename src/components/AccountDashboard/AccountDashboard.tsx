@@ -1,6 +1,6 @@
 import {Routes, Route} from "react-router-dom";
 import {NavLink} from 'react-router-dom'
-import {UserType} from "../../redux/user/userType";
+import {IUser} from "../../redux/user/userType";
 import styled from "styled-components";
 import {Flex} from "../commonStyles/Flex.styled";
 import {useAppSelector} from "../../redux/hooks/hooks";
@@ -9,6 +9,8 @@ import {Footer} from "../Footer/Footer";
 import {CreateArticlePage} from "./AccountArticles/CreateArticlePage";
 import {useNavigate} from "react-router-dom";
 import {AccountArticles} from "./AccountArticles/AccountArticles";
+import {useEffect} from "react";
+import {BackgroundLoader} from "../common/BackgroundLoader";
 
 const Wrapper = styled.div`
    
@@ -47,12 +49,23 @@ type Props = {
 
 };
 export const AccountDashboard = (props: Props) => {
-const navigate = useNavigate()
+
+    const isArticleCreating = useAppSelector(state => state.articles.isArticleCreating)
+    const navigate = useNavigate()
+    const user:IUser = useAppSelector(state => state.user.user)
+    const isAuth = useAppSelector(state => state.auth.isAuth)
 
 
-    const user:UserType = useAppSelector(state => state.user.user)
+    useEffect(() => {
+        if(!isAuth) {
+            navigate('/')
+        }
+    }, [isAuth])
+
+
+
     return <Wrapper>
-
+        {isArticleCreating && <BackgroundLoader/> }
         <Header/>
         {Object.entries(user).length ? <>
         <Flex flexDirection='column'>

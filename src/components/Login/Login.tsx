@@ -3,8 +3,9 @@ import {Wrapper} from "../commonStyles/Wrapper.styled";
 import {Content} from "../commonStyles/Content.styled";
 import {useState, useEffect} from "react";
 import {useAppDispatch, useAppSelector} from "../../redux/hooks/hooks";
-import {loginUser} from "../../redux/user/userThunks";
+import {loginUser} from "../../redux/auth/authThunks";
 import {useNavigate} from "react-router-dom";
+
 
 const LoginContainer = styled.div`
   background-image: linear-gradient(90deg, #74EBD5 0%, #9FACE6 100%);
@@ -70,20 +71,17 @@ const Button = styled.button`
 type Props = {};
 
 export const Login = (props: Props) => {
-
-    const navigate = useNavigate()
-
-    useEffect(() => {
-        const token = window.localStorage.getItem('MyClickToken')
-    if(token) {
-        navigate('/dashboard')
-    }
-    }, [window.localStorage.getItem('MyClickToken')])
-
-
     const dispatch = useAppDispatch()
     const [login, setLogin] = useState('')
     const [password, setPassword] = useState('')
+    const isAuth = useAppSelector(state => state.auth.isAuth)
+    const navigate = useNavigate()
+
+    useEffect(() => {
+    if(isAuth) {
+        navigate('/dashboard')
+    }
+    }, [isAuth])
 
     function onLoginChange(e: any) {
         const value = e.target.value

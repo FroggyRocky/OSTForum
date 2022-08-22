@@ -1,0 +1,57 @@
+div.DraftEditor-root {
+    border: none;
+    border-radius: 15px;
+    background-color: white;
+    height: 1163px;
+    width: 100%;
+    padding: 15px;
+    font-family: var(--family-text);
+    font-size: 18px;
+    overflow-x: clip;
+}
+
+div.DraftEditor-editorContainer,
+div.public-DraftEditor-content {
+    height: 100%;
+}
+
+div.DraftEditor-editorContainer, div.public-DraftEditor-content img {
+    width: 100%;
+    height: 100%;
+    margin: 20px 0;
+    padding-right: 15px;
+    border-radius: 15px;
+}
+div.DraftEditor-editorContainer, div.public-DraftEditor-content h1, h2, h3 {
+    margin: 40px 0 20px 0;
+}
+div.DraftEditor-editorContainer, div.public-DraftEditor-content h1 {
+    margin: 20px 0;
+    border-radius: 15px;
+    display: block;
+    color: #58649C;
+}
+
+div.DraftEditor-editorContainer, div.public-DraftEditor-content h2 {
+    font-weight: 700;
+    font-size: 25px;
+    line-height: 28px;
+    color: #525252;
+}
+
+div.DraftEditor-editorContainer, div.public-DraftEditor-content p {
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 32px;
+}
+/*div.DraftEditor-editorContainer, div.public-DraftEditor-content a {*/
+/*    color: #58649C;*/
+/*    text-decoration: underline;*/
+/*    font-weight: 400;*/
+/*    font-size: 18px;*/
+/*    line-height: 32px;*/
+/*}*/
+div.DraftEditor-editorContainer, div.public-DraftEditor-content ul > li {
+    font-weight: 700;
+    margin-left: 1.2%;
+}

@@ -11,7 +11,7 @@ import {Wrapper} from "../commonStyles/Wrapper.styled";
 import {Footer} from "../Footer/Footer";
 import {useAppDispatch} from "../../redux/hooks/hooks";
 import {useEffect} from "react";
-import {fetchArticles} from "../../redux/articles/articlesActions";
+import {fetchArticles} from "../../redux/articles/articlesThunks";
 
 const FirstPageWrapper = styled.div`
   position: relative;
@@ -29,7 +29,7 @@ export const Landing = (props: Props) => {
     return <div>
         <FirstPageWrapper>
             <Image pointerEvents='none' position='absolute' zIndex='5' src={curtain} alt='curtain'/>
-            <Image pointerEvents='none' position='absolute' zIndex='5' src={curtain2} right='0' alt='curtain2'/>
+            <Image top={'0'} bottom={'0'} pointerEvents='none' position='absolute' zIndex='5' src={curtain2} right='0' alt='curtain2'/>
             <Image pointerEvents='none' position='absolute' zIndex='10' bottom='0' src={flipboard} alt='flipboard'/>
             <Image pointerEvents='none' position='absolute' zIndex='10' bottom='0' right='0' src={lamp} alt='lamp'/>
             <Header/>

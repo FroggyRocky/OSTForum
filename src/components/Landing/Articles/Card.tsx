@@ -5,6 +5,7 @@ import inst from '../../../assets/instFlag.png';
 import fb from '../../../assets/instFlag.png';
 import {StatisticsPanel} from "../../common/StatisticsPanel";
 import {NavLink} from "react-router-dom";
+import {calcDate} from "../../common/services/calcDate";
 
 type CardImage = {
     src?: string
@@ -66,19 +67,20 @@ const Date = styled(Flex)`
 
 
 type Props = {
-    id:number,
- category:string,
-    mainImg:string,
-    header:string,
-    description:string,
-    views:number,
-    likes:number,
-    dislikes:number,
-    comments:number,
-    createdAt:string
+    id: number,
+    category: string,
+    mainImg: string,
+    header: string,
+    description: string,
+    views: number,
+    likes: number,
+    dislikes: number,
+    comments: number,
+    createdAt: string
 };
 
 export const Card = (props: Props) => {
+
 
     const chooseFlag = () => {
         switch (props.category) {
@@ -90,6 +92,8 @@ export const Card = (props: Props) => {
                 break;
         }
     }
+
+
 
     return <NavLink to={`/article/${props.id}`}><Container>
         <CardImage src={props.mainImg} alt='Article_head_image'/>
@@ -103,7 +107,7 @@ export const Card = (props: Props) => {
             </Text>
             <Flex justifyContent='space-between'>
                 <Date>
-                    <IoTimeOutline style={{marginRight: '4px'}} color='#58649C'/>{'Yesterday'}
+                    <IoTimeOutline style={{marginRight: '4px'}} color='#58649C'/>{`${calcDate(props.createdAt)} ago`}
                 </Date>
                 <StatisticsPanel views={props.views} comments={props.comments} likes={props.likes}
                                  dislikes={props.dislikes}/>
