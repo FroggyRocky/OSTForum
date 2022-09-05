@@ -13,7 +13,6 @@ export interface IComments {
     createdAt: string,
     user: IUser // comment creator
 }
-
 export interface IArticlesPreview {
     id: number,
     header: string,

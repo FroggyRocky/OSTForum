@@ -3,6 +3,8 @@ import * as React from 'react';
 import {IoSearch} from 'react-icons/io5'
 import {Flex} from "../commonStyles/Flex.styled";
 import styled from "styled-components";
+import {ReactComponent as Close} from "../../assets/closeBurger.svg";
+
 
 const Container = styled(Flex)`
 
@@ -29,17 +31,33 @@ border: none;
     outline: none;
   }
 `
+interface PropsBase {
 
-type Props = {
-    
-};
+}
+interface MobileProps extends PropsBase {
+    mob:true,
+    onToggleMobSearch:(state:boolean) => void
+}
+interface DesktopProps extends PropsBase {
+    mob?:false,
+    onToggleMobSearch?:(state:boolean) => void
+}
+type Props = MobileProps | DesktopProps
+
+
+
 export const Search = (props: Props) => {
     return (
         <Container>
             <Input type="text" placeholder='Search'/>
-            <IconContainer>
-            <IoSearch/>
-            </IconContainer>
+            {props.mob ?
+                <Close onClick={() => props.onToggleMobSearch(false)}
+                    style={{width: '22px', height: '20px'}}/>
+                :
+                <IconContainer>
+                <IoSearch/>
+                </IconContainer>
+            }
         </Container>
     );
 };

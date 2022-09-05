@@ -1,5 +1,5 @@
 import {AppDispatch} from "../store";
-import {articleSlice, setArticleCreatedState, setArticleCreatingState} from "./articlesSlice";
+import {articleSlice, setArticleCreatedState, setArticleCreatingState, setCommonErr} from "./articlesSlice";
 import articlesAPI from "../../api/articlesAPI";
 import {ICreatedArticle} from "./articleTypes";
 
@@ -20,6 +20,7 @@ export const createArticle = (data: ICreatedArticle) => async (dispatch: AppDisp
         dispatch(setArticleCreatingState(false))
     } else {
         dispatch(setArticleCreatingState(false))
-        dispatch(setArticleCreatedState(false))
+        dispatch(setCommonErr('Something went wrong, try again later'))
     }
 }
+

@@ -6,9 +6,16 @@ import {Pagination} from "../../common/Pagination";
 import {TgButton} from "../../common/TgButton";
 import {useAppSelector} from "../../../redux/hooks/hooks";
 import {useState} from "react";
+import {mediaSizes} from "../../commonStyles/MediaSizes";
 
 const TopicsContainer = styled(Flex)`
   padding: 0 0 41px 0;
+  @media (max-width: ${mediaSizes.mobile}) {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-direction: row;
+  }
 `
 const Topic = styled.span`
   font-family: var(--family-text);
@@ -25,6 +32,14 @@ const Topic = styled.span`
 
   &:nth-child(6) {
     margin-left: 80px;
+  }
+  @media(max-width: ${mediaSizes.mobile}) {
+    &:nth-child(2) {
+      margin: 0 0;
+    }
+    &:nth-child(4), &:nth-child(5), &:nth-child(6) {
+      display: none;
+    }
   }
 `
 
@@ -53,7 +68,7 @@ export const Articles = (props: Props) => {
                     <Topic>Topic 5</Topic>
                     <Topic>Topic 6</Topic>
                 </TopicsContainer>
-                <Flex style={{marginBottom: '50px', position: 'relative'}} gap='30px'>
+                <Flex style={{marginBottom: '50px', position: 'relative'}} gap='30px' id='articles__main'>
                     {articles}
                     <TgButton/>
                 </Flex>

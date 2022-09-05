@@ -1,5 +1,6 @@
 import {createSlice, PayloadAction} from '@reduxjs/toolkit'
-import {IArticle, IArticlesPreview, ICreatedArticle} from "./articleTypes";
+import {IArticle, IArticlesPreview, IComments, ICreatedArticle} from "./articleTypes";
+
 
 
 const initialState = {
@@ -7,7 +8,9 @@ const initialState = {
     currentArticle: null as IArticle | null,
     createdArticle: {},
     isArticleCreating: false,
-    isArticleCreated: undefined as boolean | undefined
+    isArticleCreated: false as boolean,
+    isCommentPublishing:false as boolean,
+    commonError:'' as string
 }
 
 export const articleSlice = createSlice({
@@ -23,13 +26,20 @@ export const articleSlice = createSlice({
         setArticleCreatingState(state, action: PayloadAction<boolean>) {
             state.isArticleCreating = action.payload
         },
-        setArticleCreatedState(state, action: PayloadAction<boolean | undefined>) {
+        setArticleCreatedState(state, action: PayloadAction<boolean>) {
             state.isArticleCreated = action.payload
+        },
+        setCommonErr(state, action: PayloadAction<string>) {
+            state.commonError = action.payload
         },
         setCreatedArticle(state, action: PayloadAction<ICreatedArticle>) {
             state.createdArticle = action.payload
+        },
+        updateArticleComments(state,action:PayloadAction<Array<IComments>>) {
+            if(!state.currentArticle) return
+                state.currentArticle.comments = action.payload
         }
     }
 })
 
-export const {setArticleCreatedState, setArticleCreatingState} = articleSlice.actions
+export const {setArticleCreatedState, setArticleCreatingState, setCommonErr, updateArticleComments} = articleSlice.actions

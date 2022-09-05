@@ -1,18 +1,21 @@
-import {combineReducers, configureStore} from '@reduxjs/toolkit'
+import {combineReducers, configureStore, getDefaultMiddleware} from '@reduxjs/toolkit'
 import {articleSlice} from './articles/articlesSlice'
 import {userSlice} from './user/userSlice'
 import {currentCreatedArticle} from "./currentEditedArticle/currentEditedArticleSlice";
 import {authSlice} from "./auth/authSlice";
+import {commentsAPI} from "../api/commentsAPI";
 
 const rootReducer = combineReducers({
     articles: articleSlice.reducer,
     user:userSlice.reducer,
     currentEditedArticle:currentCreatedArticle.reducer,
-    auth:authSlice.reducer
+    auth:authSlice.reducer,
+    [commentsAPI.reducerPath]:commentsAPI.reducer
 })
 
 export const store = configureStore({
-    reducer: rootReducer
+    reducer: rootReducer,
+    middleware:(getDefaultMiddleware) => getDefaultMiddleware().concat(commentsAPI.middleware)
 })
 
 export type RootState = ReturnType<typeof store.getState>

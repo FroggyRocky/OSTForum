@@ -1,6 +1,5 @@
 const express = require('express');
 const app = express();
-const PORT = 3001
 const db = require('./dbconnetction')
 const dbmodel = require('./dbmodel')
 const morgan = require('morgan')
@@ -32,10 +31,10 @@ app.use('/api', authRouter);
 app.use('/api', userRouter)
 app.use('/api', s3Router)
 
- // db.sync({alter:true});
+//  db.sync({alter:true});
  // db.sync({force:true})
 
-
+const PORT = 3001
 app.listen(PORT, () => {
     console.log('Server is running on the port ' + PORT)
 })

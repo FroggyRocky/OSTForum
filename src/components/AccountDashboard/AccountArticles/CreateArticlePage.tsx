@@ -1,5 +1,5 @@
 import {createContext, useRef, useState} from "react";
-import {H1} from '../../commonStyles/h1.styled'
+import {H1} from '../../commonStyles/H1.styled'
 import {useFormik, Form as FormikForm} from "formik";
 import {ArticleEditor} from "../ArticleEditor/ArticleEditor";
 import styled, {css} from "styled-components";
@@ -13,7 +13,7 @@ import {useAppDispatch, useAppSelector} from "../../../redux/hooks/hooks";
 import articlesAPI from "../../../api/articlesAPI";
 import {AiOutlineClose} from "react-icons/ai";
 import {ModalWindow} from "../../common/ModalWindow";
-import {setArticleCreatedState, setArticleCreatingState} from "../../../redux/articles/articlesSlice";
+import {setArticleCreatedState, setArticleCreatingState, setCommonErr} from "../../../redux/articles/articlesSlice";
 import {createArticle} from "../../../redux/articles/articlesThunks";
 import * as Yup from 'yup';
 
@@ -137,6 +137,7 @@ const [editorState, setEditorState] = useState(
         () => EditorState.createEmpty(),
     );
     const isArticleCreated = useAppSelector(state => state.articles.isArticleCreated)
+    const err = useAppSelector(state => state.articles.commonError)
     const dispatch = useAppDispatch()
 
     const fileInputRef = useRef() as React.MutableRefObject<HTMLInputElement>;
@@ -240,14 +241,16 @@ const [editorState, setEditorState] = useState(
     }
 
     function closeModal() {
-        dispatch(setArticleCreatedState(undefined))
+        dispatch(setArticleCreatedState(false))
     }
-
+function closeErrModal() {
+        dispatch(setCommonErr(''))
+}
     return <>
         {isArticleCreated === true && <ModalWindow smallModal={true} closeModal={closeModal} header={'Success'}
                                                    text='Article successfully created'/>}
-        {isArticleCreated === false && <ModalWindow smallModal={true} closeModal={closeModal} header={'Failure'}
-                                                    text={'Something went wrong, article wasn\'t created'}/>}
+        {err && <ModalWindow smallModal={true} closeModal={closeErrModal} header={'Failure'}
+                                                    text={err}/>}
         <Content style={{padding: '60px 0'}}>
             <H1 style={{textAlign: 'center'}}>Add new articles</H1>
 

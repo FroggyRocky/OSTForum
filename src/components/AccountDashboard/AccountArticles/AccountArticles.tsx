@@ -1,4 +1,4 @@
-import {H1} from '../../commonStyles/h1.styled'
+import {H1} from '../../commonStyles/H1.styled'
 import styled from 'styled-components'
 import {IoDocumentText} from "react-icons/io5";
 import {Flex} from "../../commonStyles/Flex.styled";

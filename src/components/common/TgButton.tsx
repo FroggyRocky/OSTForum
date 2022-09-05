@@ -1,6 +1,7 @@
 import {FaTelegramPlane} from "react-icons/fa";
 import styled from "styled-components";
 import {Flex} from "../commonStyles/Flex.styled";
+import {mediaSizes} from "../commonStyles/MediaSizes";
 
 
 const TelegramLinkContainer = styled(Flex)`
@@ -16,6 +17,9 @@ position: absolute;
     text-align: center;
     text-transform: uppercase;
     color: #58649C
+  }
+  @media(max-width: ${mediaSizes.mobile}) {
+    display: none;
   }
 `
 const TelegramButton = styled.button`

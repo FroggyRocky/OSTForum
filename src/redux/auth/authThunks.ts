@@ -11,7 +11,6 @@ export const loginUser = (data: IUserLogin) => async (dispatch: AppDispatch) => 
         dispatch(fetchAccountData())
         dispatch(authSlice.actions.setAuthState(true))
     } else {
-        console.log(res)
         dispatch(authSlice.actions.setLoginErr(``))
         dispatch(authSlice.actions.setAuthState(false))
     }

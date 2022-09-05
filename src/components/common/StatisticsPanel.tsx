@@ -1,6 +1,7 @@
 import {Flex} from "../commonStyles/Flex.styled";
 import {IoArrowRedo, IoChatbubbleEllipsesSharp, IoEyeSharp, IoThumbsDown, IoThumbsUp} from "react-icons/io5";
 import styled from "styled-components";
+import {mediaSizes} from "../commonStyles/MediaSizes";
 
 
 
@@ -13,6 +14,14 @@ const StatIndex = styled(Flex)`
 
   &:nth-child(4) {
     margin:0 15px;
+  }
+  @media (max-width: ${mediaSizes.mobile}) {
+    font-family: var(--family-text);
+    font-style: normal;
+    font-weight: 400;
+    font-size: 9px;
+    line-height: 9px;
+    color: #58649C;
   }
 `
 

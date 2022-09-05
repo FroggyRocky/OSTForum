@@ -1,5 +1,6 @@
 
 import styled from "styled-components";
+import {mediaSizes} from "../commonStyles/MediaSizes";
 
 const HeaderContainer = styled.div`
   width: 100%;
@@ -16,6 +17,12 @@ const HeaderBg = styled.div<{ image?: string }>`
   background-repeat: no-repeat;
   position: relative;
   border-radius: 20px 20px 0 0;
+  @media(max-width: ${mediaSizes.mobile}) {
+    height: 142px;
+    width:100%;
+    background-size: cover;
+    background-position: top left;
+  }
 `
 const ImageBackDrop = styled.div`
 width: 100%;
@@ -34,11 +41,26 @@ const Header = styled.div`
   line-height: 90px;
   text-shadow: 0px 4px 5px rgba(0, 0, 0, 0.25);
   padding: 20px;
+  @media(max-width: ${mediaSizes.mobile}) {
+    font-weight: 700;
+    font-size: 25px;
+    line-height: 26px;
+    padding: 10px;
+  }
+  
 `
 const Description = styled.p`
+  font-family:var(--family-text);
 background-color: white;
   padding: 20px;
   border-radius: 0 0 15px 15px;
+  @media(max-width: ${mediaSizes.mobile}) {
+    font-style: normal;
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 16px;
+    color: #272727;
+  }
 `
 
 type Props = {

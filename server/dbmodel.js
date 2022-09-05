@@ -30,10 +30,16 @@ const Comments = db.define('comments', {
 
 const Users = db.define('users', {
     name:DataTypes.STRING(50),
+    login:DataTypes.STRING(50),
     password:DataTypes.STRING(60),
     avatar:DataTypes.STRING,
 }, {
     timestamps: false,
+    scopes: {
+        withoutSecretData: {
+            attributes: { exclude: ['password', 'login'] },
+        }
+    }
 })
 
 //article's topics
