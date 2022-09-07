@@ -48,8 +48,9 @@ width: 110px;
   border: none;
   box-shadow: inset -10px 0px 44px -35px #AD9C9D;
   border-radius: 50px;
-  position: relative;
+  position: absolute;
   z-index: 5;
+  bottom: 5%;
   @media (max-width: ${mediaSizes.mobile}) {
     width: 50px;
     position: absolute;
@@ -70,6 +71,7 @@ align-items: center;
   justify-content: center;
   position: relative;
   z-index: 5;
+  cursor: pointer;
   @media (max-width: ${mediaSizes.mobile}) {
     width: 48px;
     height: 48px;

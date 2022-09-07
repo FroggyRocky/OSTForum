@@ -13,7 +13,7 @@ import {useAppDispatch, useAppSelector} from "../../redux/hooks/hooks";
 import {fetchCurrentArticle} from "../../redux/articles/articlesThunks";
 import {IArticle} from "../../redux/articles/articleTypes";
 import {Loader} from "../common/Loader";
-import {calcDate} from "../common/services/calcDate";
+import {calcDate} from "../../services/calcDate";
 import defaultCover from "../../assets/ArticleCardBg.png";
 import {mediaSizes} from "../commonStyles/MediaSizes";
 

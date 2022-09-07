@@ -5,7 +5,7 @@ import inst from '../../../assets/instFlag.png';
 import fb from '../../../assets/instFlag.png';
 import {StatisticsPanel} from "../../common/StatisticsPanel";
 import {NavLink} from "react-router-dom";
-import {calcDate} from "../../common/services/calcDate";
+import {calcDate} from "../../../services/calcDate";
 import {mediaSizes} from "../../commonStyles/MediaSizes";
 
 type CardImage = {
@@ -16,6 +16,7 @@ const Container = styled.div`
   background-color: white;
   border-radius: 15px;
   width: 570px;
+  height: 449px;
   @media (max-width: ${mediaSizes.mobile}) {
     width: 100%;
     flex-shrink: 0;
@@ -43,7 +44,7 @@ padding: 10px;
   
 `
 const Text = styled.div`
-  max-width: 486px;
+  word-wrap: break-word;
 
   & h1 {
     font-family: var(--family-text);

@@ -31,7 +31,7 @@ app.use('/api', authRouter);
 app.use('/api', userRouter)
 app.use('/api', s3Router)
 
-//  db.sync({alter:true});
+// db.sync({alter:true});
  // db.sync({force:true})
 
 const PORT = 3001

@@ -4,7 +4,7 @@ const {DataTypes} = require("sequelize");
 const Articles = db.define('articles', {
     header:DataTypes.TEXT,
     text:DataTypes.TEXT,
-    description:DataTypes.STRING(100),
+    description:DataTypes.STRING,
     mainImg:DataTypes.STRING,
     usersLiked: {
         type:DataTypes.ARRAY(DataTypes.INTEGER),

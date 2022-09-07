@@ -1,145 +1,37 @@
 import {createContext, useRef, useState} from "react";
 import {H1} from '../../commonStyles/H1.styled'
-import {useFormik, Form as FormikForm} from "formik";
+import {useFormik} from "formik";
 import {ArticleEditor} from "../ArticleEditor/ArticleEditor";
-import styled, {css} from "styled-components";
 import {Content} from "../../commonStyles/Content.styled";
 import {FaFileImage} from "react-icons/fa";
 import {BsFillCheckCircleFill} from "react-icons/bs";
 import {convertToHTML} from 'draft-convert';
 import {AtomicBlockUtils, convertToRaw, EditorState} from "draft-js";
-import {Flex} from "../../commonStyles/Flex.styled";
 import {useAppDispatch, useAppSelector} from "../../../redux/hooks/hooks";
 import articlesAPI from "../../../api/articlesAPI";
 import {AiOutlineClose} from "react-icons/ai";
 import {ModalWindow} from "../../common/ModalWindow";
 import {setArticleCreatedState, setArticleCreatingState, setCommonErr} from "../../../redux/articles/articlesSlice";
 import {createArticle} from "../../../redux/articles/articlesThunks";
+import {AddArticleButton, AddImgBtn, BreakingLine, Form, Input, TextArea} from './createArticle.styles'
+import {useClickOutside} from "../../../services/useClickOutside";
 import * as Yup from 'yup';
-
+import {RichUtils} from 'draft-js'
 
 export const CreateArticlePageContext = createContext<any>('')
 
-const BreakingLine = styled.hr`
-  width: 100%;
-  border: 1px solid #58649C;
-  position: absolute;
-  align-self: start;
-`
-const Form = styled.form`
-  display: flex;
-  flex-direction: column;
-  gap: 30px;
-  margin-top: 60px;
-`
-const Input = styled.input`
-  background: rgba(255, 255, 255, 0.3);
-  box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.15);
-  border-radius: 10px;
-  border: none;
-  font-family: var(--family-text);
-  height: 84px;
-  color: #525252;
-  font-size: 30px;
-  line-height: 29px;
-  font-weight: 700;
-  display: block;
-  width: 100%;
-  padding: 30px;
-
-  &:focus {
-    outline: none;
-  }
-`
-const TextArea = styled.textarea`
-  background: rgba(255, 255, 255, 0.3);
-  box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.15);
-  border-radius: 10px;
-  border: none;
-  font-family: var(--family-text);
-  height: 240px;
-  color: #272727;
-  font-size: 25px;
-  line-height: 35px;
-  font-weight: 400;
-  display: block;
-  width: 100%;
-  padding: 30px;
-  resize: none;
-
-  &:focus {
-    outline: none;
-  }
-`
-const AddImgBtn = styled(Flex)<{ imgSrc: string }>`
-  height: 253px;
-  border: none;
-  background: rgba(255, 255, 255, 0.3);
-  box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.15);
-  border-radius: 15px;
-  color: #525252;
-  position: relative;
-
-  ${({imgSrc}) => imgSrc && css`
-    background-image: url(${imgSrc});
-    background-repeat: no-repeat;
-    background-size: cover;
-    width: 1170px;
-    height: 439px;
-    margin: auto auto;
-    align-self: center;
-    background-position: center;
-  `}
-  & > p {
-    opacity: 0.5;
-    font-weight: 400;
-    font-family: var(--family-text);
-  }
-
-  & p:nth-child(3) {
-    font-size: 25px;
-    line-height: 24px;
-    text-transform: uppercase;
-    margin: 30px 0 10px 0;
-  }
-
-  & p:nth-child(4) {
-    font-size: 20px;
-    line-height: 19px;
-  }
-`
-const AddArticleButton = styled.button`
-  width: 100%;
-  height: 244px;
-  background: rgba(255, 255, 255, 0.3);
-  box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.15);
-  border-radius: 15px;
-  border: none;
-  margin: 0px 0 60px 0;
-
-  & > p {
-    font-family: var(--family-text);
-    font-weight: 400;
-    font-size: 25px;
-    line-height: 24px;
-    text-transform: uppercase;
-    color: #58649C;
-    opacity: 0.5;
-    margin-top: 18px;
-  }
-`
 
 type Props = {};
 
-export function CreateArticlePage(props:Props) {
+export function CreateArticlePage(props: Props) {
 
-const [editorState, setEditorState] = useState(
+    const [editorState, setEditorState] = useState(
         () => EditorState.createEmpty(),
     );
     const isArticleCreated = useAppSelector(state => state.articles.isArticleCreated)
     const err = useAppSelector(state => state.articles.commonError)
     const dispatch = useAppDispatch()
-
+    const [isAddLinkInputOpen, setAddLinkInputState] = useState(false)
     const fileInputRef = useRef() as React.MutableRefObject<HTMLInputElement>;
 
     const CreateArticleSchema = Yup.object().shape({
@@ -158,7 +50,8 @@ const [editorState, setEditorState] = useState(
                 file: '',
                 src: ''
             },
-            text: ''
+            text: '',
+            hyperLink: '',
         },
         validationSchema: CreateArticleSchema,
         onSubmit: values => {
@@ -166,6 +59,57 @@ const [editorState, setEditorState] = useState(
         }
     })
 
+    function onAddLink(e:any) {
+        e.preventDefault()
+        formik.setFieldValue('hyperLink', '')
+        const selection = editorState.getSelection();
+        if (!selection.isCollapsed()) {
+            setAddLinkInputState(true);
+            const contentState = editorState.getCurrentContent();
+            const startKey = editorState.getSelection().getStartKey();
+            const startOffset = editorState.getSelection().getStartOffset();
+            const blockWithLinkAtBeginning = contentState.getBlockForKey(startKey);
+            const linkKey = blockWithLinkAtBeginning.getEntityAt(startOffset);
+            if (linkKey) {
+                const linkInstance = contentState.getEntity(linkKey);
+                const url = linkInstance.getData().url;
+                formik.setFieldValue('hyperLink', url)
+            }
+        } else {
+            setAddLinkInputState(false)
+        }
+    }
+
+    function confirmLink() {
+        const {hyperLink} = formik.values
+        const contentState = editorState.getCurrentContent();
+        const contentStateWithEntity = contentState.createEntity(
+            "LINK",
+            "MUTABLE",
+            { url: hyperLink }
+        );
+         const entityKey = contentStateWithEntity.getLastCreatedEntityKey();
+        let nextEditorState = EditorState.set(editorState, {
+            currentContent: contentStateWithEntity
+        });
+        nextEditorState = RichUtils.toggleLink(
+            nextEditorState,
+            nextEditorState.getSelection(),
+            entityKey
+        );
+        setEditorState(nextEditorState);
+        formik.setFieldValue('hyperLink', '')
+        setAddLinkInputState(false)
+    }
+    function removeLink() {
+        const selection = editorState.getSelection();
+        if (!selection.isCollapsed()) {
+            const newState = RichUtils.toggleLink(editorState, selection, null);
+            setEditorState(newState)
+            formik.setFieldValue('hyperLink', '')
+        }
+        setAddLinkInputState(false)
+    }
     async function onAddArticle() {
         dispatch(setArticleCreatingState(true))
         const {header, description, mainImg, category} = formik.values
@@ -184,7 +128,6 @@ const [editorState, setEditorState] = useState(
             const s3 = await articlesAPI.uploadImage(fd)
             entityKeys[key].data.src = s3.data
         }
-
         const html = convertToHTML({
             entityToHTML: (entity, originalText) => {
                 if (entity.type === 'IMAGE') {
@@ -243,14 +186,16 @@ const [editorState, setEditorState] = useState(
     function closeModal() {
         dispatch(setArticleCreatedState(false))
     }
-function closeErrModal() {
+
+    function closeErrModal() {
         dispatch(setCommonErr(''))
-}
+    }
+
     return <>
         {isArticleCreated === true && <ModalWindow smallModal={true} closeModal={closeModal} header={'Success'}
                                                    text='Article successfully created'/>}
         {err && <ModalWindow smallModal={true} closeModal={closeErrModal} header={'Failure'}
-                                                    text={err}/>}
+                             text={err}/>}
         <Content style={{padding: '60px 0'}}>
             <H1 style={{textAlign: 'center'}}>Add new articles</H1>
 
@@ -279,7 +224,8 @@ function closeErrModal() {
         </Content>
         <BreakingLine/>
         <Content>
-            <CreateArticlePageContext.Provider value={{onAddImg: onAddImg}}>
+            <CreateArticlePageContext.Provider
+                value={{onAddImg, onAddLink, confirmLink, isAddLinkInputOpen, setAddLinkInputState, removeLink}}>
                 <ArticleEditor formik={formik} editorState={editorState} setEditorState={setEditorState}/>
             </CreateArticlePageContext.Provider>
             <AddArticleButton onClick={onAddArticle}>

@@ -4,7 +4,7 @@ import avatarEx from '../../assets/avatarEx.png'
 import {Flex} from "../commonStyles/Flex.styled";
 import {IComments} from "../../redux/articles/articleTypes";
 import {mediaSizes} from "../commonStyles/MediaSizes";
-import {calcDate} from "../common/services/calcDate";
+import {calcDate} from "../../services/calcDate";
 import {ActionPanel} from "../common/ActionPanel";
 import {AiOutlineClose} from "react-icons/ai";
 import {useFormik} from "formik";

@@ -1,19 +1,38 @@
 import {createContext, useEffect} from 'react'
-import { RichUtils} from 'draft-js';
+import Draft, { RichUtils, CompositeDecorator} from 'draft-js';
 import 'draft-js/dist/Draft.css'
-import {EditorPanel, } from "./EditorPanel";
+
+import {EditorPanel} from "./EditorPanel";
 import Editor from '@draft-js-plugins/editor';
 import createImagePlugin from '@draft-js-plugins/image';
 import './textareaEditor.css'
-import styled from "styled-components";
-import {Formik, FormikProps} from "formik";
+
+
 
 const imagePlugin = createImagePlugin();
-const EditorWrapper = styled.div`
 
-`
+function findLinkEntities(contentBlock:any, callback:any, contentState:any) {
+    contentBlock.findEntityRanges(
+        (character:any) => {
+            const entityKey = character.getEntity();
+            return (
+                entityKey !== null &&
+                contentState.getEntity(entityKey).getType() === 'LINK'
+            );
+        },
+        callback
+    );
+}
 
 
+const Link = (props:any) => {
+    const {url} = props.contentState.getEntity(props.entityKey).getData();
+    return (
+        <a className={'hyperLink'} href={url} target={'_blank'}>
+            {props.children}
+        </a>
+    );
+};
 
 export const ArticleEditorContext = createContext<any>({})
 type Props = {
@@ -27,7 +46,12 @@ type Props = {
 export const ArticleEditor = (props: Props) => {
 
 
-
+    const decorators = new CompositeDecorator([
+        {
+            strategy: findLinkEntities,
+            component: Link
+        }
+    ]);
 
 
     function onChange(editorState: any) {
@@ -44,8 +68,8 @@ export const ArticleEditor = (props: Props) => {
         <ArticleEditorContext.Provider value={{onPanelToggle}}>
             <EditorPanel editorState={props.editorState}  formik={props.formik} />
         </ArticleEditorContext.Provider>
-        <EditorWrapper>
-        <Editor plugins={[imagePlugin]} editorState={props.editorState} onChange={onChange}/>
-        </EditorWrapper>
+        <div>
+        <Editor decorators={[decorators]} plugins={[imagePlugin]} editorState={props.editorState} onChange={onChange}/>
+        </div>
     </div>
 };

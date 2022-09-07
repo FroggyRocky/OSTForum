@@ -1,14 +1,14 @@
 import styled from "styled-components";
 import {Header} from "../Header/Header";
 import {Main} from "./Main/Main";
+import flipboardSVG from '../../assets/Flipboard.svg'
+import lampSVG from '../../assets/Lamp.svg'
+import lampMob from '../../assets/lampMob.png'
+import flipboardMob from '../../assets/flipboardMob.png'
 import curtainLeft from '../../assets/curtainLeft.png'
 import curtainRight from '../../assets/curtainRight.png'
 import curtainLeftMob from '../../assets/curtainLeftMob.png'
 import curtainRightMob from '../../assets/curtainRightMob.png'
-import flipboard from '../../assets/flipboard.png'
-import lamp from '../../assets/lamp.png'
-import lampMob from '../../assets/lampMob.png'
-import flipboardMob from '../../assets/flipboardMob.png'
 import {Image} from "../commonStyles/Image.styled";
 import {Articles} from "./Articles/Articles";
 import {Wrapper} from "../commonStyles/Wrapper.styled";
@@ -28,6 +28,7 @@ const CurtainLeft = styled(Image)`
   z-index:5;
   left: 0;
   top: 0;
+  height: 100%;
  
 @media(max-width: ${mediaSizes.laptop}) {
   background: #D9E3EC;
@@ -45,6 +46,7 @@ const CurtainRight = styled(Image)`
   position:absolute;
   z-index:5;
   right:0;
+  height: 100%;
   @media(max-width: ${mediaSizes.laptop}) {
     z-index: 1;
     background: #D9E3EC;
@@ -60,6 +62,7 @@ const CurtainLeftMob = styled(Image)`
   z-index:5;
   left: 0;
   top: 0;
+  height: 100%;
   display: none;
   @media (max-width: ${mediaSizes.laptop}) {
     display: block;
@@ -71,6 +74,7 @@ const CurtainRightMob = styled(Image)`
   position:absolute;
   z-index:5;
   right:0;
+  height: 100%;
   display: none;
   @media (max-width: ${mediaSizes.laptop}) {
     display: block;
@@ -82,7 +86,7 @@ const Lamp = styled(Image)`
   pointer-events:none;
   position:absolute;
   z-index:10;
-  bottom:0; 
+  bottom:0;
   right:0;
   @media (max-width: ${mediaSizes.laptop}) {
     display: none;
@@ -102,7 +106,7 @@ display: none;
 const Flipboard = styled(Image)`
   pointer-events:none;
   position:absolute;
-  z-index:10; 
+  z-index:10;
   bottom:0;
   @media (max-width: ${mediaSizes.laptop}) { 
     display: none;
@@ -134,10 +138,10 @@ export const Landing = (props: Props) => {
             <CurtainLeftMob src={curtainLeftMob} alt='curtainLeftMobile' />
             <CurtainRight src={curtainRight} alt='curtain2'/>
             <CurtainRightMob src={curtainRightMob} alt='curtainRightMobile' />
-            <Flipboard src={flipboard} alt='flipboard'/>
+            <Flipboard src={flipboardSVG} alt='flipboard'/>
             <FlipboardMob src={flipboardMob} alt='mobile-flipboard'/>
             <LampMob src={lampMob} alt='mobile_lamp' />
-            <Lamp src={lamp} alt='lamp' />
+            <Lamp src={lampSVG} alt='lamp' />
             <Header/>
             <Main/>
         </FirstPageWrapper>

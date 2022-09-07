@@ -208,9 +208,9 @@ export function Header(props: Props) {
                 <span>Knowledge</span>
                 <span>Vacancies</span>
             </Navigation>
-            {path !== 'dashboard' && <SearchContainer>
-                <Search/>
-            </SearchContainer>}
+            {/*{path !== 'dashboard' && <SearchContainer>*/}
+            {/*    <Search/>*/}
+            {/*</SearchContainer>}*/}
             <Flex justifyContent='space-between'>
                 <ActionPanelMob>
                     {!isMobSearchOpen &&
@@ -218,15 +218,15 @@ export function Header(props: Props) {
                             <FaTelegramPlane size={15} color='white'/>
                         </TelegramButton>
                     }
-                    <MobileSearch>
-                        {isMobSearchOpen ?
-                            <Search mob={true} onToggleMobSearch={onToggleMobSearch}/>
-                            :
-                            <SearchButton onClick={() => onToggleMobSearch(true)}>
-                                <GoSearch size={15} color='white'/>
-                            </SearchButton>
-                        }
-                    </MobileSearch>
+                    {/*<MobileSearch>*/}
+                    {/*    {isMobSearchOpen ?*/}
+                    {/*        <Search mob={true} onToggleMobSearch={onToggleMobSearch}/>*/}
+                    {/*        :*/}
+                    {/*        <SearchButton onClick={() => onToggleMobSearch(true)}>*/}
+                    {/*            <GoSearch size={15} color='white'/>*/}
+                    {/*        </SearchButton>*/}
+                    {/*    }*/}
+                    {/*</MobileSearch>*/}
                     {(!isMobNavigationPanelOpen && !isMobSearchOpen) &&
                         <MenuBurger onClick={() => onToggleMobileNavigationPanel(true)}/>}
                     {isMobNavigationPanelOpen && <>
@@ -253,7 +253,7 @@ export function Header(props: Props) {
                     }
                 </ActionPanelMob>
                 <UsersWidgets>
-                {path === 'dashboard' && <DashboardWidgets/>}
+                {/*{path === 'dashboard' && <DashboardWidgets/>}*/}
                 <AvatarContainer>
                     {isAuth && <Link to={`/dashboard`}><Avatar avatar={user.avatar}/></Link>}
                 </AvatarContainer>
