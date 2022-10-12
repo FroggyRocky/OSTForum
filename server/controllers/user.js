@@ -5,7 +5,6 @@ class User {
     async getAccountData(req, res) {
         try {
             const accountId = req.accountId
-            console.log(accountId)
             const accountData = await db.Users.findByPk(accountId, {
                 attributes: {exclude: ['password']},
                 include: [{

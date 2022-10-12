@@ -21,13 +21,16 @@ useEffect(() => {
     dispatch(auth())
 }, [])
 
+
+
+
 if(!isInitialized) return <Loader/>
     return (
         <div className="App">
             <Routes>
                 <Route exact index path='/' element={<Landing/>}/>
                 <Route path='/article' element={<Layout/>}>
-                    <Route path=':id' element={<Article/>}/>
+                    <Route path=':header' element={<Article/>}/>
                 </Route>
                 <Route path='' element={<Layout/>}>
                     <Route path='/affiliate' element={<Affiliate/>}/>

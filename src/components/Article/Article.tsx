@@ -16,6 +16,9 @@ import {Loader} from "../common/Loader";
 import {calcDate} from "../../services/calcDate";
 import defaultCover from "../../assets/ArticleCardBg.png";
 import {mediaSizes} from "../commonStyles/MediaSizes";
+import { useLocation } from 'react-router-dom';
+import {PathWidget} from "../common/PathWidget";
+import * as DOMPurify from 'dompurify';
 
 const StyledPath = styled.div`
   font-family: var(--family-text);
@@ -57,7 +60,11 @@ const ContentWidget = styled(Flex)`
     line-height: 9px;
     color: #58649C;
   }
-
+`
+const PathWidgetContainer = styled.div`
+  @media (max-width: ${mediaSizes.mobile}) {
+    display: none;
+  }
 `
 const Date = styled(Flex)`
   @media (max-width: ${mediaSizes.mobile}) {
@@ -78,11 +85,12 @@ export const Article = (props: Props) => {
     const currentArticle: IArticle | null = useAppSelector(state => state.articles.currentArticle)
     const isAuth = useAppSelector(state => state.auth.isAuth)
     const userData = useAppSelector(state => state.user.user)
-
-    const {id} = useParams()
+    const location = useLocation()
+    const historyState = location.state as Array<{pathName:string,path:string}>
+    const {header} = useParams()
     useEffect(() => {
-        if (id) {
-            dispatch(fetchCurrentArticle(+id))
+        if (header) {
+            dispatch(fetchCurrentArticle(header))
         }
     }, [])
 
@@ -90,27 +98,29 @@ export const Article = (props: Props) => {
         {
             currentArticle ? <Content>
                     <StyledPath>
-                        <p><Link to='/'> Home </Link>{' > '}<Link to='/'> Articles </Link> {' > '} Article's Header</p>
+                        <PathWidgetContainer>
+                        <PathWidget historyPath={historyState} targetPath={currentArticle.header} />
+                        </PathWidgetContainer>
                         <Date>
-                            <IoTimeOutline size={15} style={{marginRight: '5px'}}/>{calcDate(currentArticle.createdAt)} ago
+                            <IoTimeOutline size={15} style={{marginRight: '5px'}}/>{calcDate(currentArticle.createdAt)}
                         </Date>
                     </StyledPath>
                     <ArticleHeader header={currentArticle.header} description={currentArticle.description}
-                                   articleCoverImg={currentArticle.mainImg || defaultCover}/>
+                                   articleCoverImg={currentArticle.mainImg || defaultCover} />
                     <ContentWidget>
                         {/*<span>Content</span>*/}
                         {/*<IoChevronDown/>*/}
                         <DateMob>
-                            <IoTimeOutline size={10} style={{marginRight: '5px'}}/>{calcDate(currentArticle.createdAt)} ago
+                            <IoTimeOutline size={10} style={{marginRight: '5px'}}/>{calcDate(currentArticle.createdAt)}
                         </DateMob>
                     </ContentWidget>
-                    <ArticleText text={currentArticle.text}/>
+                    <ArticleText text={DOMPurify.sanitize(currentArticle.text, { USE_PROFILES: { html: true }})} />
                     <ArticleComments userAvatar={userData.avatar} articleId={currentArticle.id} userId={userData.id}
                                      isAuth={isAuth}
                                      views={currentArticle.usersViewed?.length || 0}
                                      likes={currentArticle.usersLiked?.length || 0}
                                      dislikes={currentArticle.usersDisliked?.length || 0}
-                                     commentsData={currentArticle.comments}/>
+                                     commentsData={currentArticle.comments} />
                     <TgButton/>
                 </Content>
                 : <Loader/>

@@ -16,6 +16,7 @@ export interface IComments {
 export interface IArticlesPreview {
     id: number,
     header: string,
+    previewDescription:string,
     description: string,
     mainImg: string,
     keys: Array<string>,
@@ -35,6 +36,7 @@ export interface IArticle extends IArticlesPreview {
 export interface ICreatedArticle {
     header: string,
     description: string,
+    previewDescription:string,
     mainImg: string,
     text: string,
     category: string

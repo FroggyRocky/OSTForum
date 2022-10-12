@@ -93,7 +93,7 @@ export const Footer = (props: Props) => {
                     <StyledIcon/>
                     <LogoText>MY CLICK</LogoText>
                 </Flex>
-                    <p>Slogan of the company</p>
+                    <p>Clicking with result</p>
         </StyledLogo>
             <LinksContainer gap='70px' alignItems='start' >
             <StyledUl>

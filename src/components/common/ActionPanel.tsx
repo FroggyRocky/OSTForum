@@ -7,9 +7,13 @@ const Action = styled(Flex)<{ color: string }>`
   display: flex;
   align-items: center;
   color: #58649C;
-
   &:hover {
-    color: ${({color}) => color}
+   & {
+     color: ${({color}) => color}
+   }
+    & > span {
+      color: ${({color}) => color}
+    }
   }
 
   & span {
@@ -20,9 +24,6 @@ const Action = styled(Flex)<{ color: string }>`
     line-height: 15px;
     color: #58649C;
     margin-left: 5px;
-    &:hover {
-      color: ${({color}) => color}
-    }
     @media (max-width: ${mediaSizes.mobile}) {
       font-size: 9px;
       line-height: 9px;
@@ -78,11 +79,11 @@ type Props = {
 };
 export const ActionPanel = (props: Props) => {
     return <Flex>
-        <Action color='#58649C'>
-            <RepostBtn color='#58649C'/>
+        <Action color='#91A0E7'  style={{cursor: 'pointer'}}>
+            <RepostBtn/>
         </Action>
         <Action color='#58649C'>
-            <ViewsBtn color='#58649C'/>
+            <ViewsBtn />
             <span>{props.views}</span>
         </Action>
         <Action color='#6FCB57' style={{cursor: 'pointer'}}>

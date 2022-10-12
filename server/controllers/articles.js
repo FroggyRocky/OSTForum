@@ -18,8 +18,11 @@ class Articles {
     }
     async getArticle(req, res) {
         try {
-            const articleId = req.params.id;
-            const article = await db.Articles.findByPk(articleId, {
+            const articleHeader = req.header
+            const article = await db.Articles.findOne({
+                where:{
+                  header:articleHeader
+                },
                 include: [
                     {
                         model: db.Comments,
@@ -48,7 +51,6 @@ class Articles {
     async createArticle(req, res) {
         try {
             const accountId = req.accountId
-            console.log(req.body, accountId)
             const data = {
                 ...req.body,
 
@@ -77,7 +79,6 @@ class Articles {
                             }
                 ]
             })
-            console.log(comments)
             res.status(200).send(comments)
         } catch (e) {
             console.log(e)
@@ -86,6 +87,7 @@ class Articles {
     }
     async deleteComment(req,res) {
         try {
+            console.log(req.accountId)
             const commentId = req.params.id
             await db.Comments.destroy({
                 where: {
@@ -106,6 +108,16 @@ class Articles {
         } catch (e) {
             console.log(e)
             res.sendStatus(500)
+        }
+    }
+    async decodeArticleDestination(req,res,next) {
+        try {
+            const {header} = req.params
+            req.header = decodeURI(header)
+            next()
+        } catch (e) {
+            console.log(e)
+            res.send(400)
         }
     }
 }

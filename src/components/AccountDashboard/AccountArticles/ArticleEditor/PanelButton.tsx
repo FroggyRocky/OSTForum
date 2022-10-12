@@ -2,11 +2,11 @@ import styled, {css} from "styled-components";
 import {useContext, useEffect, useState} from "react";
 import {ArticleEditorContext} from './ArticleEditor'
 import {RichUtils} from 'draft-js'
-import {bool} from "yup";
 
 export const EditorPanelButton = styled.button<{ active?: boolean }>`
   width: 80px;
   height: 50px;
+  cursor: pointer;
   background: rgba(255, 255, 255, 0.3);
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.15);
   border-radius: 10px;
@@ -28,7 +28,7 @@ type Props = {
     id: string
     children?: JSX.Element[] | JSX.Element,
     editorState?: any,
-    active:boolean
+    active: boolean
 };
 
 export const PanelButton = (props: Props) => {
@@ -37,7 +37,7 @@ export const PanelButton = (props: Props) => {
 
     useEffect(() => {
         const currentBlock = RichUtils.getCurrentBlockType(props.editorState)
-        if(currentBlock) {
+        if (currentBlock) {
             setActiveBlockButton(currentBlock)
         }
     }, [RichUtils.getCurrentBlockType(props.editorState)])
@@ -45,10 +45,8 @@ export const PanelButton = (props: Props) => {
     const ArticleEditorProps = useContext(ArticleEditorContext)
 
 
-
-
-
-    return <EditorPanelButton active={activeBlockButton === props.id} onMouseDown={() => ArticleEditorProps.onPanelToggle(props.id)}>
+    return <EditorPanelButton active={activeBlockButton === props.id}
+                              onMouseDown={() => ArticleEditorProps.onPanelToggle(props.id)}>
         {props.label || props.children}
     </EditorPanelButton>
 };

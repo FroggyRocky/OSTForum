@@ -77,6 +77,7 @@ const TelegramButton = styled.button`
   display: flex;
   align-items: center;
   justify-content: center;
+  margin-right: 15px;
 `
 const SearchContainer = styled.div`
   @media (max-width: 1182px) {
@@ -200,13 +201,13 @@ export function Header(props: Props) {
                 </Flex>
             </Link>
             <Navigation justifyContent='space-between' alignItems='center'>
-                <span>Articles</span>
-                <span>Affiliate Programs</span>
-                <span>Network</span>
-                <span>Services</span>
-                <span>Cases</span>
-                <span>Knowledge</span>
-                <span>Vacancies</span>
+                {/*<span>Articles</span>*/}
+                {/*<span>Affiliate Programs</span>*/}
+                {/*<span>Network</span>*/}
+                {/*<span>Services</span>*/}
+                {/*<span>Cases</span>*/}
+                {/*<span>Knowledge</span>*/}
+                {/*<span>Vacancies</span>*/}
             </Navigation>
             {/*{path !== 'dashboard' && <SearchContainer>*/}
             {/*    <Search/>*/}

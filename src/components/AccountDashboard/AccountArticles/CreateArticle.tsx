@@ -1,29 +1,30 @@
 import {createContext, useRef, useState} from "react";
 import {H1} from '../../commonStyles/H1.styled'
 import {useFormik} from "formik";
-import {ArticleEditor} from "../ArticleEditor/ArticleEditor";
+import {ArticleEditor} from "./ArticleEditor/ArticleEditor";
 import {Content} from "../../commonStyles/Content.styled";
 import {FaFileImage} from "react-icons/fa";
 import {BsFillCheckCircleFill} from "react-icons/bs";
 import {convertToHTML} from 'draft-convert';
-import {AtomicBlockUtils, convertToRaw, EditorState} from "draft-js";
+import {AtomicBlockUtils, convertToRaw, EditorState, RichUtils} from "draft-js";
 import {useAppDispatch, useAppSelector} from "../../../redux/hooks/hooks";
 import articlesAPI from "../../../api/articlesAPI";
 import {AiOutlineClose} from "react-icons/ai";
 import {ModalWindow} from "../../common/ModalWindow";
 import {setArticleCreatedState, setArticleCreatingState, setCommonErr} from "../../../redux/articles/articlesSlice";
 import {createArticle} from "../../../redux/articles/articlesThunks";
-import {AddArticleButton, AddImgBtn, BreakingLine, Form, Input, TextArea} from './createArticle.styles'
-import {useClickOutside} from "../../../services/useClickOutside";
+import {AddArticleButton, AddImgBtn, BreakingLine, Form} from './createArticle.styles'
+import {CustomTextAreaWithCounter} from "../../common/Forms/CustomTextAreaWithCounter";
+import {CustomInputWithCounter} from "../../common/Forms/CustomInputWithCounter";
+import {RiImageAddFill} from "react-icons/ri";
 import * as Yup from 'yup';
-import {RichUtils} from 'draft-js'
 
 export const CreateArticlePageContext = createContext<any>('')
 
 
 type Props = {};
 
-export function CreateArticlePage(props: Props) {
+export function CreateArticle(props: Props) {
 
     const [editorState, setEditorState] = useState(
         () => EditorState.createEmpty(),
@@ -33,18 +34,25 @@ export function CreateArticlePage(props: Props) {
     const dispatch = useAppDispatch()
     const [isAddLinkInputOpen, setAddLinkInputState] = useState(false)
     const fileInputRef = useRef() as React.MutableRefObject<HTMLInputElement>;
-
+    const [isAttaching, setImgAttachmentState] = useState(false)
     const CreateArticleSchema = Yup.object().shape({
-        header: Yup.string().required('Required'),
+        header: Yup.string()
+            .min(1)
+            .max(55)
+            .required('Required'),
         category: Yup.string().required('Required'),
-        description: Yup.string().required('Required'),
+        previewDescription: Yup.string().max(95),
+        description: Yup.string()
+            .min(1)
+            .max(240)
+            .required('Required'),
         text: Yup.object().required('Required'),
     })
-
     const formik = useFormik({
         initialValues: {
             header: '',
             description: '',
+            previewDescription: '',
             category: '',
             mainImg: {
                 file: '',
@@ -55,11 +63,11 @@ export function CreateArticlePage(props: Props) {
         },
         validationSchema: CreateArticleSchema,
         onSubmit: values => {
-            console.log(values)
+
         }
     })
 
-    function onAddLink(e:any) {
+    function onAddLink(e: any) {
         e.preventDefault()
         formik.setFieldValue('hyperLink', '')
         const selection = editorState.getSelection();
@@ -86,9 +94,9 @@ export function CreateArticlePage(props: Props) {
         const contentStateWithEntity = contentState.createEntity(
             "LINK",
             "MUTABLE",
-            { url: hyperLink }
+            {url: hyperLink}
         );
-         const entityKey = contentStateWithEntity.getLastCreatedEntityKey();
+        const entityKey = contentStateWithEntity.getLastCreatedEntityKey();
         let nextEditorState = EditorState.set(editorState, {
             currentContent: contentStateWithEntity
         });
@@ -101,6 +109,7 @@ export function CreateArticlePage(props: Props) {
         formik.setFieldValue('hyperLink', '')
         setAddLinkInputState(false)
     }
+
     function removeLink() {
         const selection = editorState.getSelection();
         if (!selection.isCollapsed()) {
@@ -110,9 +119,10 @@ export function CreateArticlePage(props: Props) {
         }
         setAddLinkInputState(false)
     }
+
     async function onAddArticle() {
         dispatch(setArticleCreatingState(true))
-        const {header, description, mainImg, category} = formik.values
+        const {header, description, previewDescription, mainImg, category} = formik.values
         if (mainImg.file) {
             const fd2 = new FormData()
             fd2.append('file', mainImg.file)
@@ -124,7 +134,7 @@ export function CreateArticlePage(props: Props) {
         for (const key in entityKeys) {
             const {file} = entityKeys[key].data
             const fd = new FormData()
-            fd.append('file', file)
+            await fd.append('file', file)
             const s3 = await articlesAPI.uploadImage(fd)
             entityKeys[key].data.src = s3.data
         }
@@ -140,6 +150,7 @@ export function CreateArticlePage(props: Props) {
         const data = {
             header,
             description,
+            previewDescription,
             mainImg: mainImg.src,
             category,
             text: html
@@ -179,32 +190,66 @@ export function CreateArticlePage(props: Props) {
     function deleteMainImg() {
         setTimeout(() => {
             formik.setFieldValue('mainImg', {src: '', file: ''})
+            setImgAttachmentState(false)
         }, 0)
 
     }
 
     function closeModal() {
+        formik.resetForm()
         dispatch(setArticleCreatedState(false))
+        setEditorState(() => EditorState.createEmpty())
+
     }
 
     function closeErrModal() {
         dispatch(setCommonErr(''))
+    }
+function imgDrop(e:any) {e.preventDefault()
+    let imgFile = e.dataTransfer.files[0]
+    if(imgFile) {
+        const reader = new FileReader()
+        reader.readAsDataURL(imgFile)
+        reader.onload = () => {
+            formik.setFieldValue('mainImg', {src: reader.result, file: imgFile})
+        }
+    }
+}
+function dragLeave(e:any) {
+        e.preventDefault()
+    setImgAttachmentState(false)
+    }
+    function dragOver(e:any) {
+        e.preventDefault()
+    }
+    function dragEnter(e:any) {
+        e.preventDefault()
+        setImgAttachmentState(true)
     }
 
     return <>
         {isArticleCreated === true && <ModalWindow smallModal={true} closeModal={closeModal} header={'Success'}
                                                    text='Article successfully created'/>}
         {err && <ModalWindow smallModal={true} closeModal={closeErrModal} header={'Failure'}
-                             text={err}/>}
+                             text={err} />}
         <Content style={{padding: '60px 0'}}>
             <H1 style={{textAlign: 'center'}}>Add new articles</H1>
-
             <Form>
-                <Input name='header' onChange={formik.handleChange} placeholder='Header'/>
-                <TextArea name='description' onChange={formik.handleChange} placeholder='Description'/>
+                <CustomInputWithCounter value={formik.values.header} currentValueLength={formik.values.header.length}
+                                        name='header' handleChange={formik.handleChange} placeholder='Header'
+                                        maxLength={55}/>
+                <CustomTextAreaWithCounter value={formik.values.previewDescription}
+                                           currentValueLength={formik.values.previewDescription.length}
+                                           name='previewDescription' handleChange={formik.handleChange}
+                                           placeholder='Preview Description' maxLength={95}/>
+                <CustomTextAreaWithCounter value={formik.values.description}
+                                           currentValueLength={formik.values.description.length} name='description'
+                                           handleChange={formik.handleChange}
+                                           placeholder='Description' maxLength={240}/>
                 <label htmlFor="upload">
-                    <AddImgBtn flexDirection='column'
-                               imgSrc={formik.values.mainImg.src || ''}>
+                    <AddImgBtn onDragEnter={dragEnter} onDrop={imgDrop} onDragOver={dragOver}
+                               onDragLeave={dragLeave} flexDirection='column'
+                               imgSrc={formik.values.mainImg.src || ''} isAttaching={isAttaching}>
                         {!formik.values.mainImg.src && <input ref={fileInputRef} name='mainImg' onChange={onAddImg}
                                                               style={{display: 'none'}}
                                                               type="file" accept='image/*' id={'upload'}/>
@@ -212,7 +257,8 @@ export function CreateArticlePage(props: Props) {
                         {formik.values.mainImg.src &&
                             <AiOutlineClose style={{position: 'absolute', left: '93%', top: '5%'}}
                                             color='#F05050' size={30} onClick={deleteMainImg}/>}
-                        {!formik.values.mainImg.src && <>
+                        {isAttaching && !formik.values.mainImg.src && <RiImageAddFill color='#525252' size={120}/>}
+                        {!formik.values.mainImg.src && !isAttaching && <>
                             <FaFileImage color='#525252' opacity='0.5' size={120}/>
                             <p>Add image</p>
                             <p>min. size - 1170x439</p>

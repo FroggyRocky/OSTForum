@@ -2,35 +2,41 @@ import styled from "styled-components";
 import {Carousel} from "./Carousel";
 import {IoChevronForwardOutline} from "react-icons/io5"
 import {mediaSizes} from "../../commonStyles/MediaSizes";
-import {Link} from 'react-router-dom'
+import {useLocation} from "react-router-dom";
+
+import {useEffect} from "react";
+
 const Wrapper = styled.div`
-  padding:102px 0 0 0;
+  padding: 102px 0 0 0;
   text-align: center;
   height: 100vh;
+  overflow-x:hidden;
   @media (max-width: ${mediaSizes.mobile}) {
     padding: 30px 0 0 0;
   }
 `
 const H1 = styled.h1`
-  position:relative;
+  position: relative;
   z-index: 5;
-font-family: var(--family-header);
+  font-family: var(--family-header);
   font-weight: 700;
   font-size: 60px;
   line-height: 61px;
   color: #525252;
-  margin-bottom: 90px;
+  margin-bottom: 60px;
   background: linear-gradient(180deg, #8492D1 0%, #58649C 100%), #58649C;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
   text-fill-color: transparent;
   width: 100%;
+
   @media (max-width: ${mediaSizes.mobile}) {
     margin-bottom: 20px;
     font-weight: 700;
     font-size: 40px;
     line-height: 40px;
+    padding: 0 10px;
   }
 `
 const ButtonContainer = styled.div`
@@ -38,10 +44,11 @@ const ButtonContainer = styled.div`
   align-items: center;
   justify-content: center;
   flex-direction: column;
- 
+
+
 `
 const ButtonShadow = styled.div`
-width: 110px;
+  width: 110px;
   height: 5px;
   margin-top: 109px;
   background-color: var(--bg-main);
@@ -51,6 +58,7 @@ width: 110px;
   position: absolute;
   z-index: 5;
   bottom: 5%;
+
   @media (max-width: ${mediaSizes.mobile}) {
     width: 50px;
     position: absolute;
@@ -59,7 +67,7 @@ width: 110px;
   }
 `
 const Button = styled.button`
-width: 78px;
+  width: 78px;
   height: 78px;
   margin-top: 99.5px;
   border: none;
@@ -67,20 +75,30 @@ width: 78px;
   background: linear-gradient(180deg, #8492D1 0%, #58649C 100%);
   color: white;
   display: flex;
-align-items: center;
+  align-items: center;
   justify-content: center;
   position: relative;
-  z-index: 5;
+  z-index: 10;
   cursor: pointer;
   @media (max-width: ${mediaSizes.mobile}) {
     width: 48px;
     height: 48px;
-}
+  }
+
+  &:hover {
+    background: linear-gradient(180deg, #ABB6EB 0%, #838EC5 100%);
+    box-shadow: 0px 2px 0px #374793;
+  }
+
+  &:active {
+    background: linear-gradient(180deg, #58649C 0%, #8492D1 100%);
+    box-shadow: none;
+  }
 `
 const StyledArrowDown = styled(IoChevronForwardOutline)`
-  transform:rotate(90deg);
-  width: 50px;
-  height: 50px;
+  transform: rotate(90deg);
+  width: 35px;
+  height: 35px;
   @media (max-width: ${mediaSizes.mobile}) {
     width: 30px;
     height: 30px;
@@ -88,19 +106,34 @@ const StyledArrowDown = styled(IoChevronForwardOutline)`
 `
 
 type Props = {
-    
+    articlesPageRef: any
 };
 export const Main = (props: Props) => {
+    const hash = useLocation().hash
+    useEffect(() => {
+        const timeout = setTimeout(() => {
+            if (!hash) return
+            const articlesPageRef = props.articlesPageRef.current
+            if (!articlesPageRef) return
+            articlesPageRef.scrollIntoView({behavior: "smooth", block: "start", inline: "start"})
+        }, 0)
+        return () => {
+            window.scrollTo(0, 0)
+            clearTimeout(timeout)
+        }
+    }, [])
+
+
     return <Wrapper>
-<H1>The Most Popular Articles</H1>
+        <H1>The Most Popular Articles</H1>
         <Carousel/>
         <ButtonContainer>
-        <a href={'#articles__main'}>
-            <Button>
-            <StyledArrowDown />
-        </Button>
-        </a>
-            <ButtonShadow />
+            <a href={'#articles__main'}>
+                <Button>
+                    <StyledArrowDown/>
+                </Button>
+            </a>
+            <ButtonShadow/>
         </ButtonContainer>
     </Wrapper>
 };

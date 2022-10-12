@@ -26,10 +26,10 @@ const StatIndex = styled(Flex)`
 `
 
 type Props = {
-    views: number,
-    comments: number,
-    likes: number,
-    dislikes: number,
+    views: number | string,
+    comments: number | string,
+    likes: number | string,
+    dislikes: number | string,
     withRepost?:boolean | undefined,
 };
 export const StatisticsPanel = (props: Props) => {

@@ -13,46 +13,7 @@ export const Form = styled.form`
   gap: 30px;
   margin-top: 60px;
 `
-export const Input = styled.input`
-  background: rgba(255, 255, 255, 0.3);
-  box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.15);
-  border-radius: 10px;
-  border: none;
-  font-family: var(--family-text);
-  height: 84px;
-  color: #525252;
-  font-size: 30px;
-  line-height: 29px;
-  font-weight: 700;
-  display: block;
-  width: 100%;
-  padding: 30px;
-
-  &:focus {
-    outline: none;
-  }
-`
-export const TextArea = styled.textarea`
-  background: rgba(255, 255, 255, 0.3);
-  box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.15);
-  border-radius: 10px;
-  border: none;
-  font-family: var(--family-text);
-  height: 240px;
-  color: #272727;
-  font-size: 25px;
-  line-height: 35px;
-  font-weight: 400;
-  display: block;
-  width: 100%;
-  padding: 30px;
-  resize: none;
-
-  &:focus {
-    outline: none;
-  }
-`
-export const AddImgBtn = styled(Flex)<{ imgSrc: string }>`
+export const AddImgBtn = styled(Flex)<{ imgSrc: string, isAttaching: boolean }>`
   height: 253px;
   border: none;
   background: rgba(255, 255, 255, 0.3);
@@ -60,7 +21,11 @@ export const AddImgBtn = styled(Flex)<{ imgSrc: string }>`
   border-radius: 15px;
   color: #525252;
   position: relative;
+  cursor: pointer;
 
+  ${({isAttaching}) => isAttaching && css`
+    background: white;
+  `}
   ${({imgSrc}) => imgSrc && css`
     background-image: url(${imgSrc});
     background-repeat: no-repeat;
@@ -75,6 +40,7 @@ export const AddImgBtn = styled(Flex)<{ imgSrc: string }>`
     opacity: 0.5;
     font-weight: 400;
     font-family: var(--family-text);
+    transition: opacity ease-in-out 300ms;
   }
 
   & p:nth-child(3) {
@@ -87,6 +53,19 @@ export const AddImgBtn = styled(Flex)<{ imgSrc: string }>`
   & p:nth-child(4) {
     font-size: 20px;
     line-height: 19px;
+  }
+
+  &:hover {
+    background-color: white;
+
+    & > p {
+      opacity: 1;
+    }
+
+    & > svg {
+      opacity: 1;
+      transition: opacity ease-in-out 300ms;
+    }
   }
 `
 export const AddArticleButton = styled.button`
@@ -107,5 +86,19 @@ export const AddArticleButton = styled.button`
     color: #58649C;
     opacity: 0.5;
     margin-top: 18px;
+    transition: opacity ease-in-out 300ms;
+  }
+
+  &:hover {
+    background-color: white;
+
+    & > p {
+      opacity: 1;
+    }
+
+    & > svg {
+      transition: opacity ease-in-out 300ms;
+      opacity: 1;
+    }
   }
 `

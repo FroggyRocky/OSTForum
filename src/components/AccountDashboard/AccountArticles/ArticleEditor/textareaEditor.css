@@ -24,7 +24,7 @@ div.DraftEditor-editorContainer, div.public-DraftEditor-content img {
     border-radius: 15px;
 }
 div.DraftEditor-editorContainer, div.public-DraftEditor-content h1, h2, h3 {
-    margin: 40px 0 20px 0;
+    margin:20px 0;
 }
 div.DraftEditor-editorContainer, div.public-DraftEditor-content h1 {
     margin: 20px 0;
@@ -44,7 +44,16 @@ div.DraftEditor-editorContainer, div.public-DraftEditor-content p {
     font-weight: 400;
     font-size: 18px;
     line-height: 32px;
+    color: #000000;
+    font-family: var(--family-text);
 }
+.public-DraftStyleDefault-unorderedListItem {
+    font-weight: 700;
+    font-size: 18px;
+    line-height: 32px;
+    color:#525252;
+}
+
 .hyperLink {
     color: #58649C;
     font-weight: 400;
@@ -52,8 +61,4 @@ div.DraftEditor-editorContainer, div.public-DraftEditor-content p {
     line-height: 32px;
     text-decoration: underline;
     text-decoration-color: #58649C;
-}
-div.DraftEditor-editorContainer, div.public-DraftEditor-content ul > li {
-    font-weight: 700;
-    margin-left: 1.2%;
 }

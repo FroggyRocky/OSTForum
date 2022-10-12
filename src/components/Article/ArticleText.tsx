@@ -1,16 +1,15 @@
 import styled from "styled-components";
 import {mediaSizes} from "../commonStyles/MediaSizes";
-
 const Container = styled.div`
   width: 100%;
   background-color: white;
   border-radius: 15px 15px 0 0;
 `
 const Content = styled.div`
-  padding: 40px;
+  padding: 30px;
   font-family: var(--family-text);
 & > h1, h2, h3 {
-  margin: 40px 0 20px 0;
+  margin: 20px 0;
   @media(max-width: ${mediaSizes.mobile}) {
     margin: 15px 0 15px 0;
   }
@@ -25,9 +24,17 @@ const Content = styled.div`
       line-height: 22px;
     }
   }
+  & > ul {
+    margin: 16px 0 16px 1%;
+    
+  }
 & > ul > li {
+  font-family: var(--family-text);
   font-weight: 700;
-  margin-left: 1.2%;
+  margin-left: 2%;
+  font-size: 18px;
+  line-height: 32px;
+  color:#525252;
   @media(max-width: ${mediaSizes.mobile}) {
     font-size: 12px;
     line-height: 18px;
@@ -37,7 +44,8 @@ const Content = styled.div`
     font-weight: 400;
     font-size: 18px;
     line-height: 32px;
-   color: #525252;
+    color: #000000;
+    font-family: var(--family-text);
     @media(max-width: ${mediaSizes.mobile}) {
       font-size: 12px;
       line-height: 18px;
@@ -80,7 +88,6 @@ type Props = {
     text:string
 };
 export const ArticleText = (props: Props) => {
-
     return <Container>
         <Content dangerouslySetInnerHTML={{__html:props.text}}>
 

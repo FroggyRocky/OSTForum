@@ -27,7 +27,6 @@ class S3 {
             uploadParams.Key = file.name
             uploadParams.Body = file.data
             const response = await s3.upload(uploadParams).promise()
-            console.log(response.Location)
             res.status(200).send(response.Location)
         } catch (e) {
             res.sendStatus(500)

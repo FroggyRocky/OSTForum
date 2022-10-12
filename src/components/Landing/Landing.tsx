@@ -3,8 +3,8 @@ import {Header} from "../Header/Header";
 import {Main} from "./Main/Main";
 import flipboardSVG from '../../assets/Flipboard.svg'
 import lampSVG from '../../assets/Lamp.svg'
-import lampMob from '../../assets/lampMob.png'
-import flipboardMob from '../../assets/flipboardMob.png'
+import lampMob from '../../assets/lampMob.svg'
+import flipboardMob from '../../assets/flipboardMob.svg'
 import curtainLeft from '../../assets/curtainLeft.png'
 import curtainRight from '../../assets/curtainRight.png'
 import curtainLeftMob from '../../assets/curtainLeftMob.png'
@@ -14,13 +14,14 @@ import {Articles} from "./Articles/Articles";
 import {Wrapper} from "../commonStyles/Wrapper.styled";
 import {Footer} from "../Footer/Footer";
 import {useAppDispatch} from "../../redux/hooks/hooks";
-import {useEffect} from "react";
+import {useEffect, useRef} from "react";
 import {fetchArticles} from "../../redux/articles/articlesThunks";
 import {mediaSizes} from "../commonStyles/MediaSizes";
 
 
 const FirstPageWrapper = styled.div`
   position: relative;
+  overflow-x: clip;
 `
 const CurtainLeft = styled(Image)`
   pointer-events:none;
@@ -100,7 +101,7 @@ display: none;
     position:absolute;
     z-index:10;
     right: 0;
-    bottom: 10%;
+    bottom: 2%;
   }
 `
 const Flipboard = styled(Image)`
@@ -126,7 +127,7 @@ display: none;
 
 type Props = {};
 export const Landing = (props: Props) => {
-
+const articlesPageRef = useRef()
     const dispatch = useAppDispatch()
     useEffect(() => {
         dispatch(fetchArticles())
@@ -143,10 +144,10 @@ export const Landing = (props: Props) => {
             <LampMob src={lampMob} alt='mobile_lamp' />
             <Lamp src={lampSVG} alt='lamp' />
             <Header/>
-            <Main/>
+            <Main articlesPageRef={articlesPageRef}/>
         </FirstPageWrapper>
         <Wrapper>
-            <Articles/>
+            <Articles articlesPageRef={articlesPageRef}/>
             <Footer/>
         </Wrapper>
     </div>

@@ -8,8 +8,8 @@ export const fetchArticles = () => async (dispatch: AppDispatch) => {
     dispatch(articleSlice.actions.setArticles(res.data))
 }
 
-export const fetchCurrentArticle = (id: number) => async (dispatch: AppDispatch) => {
-    const res = await articlesAPI.getArticle(id)
+export const fetchCurrentArticle = (header:string) => async (dispatch: AppDispatch) => {
+    const res = await articlesAPI.getArticle(header)
     dispatch(articleSlice.actions.setCurrentArticle(res.data))
 }
 

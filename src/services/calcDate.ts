@@ -7,18 +7,18 @@ export function calcDate(createdAt:string) {
     } else if (dateDifference >= 7) {
         dateDifference = Math.ceil((dateDifference % 365) / 7)
         if (dateDifference === 0) {
-            return '1 week'
+            return '1 week ago'
         } else {
-            return dateDifference + ' weeks'
+            return dateDifference + ' weeks ago'
         }
     } else if (dateDifference >= 365) {
         Math.ceil(dateDifference / 365)
         if (dateDifference === 0) {
             return '1 year'
         } else {
-            return dateDifference + ' years'
+            return dateDifference + ' years ago'
         }
     } else if (dateDifference < 7) {
-        return dateDifference + ' days'
+        return dateDifference + ' days ago'
     }
 }

@@ -4,7 +4,7 @@ const router = new Router()
 const authController = require('../controllers/auth')
 
 router.get('/get-articles', articles.getArticles);
-router.get('/get-article/:id', articles.getArticle);
+router.get('/get-article/:header', articles.decodeArticleDestination, articles.getArticle);
 router.post('/create-article', authController.authenticateToken, articles.createArticle);
 
 ///Comments///

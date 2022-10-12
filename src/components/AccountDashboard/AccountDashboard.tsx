@@ -5,7 +5,7 @@ import {Flex} from "../commonStyles/Flex.styled";
 import {useAppSelector} from "../../redux/hooks/hooks";
 import {Header} from "../Header/Header";
 import {Footer} from "../Footer/Footer";
-import {CreateArticlePage} from "./AccountArticles/CreateArticlePage";
+import {CreateArticle} from "./AccountArticles/CreateArticle";
 import {AccountArticles} from "./AccountArticles/AccountArticles";
 import {useEffect} from "react";
 import {BackgroundLoader} from "../common/BackgroundLoader";
@@ -79,7 +79,7 @@ export const AccountDashboard = (props: Props) => {
 
                 <Routes>
                     <Route path='/articles' element={<AccountArticles articlesData={user.articles}/>}/>
-                    <Route path='/articles/create' element={<CreateArticlePage/>}/>
+                    <Route path='/articles/create' element={<CreateArticle/>}/>
                 </Routes>
 
             </> :

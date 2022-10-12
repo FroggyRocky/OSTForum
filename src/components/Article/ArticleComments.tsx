@@ -1,4 +1,4 @@
-import styled, {css} from "styled-components";
+import styled, {css, keyframes} from "styled-components";
 import {IoChevronDown} from 'react-icons/io5'
 import avatarEx from '../../assets/avatarEx.png'
 import {Flex} from "../commonStyles/Flex.styled";
@@ -10,6 +10,8 @@ import {AiOutlineClose} from "react-icons/ai";
 import {useFormik} from "formik";
 import {useCreateCommentMutation, useDeleteCommentMutation, useGetArticleCommentsQuery} from "../../api/commentsAPI";
 import {ICreateCommentData} from "../../api/apiTypes";
+import {useState} from "react";
+import * as Yup from 'yup';
 
 const Container = styled.div`
   width: 100%;
@@ -40,6 +42,7 @@ const Actions = styled(Flex)`
   }
 
   @media (max-width: ${mediaSizes.mobile}) {
+    justify-content: initial;
     & > h1 {
       font-weight: 700;
       font-size: 12px;
@@ -47,8 +50,6 @@ const Actions = styled(Flex)`
       color: #58649C;
       margin-top: 20px;
     }
-
-    justify-content: initial;
   }
 }
 
@@ -56,7 +57,32 @@ const Actions = styled(Flex)`
   flex-direction: column-reverse;
 }
 `
-const Cards = styled.div`
+const unfoldAnim = keyframes`
+  0% {
+    transform: translateY(-200px);
+  }
+  100% {
+    transform: translateY(0px);
+    opacity: 1;
+    position: static;
+    z-index: 1;
+  }
+`
+const foldAnim = keyframes`
+  100% {
+    transform: translateY(-200px);
+    opacity: 0;
+    z-index: -1;
+    position: absolute;
+  }
+`
+const Cards = styled.div<{isCommentsFolded:boolean}>`
+  ${({isCommentsFolded}) => isCommentsFolded && css`
+  animation: ${unfoldAnim} 500ms ease-in forwards;
+  `}
+  ${({isCommentsFolded}) => !isCommentsFolded && css`
+  animation: ${foldAnim} 500ms ease-in-out forwards;
+  `}
 `
 const Card = styled.div`
   width: 100%;
@@ -134,7 +160,6 @@ const StyledTextArea = styled.div`
   font-size: 16px;
   line-height: 16px;
   position: relative;
-
   & main {
     display: flex;
   }
@@ -159,6 +184,7 @@ const DeleteBtn = styled(AiOutlineClose)`
   top: 10%;
 `
 const ButtonContainer = styled(Flex)`
+  position: relative;
   & button {
     text-align: center;
     line-height: 15px;
@@ -180,10 +206,12 @@ const ButtonContainer = styled(Flex)`
 `
 const Err = styled.span`
   color: #F05050;
-  font-family: var(--family-text);
-  font-weight: 700;
-  font-size: 20px;
+  font-family: var(--family-header);
+  font-weight: 500;
+  font-size: 16px;
   line-height: 25px;
+  position: absolute;
+  left: 12%;
 `
 type Props = {
     commentsData: IComments[],
@@ -192,18 +220,31 @@ type Props = {
     dislikes: number,
     isAuth: boolean,
     userId: number,
-    userAvatar:string,
+    userAvatar: string,
     articleId: number
 };
 export const ArticleComments = (props: Props) => {
 
     const [createComment, {isError: isCreateErr, isLoading: isCreateLoading}] = useCreateCommentMutation()
     const [deleteComment, {isError: isDeleteErr, isLoading: isDeleteLoading}] = useDeleteCommentMutation();
+    const [isCommentsFolded, setCommentsSectionState] = useState(false)
+
+
+    const commentsValidation = Yup.object().shape({
+        comment:Yup.string()
+            .required('Required')
+            .min(2)
+
+    })
+
     const {isError: isFetchErr, isLoading: isFetchLoading} = useGetArticleCommentsQuery(props.articleId)
     const formik = useFormik({
         initialValues: {
             comment: ''
         },
+        validateOnChange:false,
+        validateOnBlur:true,
+        validationSchema:commentsValidation,
         onSubmit: (values, {resetForm}) => {
             const commentData: ICreateCommentData = {
                 text: values.comment,
@@ -219,6 +260,14 @@ export const ArticleComments = (props: Props) => {
         deleteComment(commentId).unwrap();
     }
 
+    function toggleCommentsSection() {
+        setCommentsSectionState(prev => !prev)
+    }
+function handleBlur() {
+    if (!formik.values.comment) {
+        formik.setTouched({'comment':false})
+    }
+}
     const comments = props.commentsData.map(el => {
         const dateDifference = calcDate(el.createdAt)
         return <Card key={el.id}>
@@ -239,28 +288,32 @@ export const ArticleComments = (props: Props) => {
         </Card>
     })
 
-
     return <Container>
         <Content>
             <Actions>
-                <h1>Comments ({props.commentsData.length})<IoChevronDown style={{marginLeft: '3px'}}/></h1>
+                <h1 onClick={toggleCommentsSection}>Comments ({props.commentsData.length})
+                    {props.commentsData.length !==0 && <IoChevronDown style={{marginLeft: '3px', transform: `rotate(${isCommentsFolded ? '0deg' : '180deg'})`}}/> }
+                </h1>
                 <ActionPanel likes={props.likes} dislikes={props.dislikes} views={props.views}/>
             </Actions>
-            <Cards>
-                {comments}
-            </Cards>
-
+            {/*{!isCommentsFolded &&*/}
+                <Cards isCommentsFolded={isCommentsFolded}>
+                    {comments}
+                </Cards>
+            {/*}*/}
             {props.isAuth && <StyledTextArea>
                 <main>
                     <Avatar display={'none'} src={props.userAvatar || avatarEx}/>
-                    <textarea onChange={formik.handleChange} value={formik.values.comment} placeholder='Leave a comment' name="comment" cols={30}
+                    <textarea onChange={formik.handleChange} value={formik.values.comment} placeholder='Leave a comment'
+                              name="comment" cols={30} onBlur={handleBlur}
                               rows={10}></textarea>
                 </main>
-                <ButtonContainer onClick={formik.submitForm} justifyContent='end'>
-                    <button
+                <ButtonContainer justifyContent='end' alignItems={'center'}>
+                    {(formik.errors.comment && formik.touched.comment) && <Err>{formik.errors.comment}</Err>}
+                    {(isCreateErr || isFetchErr) && <Err>{'Something went wrong, try to publish the post later'}</Err>}
+                <button onClick={formik.submitForm} style={{cursor:'pointer'}}
                         disabled={isFetchLoading || isCreateLoading}>{isFetchLoading || isCreateLoading ? 'Loading...' : 'Post'}</button>
-                </ButtonContainer>
-                {(isCreateErr || isFetchErr) && <Err>{'Something went wrong, try to publish the post later'}</Err>}
+            </ButtonContainer>
             </StyledTextArea>
             }
         </Content>

@@ -3,6 +3,7 @@ import {authSlice} from "./authSlice";
 import {fetchAccountData} from "../user/userThunks";
 import {IUserLogin} from './authTypes'
 import {authAPI} from "../../api/authAPI";
+import {AxiosError} from "axios";
 
 export const loginUser = (data: IUserLogin) => async (dispatch: AppDispatch) => {
     const res = await authAPI.login(data)
@@ -21,10 +22,18 @@ export const fetchConfigs = () => async (dispatch: AppDispatch) => {
 }
 
 export const auth = () => async (dispatch: AppDispatch) => {
-    const token = window.localStorage.getItem('MyClickToken')
-    if (token) {
-        await dispatch(fetchAccountData())
+    try {
+        const token = window.localStorage.getItem('MyClickToken')
+        if (token) {
+            await dispatch(fetchAccountData())
+        }
+        await dispatch(fetchConfigs())
+        dispatch(authSlice.actions.setInitializerState(true))
+    } catch (e) {
+        const err = e as AxiosError
+        if (err.response?.status === 401 || err.response?.status === 403) {
+            window.localStorage.removeItem('MyClickToken');
+            await dispatch(fetchConfigs())
+        }
     }
-    await dispatch(fetchConfigs())
-    dispatch(authSlice.actions.setInitializerState(true))
 }
