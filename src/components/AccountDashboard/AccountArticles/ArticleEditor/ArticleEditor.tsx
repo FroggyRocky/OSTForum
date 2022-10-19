@@ -28,7 +28,7 @@ function findLinkEntities(contentBlock:any, callback:any, contentState:any) {
 const Link = (props:any) => {
     const {url} = props.contentState.getEntity(props.entityKey).getData();
     return (
-        <a className={'hyperLink'} href={url} target={'_blank'}>
+        <a className={'hyperLink'} href={url} target={'_blank'} rel="noopener noreferrer">
             {props.children}
         </a>
     );
