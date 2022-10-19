@@ -16,8 +16,8 @@ import {Footer} from "../Footer/Footer";
 import {useAppDispatch} from "../../redux/hooks/hooks";
 import {useEffect, useRef} from "react";
 import {fetchArticles} from "../../redux/articles/articlesThunks";
-import {mediaSizes} from "../commonStyles/MediaSizes";
-
+import {mediaSizes, firstPageMediaSizes} from "../commonStyles/MediaSizes";
+import {isMobile} from 'react-device-detect'
 
 const FirstPageWrapper = styled.div`
   position: relative;
@@ -31,12 +31,12 @@ const CurtainLeft = styled(Image)`
   top: 0;
   height: 100%;
  
-@media(max-width: ${mediaSizes.laptop}) {
+@media(max-width: ${firstPageMediaSizes.laptop}) {
   background: #D9E3EC;
   opacity: 0.6;
   z-index: 1;
 }
-  @media(max-width: ${mediaSizes.laptop}) {
+  @media(max-width:${firstPageMediaSizes.laptop}) {
     display: none;
   }
 `
@@ -48,12 +48,12 @@ const CurtainRight = styled(Image)`
   z-index:5;
   right:0;
   height: 100%;
-  @media(max-width: ${mediaSizes.laptop}) {
+  @media(max-width: ${firstPageMediaSizes.laptop}) {
     z-index: 1;
     background: #D9E3EC;
     opacity: 0.6;
   }
-  @media(max-width: ${mediaSizes.laptop}) {
+  @media(max-width: ${firstPageMediaSizes.laptop}) {
    display: none;
   }
 `
@@ -65,7 +65,7 @@ const CurtainLeftMob = styled(Image)`
   top: 0;
   height: 100%;
   display: none;
-  @media (max-width: ${mediaSizes.laptop}) {
+  @media (max-width: ${firstPageMediaSizes.laptop}) {
     display: block;
   }
 `
@@ -77,7 +77,7 @@ const CurtainRightMob = styled(Image)`
   right:0;
   height: 100%;
   display: none;
-  @media (max-width: ${mediaSizes.laptop}) {
+  @media (max-width: ${firstPageMediaSizes.laptop}) {
     display: block;
     right:0;
   }
@@ -89,13 +89,13 @@ const Lamp = styled(Image)`
   z-index:10;
   bottom:0;
   right:0;
-  @media (max-width: ${mediaSizes.laptop}) {
+  @media (max-width: ${firstPageMediaSizes.desktopDisableVectors}) {
     display: none;
   }
 `
 const LampMob = styled(Image)`
 display: none;
-  @media (max-width: ${mediaSizes.laptop}) {
+  @media (max-width: ${mediaSizes.mobile}) {
     display: block;
     pointer-events:none;
     position:absolute;
@@ -109,13 +109,13 @@ const Flipboard = styled(Image)`
   position:absolute;
   z-index:10;
   bottom:0;
-  @media (max-width: ${mediaSizes.laptop}) { 
+  @media (max-width: ${firstPageMediaSizes.desktopDisableVectors}) { 
     display: none;
   }
 `
 const FlipboardMob = styled(Image)`
 display: none;
-  @media (max-width: ${mediaSizes.laptop}) {
+  @media (max-width: ${mediaSizes.mobile}) {
     display: block;
     position: absolute;
     z-index: 5;
@@ -123,8 +123,6 @@ display: none;
     bottom: 0;
   }
 `
-
-
 type Props = {};
 export const Landing = (props: Props) => {
 const articlesPageRef = useRef()
@@ -140,8 +138,8 @@ const articlesPageRef = useRef()
             <CurtainRight src={curtainRight} alt='curtain2'/>
             <CurtainRightMob src={curtainRightMob} alt='curtainRightMobile' />
             <Flipboard src={flipboardSVG} alt='flipboard'/>
-            <FlipboardMob src={flipboardMob} alt='mobile-flipboard'/>
-            <LampMob src={lampMob} alt='mobile_lamp' />
+            {isMobile && <FlipboardMob src={flipboardMob} alt='mobile-flipboard'/> }
+            {isMobile && <LampMob src={lampMob} alt='mobile_lamp' /> }
             <Lamp src={lampSVG} alt='lamp' />
             <Header/>
             <Main articlesPageRef={articlesPageRef}/>

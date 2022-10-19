@@ -1,8 +1,8 @@
 import {FaTelegramPlane} from "react-icons/fa";
 import styled from "styled-components";
 import {Flex} from "../commonStyles/Flex.styled";
-import {mediaSizes} from "../commonStyles/MediaSizes";
-
+import {firstPageMediaSizes, mediaSizes} from "../commonStyles/MediaSizes";
+import {TransparentLink} from "../common/CommonStyles";
 
 const TelegramLinkContainer = styled(Flex)`
 position: absolute;
@@ -17,6 +17,9 @@ position: absolute;
     text-align: center;
     text-transform: uppercase;
     color: #58649C
+  }
+  @media(max-width: ${firstPageMediaSizes.desktopDisableVectors}) {
+    right: 0;
   }
   @media(max-width: ${mediaSizes.mobile}) {
     display: none;
@@ -36,10 +39,12 @@ type Props = {
 
 };
 export const TgButton = (props: Props) => {
-    return      <TelegramLinkContainer flexDirection='column'>
+    return  <TransparentLink href='t.me/myclickmedia' target={'_blank'} >
+        <TelegramLinkContainer flexDirection='column'>
         <TelegramButton>
             <FaTelegramPlane style={{marginLeft:'10px'}} size={35} color='white' />
         </TelegramButton>
         <p>SITEBLOG</p>
     </TelegramLinkContainer>
+    </TransparentLink>
 };

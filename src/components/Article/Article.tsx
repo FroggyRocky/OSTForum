@@ -94,7 +94,7 @@ export const Article = (props: Props) => {
         }
     }, [])
 
-    return <Wrapper style={{padding: '40px 0 120px 0'}}>
+    return <Wrapper style={{paddingBottom:'40px'}}>
         {
             currentArticle ? <Content>
                     <StyledPath>

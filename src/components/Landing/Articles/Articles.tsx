@@ -10,11 +10,12 @@ import {mediaSizes} from "../../commonStyles/MediaSizes";
 
 const TopicsContainer = styled(Flex)`
   padding: 0 0 41px 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
   @media (max-width: ${mediaSizes.mobile}) {
     display: flex;
-    align-items: center;
-    justify-content: space-between;
-    flex-direction: row;
   }
 `
 const Topic = styled.span`
@@ -25,15 +26,6 @@ const Topic = styled.span`
   text-decoration-line: underline;
   color: #272727;
   cursor: pointer;
-
-  &:nth-child(2), &:nth-child(4) {
-    margin: 0 80px;
-  }
-
-  &:nth-child(6) {
-    margin-left: 80px;
-  }
-
   @media (max-width: ${mediaSizes.mobile}) {
     &:nth-child(2) {
       margin: 0 0;
@@ -42,7 +34,7 @@ const Topic = styled.span`
     &:nth-child(4), &:nth-child(5), &:nth-child(6) {
       display: none;
     }
-  }
+   }
 `
 const ArticlesContainer = styled(Flex)`
   margin-bottom: 50px;

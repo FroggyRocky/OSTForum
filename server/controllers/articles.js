@@ -1,5 +1,5 @@
 const db = require('../dbmodel')
-
+const Sequelize = require('sequelize')
 class Articles {
     async getArticles(req, res) {
         const articles = await db.Articles.findAll({
@@ -21,7 +21,9 @@ class Articles {
             const articleHeader = req.header
             const article = await db.Articles.findOne({
                 where:{
-                  header:articleHeader
+                  header: {
+                      [Sequelize.Op.like]:'%' + articleHeader + '%'
+                  }
                 },
                 include: [
                     {
@@ -87,7 +89,6 @@ class Articles {
     }
     async deleteComment(req,res) {
         try {
-            console.log(req.accountId)
             const commentId = req.params.id
             await db.Comments.destroy({
                 where: {

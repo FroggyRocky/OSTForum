@@ -199,12 +199,12 @@ const ButtonContainer = styled(Flex)`
       background-color: grey;
     }
   }
-
   @media (max-width: ${mediaSizes.mobile}) {
     justify-content: center;
+    flex-direction: column;
   }
 `
-const Err = styled.span`
+const Err = styled.p`
   color: #F05050;
   font-family: var(--family-header);
   font-weight: 500;
@@ -212,6 +212,10 @@ const Err = styled.span`
   line-height: 25px;
   position: absolute;
   left: 12%;
+  @media (max-width: ${mediaSizes.mobile}) {
+    position: static;
+    margin-top:15px;
+  }
 `
 type Props = {
     commentsData: IComments[],

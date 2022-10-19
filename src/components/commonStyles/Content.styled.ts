@@ -4,6 +4,9 @@ export const Content = styled.div`
   width: 65%;
   margin: auto auto;
   position: relative;
+  @media (max-width: ${mediaSizes.laptop}) {
+    width: 95%;
+  }
   @media(max-width: ${mediaSizes.mobile}) {
     width: 100%;
     padding: 0 20px;

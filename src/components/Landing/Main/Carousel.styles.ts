@@ -1,5 +1,5 @@
 import styled, {css} from "styled-components";
-import {mediaSizes} from "../../commonStyles/MediaSizes";
+import {mediaSizes, firstPageMediaSizes} from "../../commonStyles/MediaSizes";
 import {Link} from "react-router-dom";
 
 export const Wrapper = styled.div`
@@ -8,7 +8,7 @@ export const Wrapper = styled.div`
   min-width: 1358px;
   margin: auto auto;
   overflow-x: hidden;
-  @media (max-width: ${mediaSizes.laptop}) {
+  @media (max-width: ${firstPageMediaSizes.laptop}) {
     z-index: 10;
     margin: 0 0;
     width: 100%;
@@ -29,7 +29,7 @@ export const CarouselWindow = styled.div<{isThereOnlyOneItem:boolean}>`
   justify-content: center;
   gap: 30px;
   margin: auto auto;
-  @media (max-width: ${mediaSizes.laptop}) {
+  @media (max-width: ${mediaSizes.mobile}) {
     width: calc(30px + 280px); // gaps + one element 280 px
     gap: 0;
     justify-content: ${({isThereOnlyOneItem}) => isThereOnlyOneItem ? 'center' : 'flex-start'};
@@ -38,9 +38,6 @@ export const CarouselWindow = styled.div<{isThereOnlyOneItem:boolean}>`
 export const StyledLink = styled(Link)<{ translation?: string | number }>`
   transform: translateX(${({translation}) => translation + '%'});
   transition: transform 900ms ease-in-out;
-  @media (max-width: ${mediaSizes.laptop}) {
-    transition: transform 900ms ease-in-out;
-  }
 `
 export const Card = styled.div<{ imgSrc: string, translation?: string | number,isThereOnlyOneItem:boolean}>`
   width: 570px;
@@ -68,7 +65,7 @@ export const Card = styled.div<{ imgSrc: string, translation?: string | number,i
     background: linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.88) 100%);
   }
 
-  @media (max-width: ${mediaSizes.laptop}) {
+  @media (max-width: ${mediaSizes.mobile}) {
     width: 280px;
     height: 141px;
     &:nth-child(odd) {
@@ -87,23 +84,8 @@ export const Controls = styled.div`
   gap: 30px;
   justify-content: center;
   align-items: center;
-  @media (max-width: ${mediaSizes.laptop}) {
-    display: none;
-  }
 `
-export const ControlsMob = styled.div`
-  display: none;
-  @media (max-width: ${mediaSizes.laptop}) {
-    position: relative;
-    z-index: 10;
-    display: flex;
-    gap: 10px;
-    margin: 16px 15px 0 15px;
-    justify-content: center;
-    align-items: center;
 
-  }
-`
 
 export const ArrContainer = styled.div<{unactive:boolean}>`
   padding: 10px;
@@ -140,12 +122,6 @@ ${({unactive}) => unactive && css`
   opacity: 0.5;
 }
 `}
-`
-
-export const StyledActiveArrRightMob = styled.div`
-`
-
-export const  StyledActiveArrLeftMob = styled.div`
 `
 
 export const StyledActiveArrLeft = styled.div`

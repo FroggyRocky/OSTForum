@@ -1,4 +1,9 @@
 export const mediaSizes = {
-    laptop:'1650px',
-    mobile:'1182px'
+    laptop:'1024px',
+    mobile:'760px'
+}
+
+export const firstPageMediaSizes = {
+    laptop:'1605px',
+    desktopDisableVectors:'1270px'
 }

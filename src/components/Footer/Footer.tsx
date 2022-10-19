@@ -8,6 +8,8 @@ import vk from '../../assets/vk.png'
 import {ReactComponent as Logo} from '../../assets/logo.svg'
 import {LogoText} from "../commonStyles/Logo.styled";
 import {mediaSizes} from "../commonStyles/MediaSizes";
+import { FaRedditSquare } from "react-icons/fa";
+import {isMobile} from "react-device-detect";
 
 const Wrapper = styled.div`
   font-family: var(--family-text);
@@ -60,18 +62,13 @@ const LinksContainer = styled(Flex)`
 const StyledLinks = styled(Flex)`
   align-items: center;
 & img:nth-child(2) {
-  margin-left:30px;
+  margin: 0 30px;
 }
-  & img:nth-child(3) {
-    margin:0 30px;
-  }
   @media(max-width: ${mediaSizes.mobile}) {
     & img:nth-child(2) {
-      margin-left:20px;
-    }
-    & img:nth-child(3) {
       margin:0 20px;
     }
+ 
   }
 `
 const FooterContainer = styled(Flex)`
@@ -81,6 +78,7 @@ const FooterContainer = styled(Flex)`
   align-items: center;
 }
 `
+
 type Props = {};
 
 export const Footer = (props: Props) => {
@@ -91,7 +89,7 @@ export const Footer = (props: Props) => {
             <StyledLogo flexDirection='column'>
                 <Flex>
                     <StyledIcon/>
-                    <LogoText>MY CLICK</LogoText>
+                    <LogoText isMobile={isMobile}>MY CLICK</LogoText>
                 </Flex>
                     <p>Clicking with result</p>
         </StyledLogo>
@@ -111,10 +109,20 @@ export const Footer = (props: Props) => {
             </StyledUl>
             </LinksContainer>
             <StyledLinks alignItems='start' justifyContent='start'>
-                <img src={youtube} alt="youtube_icon"/>
+                {/*<img src={youtube} alt="youtube_icon"/>*/}
                 <img src={tg} alt="telegram_icon"/>
-                <img src={vk} alt="vk_icon"/>
+                {/*<img src={vk} alt="vk_icon"/>*/}
                 <img src={inst} alt="instagram_icon"/>
+                <svg width="40" height="40">
+                    <defs>
+                        <linearGradient id="myGradient" gradientTransform="rotate(90)">
+                            <stop offset="0%"  stopColor="#8492D1" />
+                            <stop offset="100%" stopColor="#58649C" />
+                        </linearGradient>
+                    </defs>
+                    <FaRedditSquare className='reddit_icon' size={35} style={{ fill: "url('#myGradient')"}}  />
+                </svg>
+
             </StyledLinks>
         </FooterContainer>
                 <P>© 2022 All rights reserved. Any copy of information without an active link to the source is prohibited </P>

@@ -42,6 +42,9 @@ const Header = styled.div`
   text-shadow: 0px 4px 5px rgba(0, 0, 0, 0.25);
   padding: 20px;
   word-break: break-word;
+  @media(max-width: ${mediaSizes.laptop}) {
+    font-size: 82px;
+  }
   @media(max-width: ${mediaSizes.mobile}) {
     font-weight: 700;
     font-size: 25px;

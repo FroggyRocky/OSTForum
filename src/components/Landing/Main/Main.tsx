@@ -1,19 +1,24 @@
-import styled from "styled-components";
+import styled, {css} from "styled-components";
 import {Carousel} from "./Carousel";
 import {IoChevronForwardOutline} from "react-icons/io5"
 import {mediaSizes} from "../../commonStyles/MediaSizes";
 import {useLocation} from "react-router-dom";
-
 import {useEffect} from "react";
+import {isMobile} from 'react-device-detect'
 
-const Wrapper = styled.div`
-  padding: 102px 0 0 0;
+const Wrapper = styled.div<{isMobile:boolean}>`
+  padding: 102px 0;
   text-align: center;
-  height: 100vh;
+  height: 1112px;
   overflow-x:hidden;
-  @media (max-width: ${mediaSizes.mobile}) {
-    padding: 30px 0 0 0;
+  @media (max-width: ${mediaSizes.laptop}) {
+  height: initial;  
+    padding: 102px 0;
   }
+  ${({isMobile}) => isMobile && css `
+  height: 100vh;
+    padding: 30px 0 0 0;
+  `};
 `
 const H1 = styled.h1`
   position: relative;
@@ -30,7 +35,6 @@ const H1 = styled.h1`
   background-clip: text;
   text-fill-color: transparent;
   width: 100%;
-
   @media (max-width: ${mediaSizes.mobile}) {
     margin-bottom: 20px;
     font-weight: 700;
@@ -87,7 +91,7 @@ const Button = styled.button`
 
   &:hover {
     background: linear-gradient(180deg, #ABB6EB 0%, #838EC5 100%);
-    box-shadow: 0px 2px 0px #374793;
+    box-shadow: none;
   }
 
   &:active {
@@ -124,7 +128,7 @@ export const Main = (props: Props) => {
     }, [])
 
 
-    return <Wrapper>
+    return <Wrapper isMobile={isMobile}>
         <H1>The Most Popular Articles</H1>
         <Carousel/>
         <ButtonContainer>

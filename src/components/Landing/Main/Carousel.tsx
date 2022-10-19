@@ -4,16 +4,14 @@ import {
     CarouselWindow,
     Controls,
     StyledActiveArrLeft,
-    StyledActiveArrLeftMob,
     StyledActiveArrRight,
-    StyledActiveArrRightMob,
     StyledLink,
     Wrapper,
-    ControlsMob,
     ArrContainer
 } from './Carousel.styles'
 import {useEffect, useRef, useState} from "react";
 import {useAppSelector} from "../../../redux/hooks/hooks";
+import {isMobile} from 'react-device-detect'
 
 type Props = {};
 export const Carousel = (props: Props) => {
@@ -146,7 +144,7 @@ function handleTouchEnd() {
                     {Articles}
                 </CarouselWindow>
             </CarouselContainer>
-            {articlesData.length > 1 && <Controls>
+            {(articlesData.length > 1 && !isMobile) && <Controls>
              <ArrContainer onClick={!isFirstArticleVisible ? handleLeftClick : undefined} unactive={isFirstArticleVisible === true}>
                     <StyledActiveArrLeft />
              </ArrContainer>
