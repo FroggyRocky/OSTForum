@@ -10,5 +10,6 @@ export const LogoText = styled.span<{isMobile:boolean}>`
     ${({isMobile}) => isMobile && css`
       font-size: 20px;
     `}
+    font-size: 28px;
   }
 `

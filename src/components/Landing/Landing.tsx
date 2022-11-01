@@ -9,14 +9,14 @@ import curtainLeft from '../../assets/curtainLeft.png'
 import curtainRight from '../../assets/curtainRight.png'
 import curtainLeftMob from '../../assets/curtainLeftMob.png'
 import curtainRightMob from '../../assets/curtainRightMob.png'
-import {Image} from "../commonStyles/Image.styled";
+import {Image} from "../common/commonStyles/Image.styled";
 import {Articles} from "./Articles/Articles";
-import {Wrapper} from "../commonStyles/Wrapper.styled";
+import {Wrapper} from "../common/commonStyles/Wrapper.styled";
 import {Footer} from "../Footer/Footer";
 import {useAppDispatch} from "../../redux/hooks/hooks";
 import {useEffect, useRef} from "react";
 import {fetchArticles} from "../../redux/articles/articlesThunks";
-import {mediaSizes, firstPageMediaSizes} from "../commonStyles/MediaSizes";
+import {mediaSizes, firstPageMediaSizes} from "../common/commonStyles/MediaSizes";
 import {isMobile} from 'react-device-detect'
 
 const FirstPageWrapper = styled.div`
@@ -127,9 +127,6 @@ type Props = {};
 export const Landing = (props: Props) => {
 const articlesPageRef = useRef()
     const dispatch = useAppDispatch()
-    useEffect(() => {
-        dispatch(fetchArticles())
-    }, [])
 
     return <div>
         <FirstPageWrapper>

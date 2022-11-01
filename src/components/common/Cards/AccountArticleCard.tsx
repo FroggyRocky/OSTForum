@@ -1,4 +1,4 @@
-import {Flex} from "../../commonStyles/Flex.styled";
+import {Flex} from "../commonStyles/Flex.styled";
 import styled from "styled-components";
 import {StatisticsPanel} from "../StatisticsPanel";
 import {IoTimeOutline} from "react-icons/io5";
@@ -69,7 +69,7 @@ const Date = styled(Flex)`
 
 type Props = {
     category?:string,
-    mainImg:string,
+    coverImg_withText:string,
     header:string,
     description:string,
     views:number,
@@ -94,7 +94,7 @@ export const AccountArticleCard = (props: Props) => {
     }
 
     return <Container>
-        <CardImage src={props.mainImg} alt='Article_head_image'/>
+        <CardImage src={props.coverImg_withText} alt='Article_head_image'/>
         <Info>
             <Flag src={chooseFlag()} alt="flag"/>
             <Text>

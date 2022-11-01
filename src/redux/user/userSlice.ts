@@ -3,8 +3,9 @@ import {IUser} from "./userType";
 import {IArticlesPreview} from "../articles/articleTypes";
 
 const initialState = {
-    user: {} as IUser,
+    userData: {} as IUser,
     articles: [] as IArticlesPreview[],
+    editingArticle:{} as {ContentBlock:Array<Object>, entityMap:Array<Object>},
     auth: false as boolean,
     loginErr: '' as string
 }
@@ -15,7 +16,7 @@ export const userSlice = createSlice({
     initialState,
     reducers: {
         setUser(state, action: PayloadAction<IUser>) {
-            state.user = action.payload
+            state.userData = action.payload
         }
     }
 })

@@ -1,7 +1,7 @@
 // @flow 
 import * as React from 'react';
 import {IoChevronDownOutline} from 'react-icons/io5'
-import {Flex} from "../commonStyles/Flex.styled";
+import {Flex} from "../common/commonStyles/Flex.styled";
 import styled from "styled-components";
 import {IoPersonOutline} from 'react-icons/io5';
 

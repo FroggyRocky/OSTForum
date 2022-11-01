@@ -1,7 +1,7 @@
-import {Flex} from "../commonStyles/Flex.styled";
+import {Flex} from "./commonStyles/Flex.styled";
 import {IoArrowRedo, IoChatbubbleEllipsesSharp, IoEyeSharp, IoThumbsDown, IoThumbsUp} from "react-icons/io5";
 import styled from "styled-components";
-import {mediaSizes} from "../commonStyles/MediaSizes";
+import {mediaSizes} from "./commonStyles/MediaSizes";
 
 
 

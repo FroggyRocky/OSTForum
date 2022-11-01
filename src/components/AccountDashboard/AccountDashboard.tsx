@@ -1,7 +1,7 @@
 import {NavLink, Route, Routes, useNavigate} from "react-router-dom";
 import {IUser} from "../../redux/user/userType";
 import styled from "styled-components";
-import {Flex} from "../commonStyles/Flex.styled";
+import {Flex} from "../common/commonStyles/Flex.styled";
 import {useAppSelector} from "../../redux/hooks/hooks";
 import {Header} from "../Header/Header";
 import {Footer} from "../Footer/Footer";
@@ -9,6 +9,7 @@ import {CreateArticle} from "./AccountArticles/CreateArticle";
 import {AccountArticles} from "./AccountArticles/AccountArticles";
 import {useEffect} from "react";
 import {BackgroundLoader} from "../common/BackgroundLoader";
+import {mediaSizes} from "../common/commonStyles/MediaSizes";
 
 const Wrapper = styled.div`
 
@@ -20,9 +21,12 @@ const H1 = styled.h1`
   font-size: 35px;
   line-height: 33px;
   color: #525252;
-
   & > b {
     color: black;
+  }
+  @media (max-width: ${mediaSizes.mobile}) {
+    font-size: 25px;
+    line-height: 33px;
   }
 `
 const Navigation = styled.div`
@@ -51,7 +55,7 @@ export const AccountDashboard = (props: Props) => {
 
     const isArticleCreating = useAppSelector(state => state.articles.isArticleCreating)
     const navigate = useNavigate()
-    const user: IUser = useAppSelector(state => state.user.user)
+    const user: IUser = useAppSelector(state => state.user.userData)
     const isAuth = useAppSelector(state => state.auth.isAuth)
 
 
@@ -71,7 +75,7 @@ export const AccountDashboard = (props: Props) => {
                     <Navigation>
                         <span>Statistics</span>
                         <span>
-                   <NavLink to={'/dashboard/articles/create'}>Add article</NavLink>
+                   <NavLink to={'/dashboard/articles/create:id?'}>Add article</NavLink>
                </span>
                         <span>Settings</span>
                     </Navigation>

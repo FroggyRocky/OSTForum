@@ -1,13 +1,11 @@
 import styled from 'styled-components'
-import {Content} from "../commonStyles/Content.styled";
-import {Flex} from "../commonStyles/Flex.styled";
-import youtube from '../../assets/youtube.png'
-import tg from '../../assets/tg.png'
-import inst from '../../assets/inst.png'
-import vk from '../../assets/vk.png'
+import {Content} from "../common/commonStyles/Content.styled";
+import {Flex} from "../common/commonStyles/Flex.styled";
+import tg from '../../assets/tg.svg'
+import inst from '../../assets/inst.svg'
 import {ReactComponent as Logo} from '../../assets/logo.svg'
-import {LogoText} from "../commonStyles/Logo.styled";
-import {mediaSizes} from "../commonStyles/MediaSizes";
+import {LogoText} from "../common/commonStyles/Logo.styled";
+import {mediaSizes} from "../common/commonStyles/MediaSizes";
 import { FaRedditSquare } from "react-icons/fa";
 import {isMobile} from "react-device-detect";
 
@@ -21,8 +19,9 @@ const Wrapper = styled.div`
 `
 
 const StyledLogo = styled(Flex)`
+  user-select: none;
     & > p {
-      margin-top: 21px;
+      margin: 25px 0;
     }
   @media (max-width: ${mediaSizes.mobile}) {
     & > p {
@@ -31,7 +30,7 @@ const StyledLogo = styled(Flex)`
   }
 `
 const P = styled.p`
-    margin-top:60px;
+    margin-top:30px;
   text-align:center;
   @media (max-width: ${mediaSizes.mobile}) {
     margin:18px 20px 0 20px
@@ -72,11 +71,12 @@ const StyledLinks = styled(Flex)`
   }
 `
 const FooterContainer = styled(Flex)`
-@media (max-width: ${mediaSizes.mobile}) {
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-}
+  @media (max-width: 1357px) {
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 0px;
+  }
 `
 
 type Props = {};
@@ -91,27 +91,25 @@ export const Footer = (props: Props) => {
                     <StyledIcon/>
                     <LogoText isMobile={isMobile}>MY CLICK</LogoText>
                 </Flex>
-                    <p>Clicking with result</p>
+                    <p>Every click has a story, be part of MyClick!</p>
         </StyledLogo>
-            <LinksContainer gap='70px' alignItems='start' >
-            <StyledUl>
-                <li>Articles</li>
-                <li>Coope</li>
-                <li>NetWork</li>
-            </StyledUl>
-            <StyledUl>
-                <li>Services</li>
-                <li>Cases</li>
-                <li>Knowledge</li>
-            </StyledUl>
-            <StyledUl>
-                <li>Vacancies</li>
-            </StyledUl>
-            </LinksContainer>
+            {/*<LinksContainer gap='70px' alignItems='start' >*/}
+            {/*<StyledUl>*/}
+            {/*    <li>Articles</li>*/}
+            {/*    <li>Coope</li>*/}
+            {/*    <li>NetWork</li>*/}
+            {/*</StyledUl>*/}
+            {/*<StyledUl>*/}
+            {/*    <li>Services</li>*/}
+            {/*    <li>Cases</li>*/}
+            {/*    <li>Knowledge</li>*/}
+            {/*</StyledUl>*/}
+            {/*<StyledUl>*/}
+            {/*    <li>Vacancies</li>*/}
+            {/*</StyledUl>*/}
+            {/*</LinksContainer>*/}
             <StyledLinks alignItems='start' justifyContent='start'>
-                {/*<img src={youtube} alt="youtube_icon"/>*/}
                 <img src={tg} alt="telegram_icon"/>
-                {/*<img src={vk} alt="vk_icon"/>*/}
                 <img src={inst} alt="instagram_icon"/>
                 <svg width="40" height="40">
                     <defs>
@@ -120,9 +118,8 @@ export const Footer = (props: Props) => {
                             <stop offset="100%" stopColor="#58649C" />
                         </linearGradient>
                     </defs>
-                    <FaRedditSquare className='reddit_icon' size={35} style={{ fill: "url('#myGradient')"}}  />
+                    <FaRedditSquare className='reddit_icon' size={39} style={{ fill: "url('#myGradient')"}}  />
                 </svg>
-
             </StyledLinks>
         </FooterContainer>
                 <P>© 2022 All rights reserved. Any copy of information without an active link to the source is prohibited </P>

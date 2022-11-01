@@ -1,12 +1,11 @@
 import styled from "styled-components";
-import {Flex} from '../../commonStyles/Flex.styled'
+import {Flex} from '../../common/commonStyles/Flex.styled'
 import {IoTimeOutline} from 'react-icons/io5'
 import inst from '../../../assets/instFlag.png';
 import fb from '../../../assets/instFlag.png';
-import {StatisticsPanel} from "../../common/StatisticsPanel";
 import {NavLink} from "react-router-dom";
 import {calcDate} from "../../../services/calcDate";
-import {mediaSizes} from "../../commonStyles/MediaSizes";
+import {mediaSizes} from "../../common/commonStyles/MediaSizes";
 
 type CardImage = {
     src?: string
@@ -53,6 +52,7 @@ const Info = styled.div`
 `
 const Text = styled.div`
   word-wrap: break-word;
+
   & h1 {
     font-family: var(--family-text);
     font-weight: 700;
@@ -68,12 +68,13 @@ const Text = styled.div`
     line-height: 23px;
     color: #525252;
   }
-@media (max-width: 1200px) {
-  & h1 {
-    font-size: 20px;
-    line-height: 20px;
+
+  @media (max-width: 1200px) {
+    & h1 {
+      font-size: 20px;
+      line-height: 20px;
+    }
   }
-}
   @media (max-width: ${mediaSizes.mobile}) {
     word-break: break-all;
     & h1 {
@@ -127,7 +128,7 @@ const Date = styled(Flex)`
 type Props = {
     id: number,
     category: string,
-    mainImg: string,
+    coverImg_withText: string,
     header: string,
     description: string,
     previewDescription: string,
@@ -156,7 +157,7 @@ export const Card = (props: Props) => {
 
     return <NavLink to={`/article/${encodeURI(props.header)}`} state={props.historyPath}>
         <Container>
-            <CardImage src={props.mainImg} alt='Article_head_image'/>
+            <CardImage src={props.coverImg_withText} alt='Article_head_image'/>
             {props.category && <FlagMob src={chooseFlag()} alt="flag"/>}
             <Info>
                 {props.category && <Flag src={chooseFlag()} alt="flag"/>}
@@ -164,16 +165,16 @@ export const Card = (props: Props) => {
                     <h1>{props.header}</h1>
                 </Text>
                 <Text>
-               <p>{props.previewDescription}</p>
-            </Text>
+                    <p>{props.previewDescription}</p>
+                </Text>
                 <Flex justifyContent='space-between'>
                     <Date>
                         <IoTimeOutline style={{marginRight: '4px'}} color='#58649C'/>{`${calcDate(props.createdAt)}`}
                     </Date>
-                    <StatisticsPanel views={props.views > 100 ? '100+' : props.views}
-                                     comments={props.comments > 100 ? '100+' : props.comments}
-                                     likes={props.likes > 100 ? '100+' : props.likes}
-                                     dislikes={props.dislikes > 100 ? '100+' : props.dislikes}/>
+                    {/*<StatisticsPanel views={props.views > 100 ? '100+' : props.views}*/}
+                    {/*                 comments={props.comments > 100 ? '100+' : props.comments}*/}
+                    {/*                 likes={props.likes > 100 ? '100+' : props.likes}*/}
+                    {/*                 dislikes={props.dislikes > 100 ? '100+' : props.dislikes}/>*/}
                 </Flex>
             </Info>
         </Container>

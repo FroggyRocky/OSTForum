@@ -1,7 +1,6 @@
 import {createContext, useEffect} from 'react'
 import Draft, { RichUtils, CompositeDecorator} from 'draft-js';
 import 'draft-js/dist/Draft.css'
-
 import {EditorPanel} from "./EditorPanel";
 import Editor from '@draft-js-plugins/editor';
 import createImagePlugin from '@draft-js-plugins/image';

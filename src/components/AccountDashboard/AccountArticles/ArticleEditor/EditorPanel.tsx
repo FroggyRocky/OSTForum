@@ -1,6 +1,6 @@
 import {EditorPanelButton, PanelButton} from "./PanelButton";
 import {RichUtils} from 'draft-js'
-import {Flex} from "../../../commonStyles/Flex.styled";
+import {Flex} from "../../../common/commonStyles/Flex.styled";
 import {AiOutlineLink} from "react-icons/ai";
 import {BsFillBookmarkFill, BsImageFill} from "react-icons/bs";
 import {MdArrowDropDown} from "react-icons/md";
@@ -64,9 +64,8 @@ export const EditorPanel = (props: Props) => {
     const {value: categoryValue, touched: categoryTouched} = props.formik.getFieldMeta('category')
     const {setValue: setHyperLinkValue} = props.formik.getFieldHelpers('hyperLink')
     const {value: hyperLinkValue} = props.formik.getFieldMeta('hyperLink')
+    const categoryFlagsRef = useClickOutside(closeCategoryFlagsSelector)
     const categories = useAppSelector(state => state.auth.configs.categories)
-    const linkFiledRef = useClickOutside(closeLinkField)
-    const linkButtonRef = useClickOutside(closeLinkField)
     const BLOCK_TYPES_HEADINGS = [
         {label: 'h1', id: 'header-one'},
         {label: 'h2', id: 'header-two'},
@@ -77,10 +76,9 @@ export const EditorPanel = (props: Props) => {
                             label={el.label}/>
     })
 
-    function closeLinkField() {
-        CreateArticleContext.setAddLinkInputState(false)
+    function closeCategoryFlagsSelector() {
+        setCategoryTouched(false)
     }
-
     function stateActive(id: string) {
         const currentBlockType = RichUtils.getCurrentBlockType(props.editorState);
         return currentBlockType === id;
@@ -108,7 +106,7 @@ export const EditorPanel = (props: Props) => {
                 </PanelButton>
             </Flex>
             <Flex gap={'30px'}>
-                <Button ref={linkButtonRef} onClick={CreateArticleContext.onAddLink}>
+                <Button onClick={CreateArticleContext.onAddLink}>
                     <AiOutlineLink size={35}/>
                 </Button>
                 <Button type={'button'}>
@@ -116,7 +114,7 @@ export const EditorPanel = (props: Props) => {
                     <input type="file" id='upload2' style={{display: 'none'}} onChange={CreateArticleContext.onAddImg}/>
                     <BsImageFill/>
                 </Button>
-                <CategoryContainer onClick={() => setCategoryTouched(!categoryTouched)} tabIndex={0}>
+                <CategoryContainer ref={categoryFlagsRef} onClick={() => setCategoryTouched(!categoryTouched)}>
                     <Button>
                         <Flex style={{cursor: 'pointer'}}>
                             <BsFillBookmarkFill/>
@@ -130,8 +128,8 @@ export const EditorPanel = (props: Props) => {
             </Flex>
         </Flex>
         {CreateArticleContext.isAddLinkInputOpen &&
-            <div style={{margin: '10px 0', textAlign: 'end'}} ref={linkFiledRef}>
-                <Input onBlur={handleLinkInputBlur} type="text" name={'hyperLink'} value={hyperLinkValue}
+            <div style={{margin: '10px 0', textAlign: 'end'}}>
+                <Input onBlur={handleLinkInputBlur} autoFocus  type="text" name={'hyperLink'} value={hyperLinkValue}
                        onChange={handleHyperLinkChange}/>
                 <LinkBtn type={'button'} onClick={CreateArticleContext.confirmLink}>Add</LinkBtn>
                 <LinkBtn type={'button'} style={{color: '#F05050', width: '90px'}}

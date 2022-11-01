@@ -6,7 +6,8 @@ const Articles = db.define('articles', {
     text:DataTypes.TEXT,
     description:DataTypes.STRING(240),
     previewDescription:DataTypes.STRING(95),
-    mainImg:DataTypes.STRING,
+    coverImg_withText:DataTypes.STRING,
+    coverImg_withOutText:DataTypes.STRING,
     usersLiked: {
         type:DataTypes.ARRAY(DataTypes.INTEGER),
     }, // ID OF USERS WHO LIKED THE ARTICLE
@@ -16,8 +17,6 @@ const Articles = db.define('articles', {
     usersViewed:{
         type:DataTypes.ARRAY(DataTypes.INTEGER),
     }, // ID OF USERS WHO LIKED VIEWED THE ARTICLE,
-    categories:DataTypes.STRING,
-    keys:DataTypes.ARRAY(DataTypes.STRING)
 })
 const Comments = db.define('comments', {
     text:DataTypes.STRING(100),
@@ -49,12 +48,6 @@ const Categories = db.define('categories', {
 }, {
     timestamps:false
 })
-const Keys = db.define('keys', {
-    name:DataTypes.STRING
-}, {
-    timestamps:false
-})
-
 const RefreshTokens = db.define('refresh_tokens', {
     token:DataTypes.STRING
 })
@@ -75,6 +68,5 @@ module.exports = {
     Comments,
     Users,
     Categories,
-    Keys,
     RefreshTokens
 }

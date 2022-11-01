@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-export const TransparentLink = styled.a`
+export const TransparentHyperLink = styled.a`
     margin: 0;
   padding: 0;
 `

@@ -1,4 +1,5 @@
 import {
+    ArrContainer,
     Card,
     CarouselContainer,
     CarouselWindow,
@@ -6,8 +7,7 @@ import {
     StyledActiveArrLeft,
     StyledActiveArrRight,
     StyledLink,
-    Wrapper,
-    ArrContainer
+    Wrapper
 } from './Carousel.styles'
 import {useEffect, useRef, useState} from "react";
 import {useAppSelector} from "../../../redux/hooks/hooks";
@@ -21,7 +21,7 @@ export const Carousel = (props: Props) => {
         const firstArticleRef = useRef() as React.MutableRefObject<HTMLAnchorElement>;
         const observerFramesRef = useRef() as React.MutableRefObject<HTMLDivElement>
         const [translation, setTranslation] = useState(0)
-    const [touchPosition, setTouchPosition] = useState<null | number>(null)
+        const [touchPosition, setTouchPosition] = useState<null | number>(null)
         const articlesData = useAppSelector(state => state.articles.articles)
         const PAGEWIDTH = 100
 
@@ -81,34 +81,38 @@ export const Carousel = (props: Props) => {
             })
 
         }
-        function handleTouchStart(e:any) {
+
+        function handleTouchStart(e: any) {
             document.body.style.overflowY = "hidden";
             const touchDown = e.touches[0].clientX
             setTouchPosition(touchDown)
         }
-function handleTouchMove(e:any) {
-    const touchDown = touchPosition
 
-    if(touchDown === null) {
-        return
-    }
+        function handleTouchMove(e: any) {
+            const touchDown = touchPosition
 
-    const currentTouch = e.touches[0].clientX
-    const diff = touchDown - currentTouch
+            if (touchDown === null) {
+                return
+            }
 
-    if (diff > 5) {
-        handleRightClickMob()
-    }
+            const currentTouch = e.touches[0].clientX
+            const diff = touchDown - currentTouch
 
-    if (diff < -5) {
-        handleLeftClickMob()
-    }
+            if (diff > 5) {
+                handleRightClickMob()
+            }
 
-    setTouchPosition(null)
-}
-function handleTouchEnd() {
-    document.body.style.overflowY = "auto";
-}
+            if (diff < -5) {
+                handleLeftClickMob()
+            }
+
+            setTouchPosition(null)
+        }
+
+        function handleTouchEnd() {
+            document.body.style.overflowY = "auto";
+        }
+
         const Articles = articlesData.map((el, index) => {
             const pathData = [{
                 pathName: 'Home',
@@ -116,22 +120,25 @@ function handleTouchEnd() {
             },
             ]
             if (index === +articlesData.length - 1) {
-                return <StyledLink translation={translation} ref={lastArticleRef} key={el.id} to={`/article/${encodeURI(el.header)}`}
+                return <StyledLink translation={translation} ref={lastArticleRef} key={el.id}
+                                   to={`/article/${encodeURI(el.header)}`}
                                    state={pathData}>
-                    <Card isThereOnlyOneItem={articlesData.length <= 1} id={`${el.id}`} imgSrc={el.mainImg}>
+                    <Card isThereOnlyOneItem={articlesData.length <= 1} id={`${el.id}`} imgSrc={el.coverImg_withOutText || el.coverImg_withText}>
                         <p>{el.header}</p>
                     </Card>
                 </StyledLink>
             } else if (index === 0) {
-                return <StyledLink translation={translation} ref={firstArticleRef} key={el.id} to={`/article/${encodeURI(el.header)}`}
+                return <StyledLink translation={translation} ref={firstArticleRef} key={el.id}
+                                   to={`/article/${encodeURI(el.header)}`}
                                    state={pathData}>
-                    <Card isThereOnlyOneItem={articlesData.length <= 1} id={`${el.id}`} imgSrc={el.mainImg}>
+                    <Card isThereOnlyOneItem={articlesData.length <= 1} id={`${el.id}`} imgSrc={el.coverImg_withOutText || el.coverImg_withText}>
                         <p>{el.header}</p>
                     </Card>
                 </StyledLink>
             } else {
-                return <StyledLink translation={translation} key={el.id} to={`/article/${encodeURI(el.header)}`} state={pathData}>
-                    <Card isThereOnlyOneItem={articlesData.length <= 1} id={`${el.id}`} imgSrc={el.mainImg}>
+                return <StyledLink translation={translation} key={el.id} to={`/article/${encodeURI(el.header)}`}
+                                   state={pathData}>
+                    <Card isThereOnlyOneItem={articlesData.length <= 1} id={`${el.id}`} imgSrc={el.coverImg_withOutText || el.coverImg_withText}>
                         <p>{el.header}</p>
                     </Card>
                 </StyledLink>
@@ -139,17 +146,19 @@ function handleTouchEnd() {
         })
 
         return <Wrapper>
-            <CarouselContainer onTouchEnd={handleTouchEnd} onTouchStart={handleTouchStart} onTouchMove={handleTouchMove} >
+            <CarouselContainer onTouchEnd={handleTouchEnd} onTouchStart={handleTouchStart} onTouchMove={handleTouchMove}>
                 <CarouselWindow isThereOnlyOneItem={articlesData.length <= 1} ref={observerFramesRef}>
                     {Articles}
                 </CarouselWindow>
             </CarouselContainer>
             {(articlesData.length > 1 && !isMobile) && <Controls>
-             <ArrContainer onClick={!isFirstArticleVisible ? handleLeftClick : undefined} unactive={isFirstArticleVisible === true}>
-                    <StyledActiveArrLeft />
-             </ArrContainer>
-                <ArrContainer onClick={!isLastArticleVisible ? handleRightClick : undefined} unactive={isLastArticleVisible === true}>
-                    <StyledActiveArrRight />
+                <ArrContainer onClick={!isFirstArticleVisible ? handleLeftClick : undefined}
+                              unactive={isFirstArticleVisible === true}>
+                    <StyledActiveArrLeft/>
+                </ArrContainer>
+                <ArrContainer onClick={!isLastArticleVisible ? handleRightClick : undefined}
+                              unactive={isLastArticleVisible === true}>
+                    <StyledActiveArrRight/>
                 </ArrContainer>
             </Controls>
             }

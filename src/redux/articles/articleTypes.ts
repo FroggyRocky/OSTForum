@@ -1,4 +1,5 @@
 import {IUser} from "../user/userType";
+import {ContentBlock} from "draft-js";
 
 export interface ICategory {
     id: number,
@@ -13,12 +14,14 @@ export interface IComments {
     createdAt: string,
     user: IUser // comment creator
 }
+
 export interface IArticlesPreview {
     id: number,
     header: string,
-    previewDescription:string,
+    previewDescription: string,
     description: string,
-    mainImg: string,
+    coverImg_withText: string,
+    coverImg_withOutText: string,
     keys: Array<string>,
     usersLiked: Array<number>
     usersDisliked: Array<number>
@@ -36,8 +39,17 @@ export interface IArticle extends IArticlesPreview {
 export interface ICreatedArticle {
     header: string,
     description: string,
-    previewDescription:string,
-    mainImg: string,
+    previewDescription: string,
+    coverImg_withText: string,
     text: string,
-    category: string
+    categoryId: number | undefined
+}
+
+export interface IEditingArticle {
+    editorState: {
+        contentBlocks: ContentBlock[],
+        entityMap: any
+    },
+    coverImg_withText:string,
+    coverImg_withOutText:string
 }

@@ -8,3 +8,4 @@ export interface IUser {
     avatar:string,
     articles:IArticlesPreview[]
 }
+

@@ -102,8 +102,7 @@ class Auth {
     async compileConfigs(req, res) {
         try {
             const categories = await db.Categories.findAll()
-            const keys = await db.Keys.findAll()
-            res.status(200).send({categories:categories, keys:keys})
+            res.status(200).send({categories:categories})
         } catch (e) {
             res.sendStatus(500)
             console.log(e)

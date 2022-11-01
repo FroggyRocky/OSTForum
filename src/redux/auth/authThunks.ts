@@ -4,6 +4,7 @@ import {fetchAccountData} from "../user/userThunks";
 import {IUserLogin} from './authTypes'
 import {authAPI} from "../../api/authAPI";
 import {AxiosError} from "axios";
+import {fetchArticles} from "../articles/articlesThunks";
 
 export const loginUser = (data: IUserLogin) => async (dispatch: AppDispatch) => {
     const res = await authAPI.login(data)
@@ -28,6 +29,7 @@ export const auth = () => async (dispatch: AppDispatch) => {
             await dispatch(fetchAccountData())
         }
         await dispatch(fetchConfigs())
+        await dispatch(fetchArticles())
         dispatch(authSlice.actions.setInitializerState(true))
     } catch (e) {
         const err = e as AxiosError

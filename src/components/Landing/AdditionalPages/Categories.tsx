@@ -1,7 +1,7 @@
 import styled from "styled-components";
-import {Flex} from '../../commonStyles/Flex.styled'
-import {Wrapper} from "../../commonStyles/Wrapper.styled";
-import {Content} from "../../commonStyles/Content.styled";
+import {Flex} from '../../common/commonStyles/Flex.styled'
+import {Wrapper} from "../../common/commonStyles/Wrapper.styled";
+import {Content} from "../../common/commonStyles/Content.styled";
 import {ReactElement, useState} from "react";
 import {TgButton} from "../../common/TgButton";
 

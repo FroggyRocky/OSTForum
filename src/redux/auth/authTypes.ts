@@ -3,10 +3,6 @@ export interface IUserLogin {
     password:string
 }
 
-interface Keys {
-    id:number,
-    name:string
-}
 interface Categories {
     id:number,
     name:string
@@ -14,5 +10,4 @@ interface Categories {
 
 export interface IConfigs {
     categories:Array<Categories>,
-    keys:Array<Keys>
 }

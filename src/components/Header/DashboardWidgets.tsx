@@ -1,7 +1,7 @@
 import { MdOutlineNotificationsActive } from "react-icons/md";
 import { IoChatboxEllipsesOutline } from "react-icons/io5";
 import styled from "styled-components";
-import {Flex} from "../commonStyles/Flex.styled";
+import {Flex} from "../common/commonStyles/Flex.styled";
 
 const Icon = styled.div`
 &:nth-child(2) {

@@ -1,10 +1,11 @@
 import {createSlice, PayloadAction} from '@reduxjs/toolkit'
-import {IArticle, IArticlesPreview, IComments, ICreatedArticle} from "./articleTypes";
+import {IArticle, IArticlesPreview, IComments, ICreatedArticle, IEditingArticle} from "./articleTypes";
 
 
 
 const initialState = {
     articles: [] as Array<IArticlesPreview>,
+    editingArticle:{} as IEditingArticle,
     currentArticle: null as IArticle | null,
     createdArticle: {},
     isArticleCreating: false,
@@ -38,8 +39,11 @@ export const articleSlice = createSlice({
         updateArticleComments(state,action:PayloadAction<Array<IComments>>) {
             if(!state.currentArticle) return
                 state.currentArticle.comments = action.payload
+        },
+        setEditingArticle(state,action:PayloadAction<IEditingArticle>) {
+            state.editingArticle = action.payload
         }
     }
 })
 
-export const {setArticleCreatedState, setArticleCreatingState, setCommonErr, updateArticleComments} = articleSlice.actions
+export const {setArticleCreatedState, setArticleCreatingState, setCommonErr, updateArticleComments, setEditingArticle} = articleSlice.actions

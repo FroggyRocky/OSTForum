@@ -1,6 +1,6 @@
 import styled, {css} from "styled-components";
-import {Wrapper} from "../commonStyles/Wrapper.styled";
-import {Content} from "../commonStyles/Content.styled";
+import {Wrapper} from "../common/commonStyles/Wrapper.styled";
+import {Content} from "../common/commonStyles/Content.styled";
 import {useState, useEffect} from "react";
 import {useAppDispatch, useAppSelector} from "../../redux/hooks/hooks";
 import {loginUser} from "../../redux/auth/authThunks";

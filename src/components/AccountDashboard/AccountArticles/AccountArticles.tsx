@@ -1,11 +1,11 @@
-import {H1} from '../../commonStyles/H1.styled'
+import {H1} from '../../common/commonStyles/H1.styled'
 import styled from 'styled-components'
 import {IoDocumentText} from "react-icons/io5";
-import {Flex} from "../../commonStyles/Flex.styled";
+import {Flex} from "../../common/commonStyles/Flex.styled";
 import {IArticlesPreview} from "../../../redux/articles/articleTypes";
 import {AccountArticleCard} from "../../common/Cards/AccountArticleCard";
 import {Link} from "react-router-dom";
-import {Content} from "../../commonStyles/Content.styled";
+import {Content} from "../../common/commonStyles/Content.styled";
 
 const Button = styled.button`
   width: 100%;
@@ -39,7 +39,7 @@ export const AccountArticles = (props: Props) => {
         return <AccountArticleCard key={el.id} views={el.usersViewed.length} dislikes={el.usersDisliked.length}
                                    likes={el.usersLiked.length} header={el.header} description={el.description}
                                    comments={el.comments.length}
-                                   createdAt={el.createdAt} mainImg={el.mainImg} category={el.category.name}/>
+                                   createdAt={el.createdAt} coverImg_withText={el.coverImg_withText} category={el.category.name}/>
     })
 
     return <Content style={{padding: '30px 0 60px 0'}}>

@@ -3,7 +3,7 @@ const Sequelize = require('sequelize')
 class Articles {
     async getArticles(req, res) {
         const articles = await db.Articles.findAll({
-            attributes: {exclude: ['updatedAt', 'userId', 'text']},
+            attributes: {exclude: ['updatedAt', 'userId', 'text', 'categoryId']},
             include: [
                 {
                     model: db.Comments
@@ -55,13 +55,9 @@ class Articles {
             const accountId = req.accountId
             const data = {
                 ...req.body,
-
+                userId:accountId
             }
-            const response = await db.Articles.create(data, {
-                where: {
-                    userId: accountId
-                }
-            })
+            const response = await db.Articles.create(data)
             res.status(200).send(response)
         } catch (e) {
             console.log(e)
@@ -103,6 +99,7 @@ class Articles {
     }
     async createComment(req,res) {
         const commentData = req.body
+        commentData.userId = req.accountId
         try {
             await db.Comments.create(commentData)
             res.sendStatus(200)

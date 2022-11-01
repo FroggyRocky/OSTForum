@@ -1,7 +1,7 @@
 import styled, {css} from "styled-components";
 import {Carousel} from "./Carousel";
 import {IoChevronForwardOutline} from "react-icons/io5"
-import {mediaSizes} from "../../commonStyles/MediaSizes";
+import {mediaSizes} from "../../common/commonStyles/MediaSizes";
 import {useLocation} from "react-router-dom";
 import {useEffect} from "react";
 import {isMobile} from 'react-device-detect'

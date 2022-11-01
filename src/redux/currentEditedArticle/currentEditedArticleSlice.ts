@@ -6,7 +6,7 @@ import {createSlice, PayloadAction} from '@reduxjs/toolkit'
 const initialState = {
     header: '' as string,
     description: '' as string,
-    mainImg: '' as string,
+    coverImg_withText: '' as string,
     isArticleCreated: false as boolean,
     articleCreationErr: '' as string
 }
@@ -15,8 +15,8 @@ export const currentCreatedArticle = createSlice({
     name: 'currentEditedArticle',
     initialState,
     reducers: {
-        setMainImg(state, action: PayloadAction<string>) {
-            state.mainImg = action.payload
+        setCoverImg_withText(state, action: PayloadAction<string>) {
+            state.coverImg_withText = action.payload
         },
         setArticleCreationState(state, action: PayloadAction<boolean>) {
             state.isArticleCreated = action.payload
@@ -29,4 +29,4 @@ export const currentCreatedArticle = createSlice({
 })
 
 
-export const {setMainImg} = currentCreatedArticle.actions
+export const {setCoverImg_withText} = currentCreatedArticle.actions

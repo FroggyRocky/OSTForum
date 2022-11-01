@@ -1,5 +1,5 @@
 import styled, {css} from "styled-components";
-import {mediaSizes, firstPageMediaSizes} from "../../commonStyles/MediaSizes";
+import {mediaSizes, firstPageMediaSizes} from "../../common/commonStyles/MediaSizes";
 import {Link} from "react-router-dom";
 
 export const Wrapper = styled.div`

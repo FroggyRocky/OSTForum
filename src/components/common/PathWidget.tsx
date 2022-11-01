@@ -34,16 +34,25 @@ type Props = {
 
 export function PathWidget(props: Props) {
 
-    const historyPath = props.historyPath.map((el, index) => {
-        if (!props.targetPath && props.historyPath.length - 1 === index) {
-            return <Link to={el.path}>{el.pathName}</Link>
+    const historyPath = () => {
+        if (props.historyPath && props.historyPath.length) {
+            return props.historyPath.map((el, index) => {
+                if (!props.targetPath && props.historyPath.length - 1 === index) {
+                    return <Link to={el.path}>{el.pathName}</Link>
+                } else {
+                    return <>
+                        <Link to={el.path}>{el.pathName}</Link>
+                        <PathArrow>{`>`}</PathArrow>
+                    </>
+                }
+            })
         } else {
             return <>
-                <Link to={el.path}>{el.pathName}</Link>
+                <Link to='/'>Home</Link>
                 <PathArrow>{`>`}</PathArrow>
             </>
         }
-    })
+    }
 
-    return <Path>{historyPath}{props.targetPath}</Path>
+    return <Path>{historyPath()}{props.targetPath}</Path>
 }

@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import {mediaSizes} from "../commonStyles/MediaSizes";
+import {mediaSizes} from "../common/commonStyles/MediaSizes";
 const Container = styled.div`
   width: 100%;
   background-color: white;

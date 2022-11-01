@@ -1,13 +1,13 @@
-
 import styled from "styled-components";
-import {mediaSizes} from "../commonStyles/MediaSizes";
-
+import {mediaSizes} from "../common/commonStyles/MediaSizes";
+import { AiOutlineEdit } from "react-icons/ai";
 const HeaderContainer = styled.div`
   width: 100%;
   font-family: var(--family-text);
   font-size: 25px;
   line-height: 35px;
   color: #272727;
+  margin-top: 30px;
 `
 const HeaderBg = styled.div<{ image?: string }>`
   width: 100%;
@@ -66,15 +66,32 @@ background-color: white;
     color: #272727;
   }
 `
-
+const Edit = styled(AiOutlineEdit)`
+position: absolute;
+  z-index: 100;
+  right: 2%;
+  top: 5%;
+  color: #6FCB57;
+  cursor: pointer;
+  &:hover {
+    color: #F05050;
+  }
+`
 type Props = {
 header:string,
     description:string
-    articleCoverImg:string
+    articleCoverImg:string,
+    userId:number,
+    articleCreatorId:number,
+    edit:() => void
 };
+
 export const ArticleHeader = (props: Props) => {
     return   <HeaderContainer>
         <HeaderBg image={props.articleCoverImg}>
+            {+props.userId === +props.articleCreatorId &&
+                <Edit onClick={props.edit} size={45}/>
+            }
             <ImageBackDrop>
                 <Header>
                     <span>{props.header}</span>

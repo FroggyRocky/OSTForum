@@ -1,17 +1,20 @@
 import styled, {css, keyframes} from "styled-components";
-import {IoChevronDown} from 'react-icons/io5'
-import avatarEx from '../../assets/avatarEx.png'
-import {Flex} from "../commonStyles/Flex.styled";
+import {IoChevronDown, IoLogoFacebook} from 'react-icons/io5'
+import {Flex} from "../common/commonStyles/Flex.styled";
 import {IComments} from "../../redux/articles/articleTypes";
-import {mediaSizes} from "../commonStyles/MediaSizes";
+import {mediaSizes} from "../common/commonStyles/MediaSizes";
 import {calcDate} from "../../services/calcDate";
 import {ActionPanel} from "../common/ActionPanel";
-import {AiOutlineClose} from "react-icons/ai";
 import {useFormik} from "formik";
 import {useCreateCommentMutation, useDeleteCommentMutation, useGetArticleCommentsQuery} from "../../api/commentsAPI";
 import {ICreateCommentData} from "../../api/apiTypes";
 import {useState} from "react";
 import * as Yup from 'yup';
+import {AiFillTwitterCircle, AiOutlineClose} from "react-icons/ai";
+import {FaReddit} from "react-icons/fa";
+import {BiLinkAlt} from "react-icons/bi";
+import {useClickOutside} from "../../services/useClickOutside";
+
 
 const Container = styled.div`
   width: 100%;
@@ -76,12 +79,12 @@ const foldAnim = keyframes`
     position: absolute;
   }
 `
-const Cards = styled.div<{isCommentsFolded:boolean}>`
+const Cards = styled.div<{ isCommentsFolded: boolean }>`
   ${({isCommentsFolded}) => isCommentsFolded && css`
-  animation: ${unfoldAnim} 500ms ease-in forwards;
+    animation: ${unfoldAnim} 500ms ease-in forwards;
   `}
   ${({isCommentsFolded}) => !isCommentsFolded && css`
-  animation: ${foldAnim} 500ms ease-in-out forwards;
+    animation: ${foldAnim} 500ms ease-in-out forwards;
   `}
 `
 const Card = styled.div`
@@ -160,6 +163,7 @@ const StyledTextArea = styled.div`
   font-size: 16px;
   line-height: 16px;
   position: relative;
+
   & main {
     display: flex;
   }
@@ -185,6 +189,7 @@ const DeleteBtn = styled(AiOutlineClose)`
 `
 const ButtonContainer = styled(Flex)`
   position: relative;
+
   & button {
     text-align: center;
     line-height: 15px;
@@ -199,6 +204,7 @@ const ButtonContainer = styled(Flex)`
       background-color: grey;
     }
   }
+
   @media (max-width: ${mediaSizes.mobile}) {
     justify-content: center;
     flex-direction: column;
@@ -214,9 +220,86 @@ const Err = styled.p`
   left: 12%;
   @media (max-width: ${mediaSizes.mobile}) {
     position: static;
-    margin-top:15px;
+    margin-top: 15px;
   }
 `
+const ShareDropDown = styled.div`
+  background: #FFFFFF;
+  box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.15);
+  border-radius: 15px;
+  padding: 15px;
+  font-family: var(--family-text);
+  font-style: normal;
+  font-weight: 400;
+  font-size: 24px;
+  line-height: 13px;
+  color: #525252;
+  position: absolute;
+  z-index: 20;
+  margin-top: 10px;
+  user-select: none;
+  & > a {
+    display: flex;
+    align-items: center;
+    padding: 15px 0;
+    cursor: pointer;
+    color: #525252;
+&:visited {
+  color: #525252;
+}
+    & > p {
+      padding-left: 10px;
+    }
+  }
+  @media (max-width: ${mediaSizes.mobile}) {
+    display:none
+  }
+`
+const ShareModal = styled.div`
+  display: none;
+  @media(max-width: ${mediaSizes.mobile}) {
+    display: flex;
+    position: fixed;
+    width:100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    z-index: 200;
+    top: 0;
+    left: 0;
+    justify-content: center;
+    align-items: center;
+    overflow-y: hidden;
+    
+  }
+`
+const ShareModalContent = styled.div`
+background-color: white;
+  font-family: var(--family-text);
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 13px;
+  color: #525252;
+  height: 200px;
+  width: 90%;
+  padding:0 15px;
+  box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.15);
+  border-radius: 10px;
+  & > a {
+    padding: 15px 0;
+    color: #525252;
+    display: flex;
+    align-items: center;
+    cursor:pointer;
+    & > p {
+      margin-left: 10px;
+    }
+    &:visited {
+      color: #525252;
+    }
+  }
+  
+`
+
 type Props = {
     commentsData: IComments[],
     views: number,
@@ -225,101 +308,175 @@ type Props = {
     isAuth: boolean,
     userId: number,
     userAvatar: string,
-    articleId: number
+    articleId: number,
+    articleHeader: string,
 };
 export const ArticleComments = (props: Props) => {
 
     const [createComment, {isError: isCreateErr, isLoading: isCreateLoading}] = useCreateCommentMutation()
     const [deleteComment, {isError: isDeleteErr, isLoading: isDeleteLoading}] = useDeleteCommentMutation();
+    const [isShareDropDownOpen, setShareDropDownState] = useState(false)
+    const [isShareMobileModalOpen, setShareMobileModalState] = useState(false)
+    const [isLinkCopied, setLinkCopyState] = useState(false)
     const [isCommentsFolded, setCommentsSectionState] = useState(false)
-
-
+    const clickOutsideRef = useClickOutside(closeShareDropDown)
     const commentsValidation = Yup.object().shape({
-        comment:Yup.string()
+        comment: Yup.string()
             .required('Required')
             .min(2)
 
     })
-
+    function copyLink() {
+        try {
+            const url = window.location.href
+            navigator.clipboard.writeText(url);
+            setLinkCopyState(true)
+        } catch (e) {
+            console.log(e)
+        }
+    }
+    function closeShareModal(e:any) {
+        console.log(e.target.id === 'shareModal_bg')
+        if(e.target.id === 'shareModal_bg') {
+            setShareMobileModalState(false)
+        }
+    }
+    function closeShareDropDown() {
+        setShareDropDownState(false)
+    }
     const {isError: isFetchErr, isLoading: isFetchLoading} = useGetArticleCommentsQuery(props.articleId)
     const formik = useFormik({
         initialValues: {
             comment: ''
         },
-        validateOnChange:false,
-        validateOnBlur:true,
-        validationSchema:commentsValidation,
+        validateOnChange: false,
+        validateOnBlur: true,
+        validationSchema: commentsValidation,
         onSubmit: (values, {resetForm}) => {
             const commentData: ICreateCommentData = {
                 text: values.comment,
                 articleId: props.articleId,
-                userId: props.userId
             }
             createComment(commentData).unwrap()
                 .then(() => resetForm())
         }
     })
 
-    async function handleCommentDelete(commentId: number) {
-        deleteComment(commentId).unwrap();
-    }
 
     function toggleCommentsSection() {
         setCommentsSectionState(prev => !prev)
     }
-function handleBlur() {
-    if (!formik.values.comment) {
-        formik.setTouched({'comment':false})
-    }
-}
-    const comments = props.commentsData.map(el => {
-        const dateDifference = calcDate(el.createdAt)
-        return <Card key={el.id}>
-            {props.userId === el.user.id &&
-                <DeleteBtn onClick={() => handleCommentDelete(el.id)} color='#525252' size={15}/>}
-            <CardContent>
-                <Avatar src={el.user.avatar}/>
-                <Info>
-                    <header>
-                        <h1>{el.user.name}</h1>
-                        <span>&nbsp;|&nbsp;{dateDifference}</span>
-                    </header>
-                    <main>
-                        <p>{el.text}</p>
-                    </main>
-                </Info>
-            </CardContent>
-        </Card>
-    })
+    // async function handleCommentDelete(commentId: number) {
+    //     deleteComment(commentId).unwrap();
+    // }
+    // function handleBlur() {
+    //     if (!formik.values.comment) {
+    //         formik.setTouched({'comment': false})
+    //     }
+    // }
+    // const comments = props.commentsData.map(el => {
+    //     const dateDifference = calcDate(el.createdAt)
+    //     return <Card key={el.id}>
+    //         {props.userId === el.user.id &&
+    //             <DeleteBtn onClick={() => handleCommentDelete(el.id)} color='#525252' size={15}/>}
+    //         <CardContent>
+    //             <Avatar src={el.user.avatar}/>
+    //             <Info>
+    //                 <header>
+    //                     <h1>{el.user.name}</h1>
+    //                     <span>&nbsp;|&nbsp;{dateDifference}</span>
+    //                 </header>
+    //                 <main>
+    //                     <p>{el.text}</p>
+    //                 </main>
+    //             </Info>
+    //         </CardContent>
+    //     </Card>
+    // })
 
-    return <Container>
+    return <>
+        {isShareMobileModalOpen &&
+        <ShareModal id={'shareModal_bg'} onClick={closeShareModal}>
+            <ShareModalContent>
+                <a target="_blank" rel="noopener noreferrer"
+                   href={`https://twitter.com/intent/tweet?text=${props.articleHeader}&url=${encodeURI(window.location.href)}`}>
+                    <AiFillTwitterCircle color={'#58649C'} size={22}/>
+                    <p>Twitter</p>
+                </a>
+                <a target="_blank" rel="noopener noreferrer"
+                   href={`https://www.reddit.com/submit?url=${encodeURI(window.location.href)}&title=${props.articleHeader}`}>
+                    <FaReddit color={'#58649C'} size={22}/>
+                    <p>Reddit</p>
+                </a>
+                <a target="_blank" rel="noopener noreferrer"
+                   href={`https://www.facebook.com/sharer/sharer.php?u=${encodeURI(window.location.href)}&quote=${props.articleHeader}`}>
+                    <IoLogoFacebook color={'#58649C'} size={22}/>
+                    <p>Facebook</p>
+                </a>
+                <a onClick={copyLink}>
+                    <BiLinkAlt color={'#58649C'} size={22}/>
+                    <p>{isLinkCopied ? 'Copied!' : 'Copy link'}</p>
+                </a>
+            </ShareModalContent>
+        </ShareModal>
+    }
+    <Container>
+
         <Content>
             <Actions>
-                <h1 onClick={toggleCommentsSection}>Comments ({props.commentsData.length})
-                    {props.commentsData.length !==0 && <IoChevronDown style={{marginLeft: '3px', transform: `rotate(${isCommentsFolded ? '0deg' : '180deg'})`}}/> }
+                <h1 onClick={toggleCommentsSection}>
+                    {/*Comments ({props.commentsData.length})*/}
+                    {/*{props.commentsData.length !== 0 && <IoChevronDown*/}
+                    {/*    style={{marginLeft: '3px', transform: `rotate(${isCommentsFolded ? '0deg' : '180deg'})`}}/>}*/}
                 </h1>
-                <ActionPanel likes={props.likes} dislikes={props.dislikes} views={props.views}/>
+                <div style={{position: 'relative'}} ref={clickOutsideRef}>
+                    <ActionPanel setShareDropDownState={setShareDropDownState} likes={props.likes}
+                                 dislikes={props.dislikes} views={props.views} setShareMobileModalState={setShareMobileModalState} />
+                    {isShareDropDownOpen && <ShareDropDown>
+                        <a target="_blank" rel="noopener noreferrer"
+                           href={`https://twitter.com/intent/tweet?text=${props.articleHeader}&url=${encodeURI(window.location.href)}`}>
+                            <AiFillTwitterCircle color={'#58649C'} size={40}/>
+                            <p>Twitter</p>
+                        </a>
+                        <a target="_blank" rel="noopener noreferrer"
+                           href={`https://www.reddit.com/submit?url=${encodeURI(window.location.href)}&title=${props.articleHeader}`}>
+                            <FaReddit color={'#58649C'} size={40}/>
+                            <p>Reddit</p>
+                        </a>
+                        <a target="_blank" rel="noopener noreferrer"
+                           href={`https://www.facebook.com/sharer/sharer.php?u=${encodeURI(window.location.href)}&quote=${props.articleHeader}`}>
+                            <IoLogoFacebook color={'#58649C'} size={40}/>
+                            <p>Facebook</p>
+                        </a>
+                        <a href={'#'} onClick={copyLink}>
+                            <BiLinkAlt color={'#58649C'} size={40}/>
+                            <p>{isLinkCopied ? 'Copied!' : 'Copy link'}</p>
+                        </a>
+                    </ShareDropDown>
+                    }
+                </div>
             </Actions>
             {/*{!isCommentsFolded &&*/}
-                <Cards isCommentsFolded={isCommentsFolded}>
-                    {comments}
-                </Cards>
+            {/*    <Cards isCommentsFolded={isCommentsFolded}>*/}
+            {/*        {comments}*/}
+            {/*    </Cards>*/}
             {/*}*/}
-            {props.isAuth && <StyledTextArea>
-                <main>
-                    <Avatar display={'none'} src={props.userAvatar || avatarEx}/>
-                    <textarea onChange={formik.handleChange} value={formik.values.comment} placeholder='Leave a comment'
-                              name="comment" cols={30} onBlur={handleBlur}
-                              rows={10}></textarea>
-                </main>
-                <ButtonContainer justifyContent='end' alignItems={'center'}>
-                    {(formik.errors.comment && formik.touched.comment) && <Err>{formik.errors.comment}</Err>}
-                    {(isCreateErr || isFetchErr) && <Err>{'Something went wrong, try to publish the post later'}</Err>}
-                <button onClick={formik.submitForm} style={{cursor:'pointer'}}
-                        disabled={isFetchLoading || isCreateLoading}>{isFetchLoading || isCreateLoading ? 'Loading...' : 'Post'}</button>
-            </ButtonContainer>
-            </StyledTextArea>
-            }
+            {/*{props.isAuth && <StyledTextArea>*/}
+            {/*    <main>*/}
+            {/*        <Avatar display={'none'} src={props.userAvatar || avatarEx}/>*/}
+            {/*        <textarea onChange={formik.handleChange} value={formik.values.comment} placeholder='Leave a comment'*/}
+            {/*                  name="comment" cols={30} onBlur={handleBlur}*/}
+            {/*                  rows={10}></textarea>*/}
+            {/*    </main>*/}
+            {/*    <ButtonContainer justifyContent='end' alignItems={'center'}>*/}
+            {/*        {(formik.errors.comment && formik.touched.comment) && <Err>{formik.errors.comment}</Err>}*/}
+            {/*        {(isCreateErr || isFetchErr) && <Err>{'Something went wrong, try to publish the post later'}</Err>}*/}
+            {/*    <button onClick={formik.submitForm} style={{cursor:'pointer'}}*/}
+            {/*            disabled={isFetchLoading || isCreateLoading}>{isFetchLoading || isCreateLoading ? 'Loading...' : 'Post'}</button>*/}
+            {/*</ButtonContainer>*/}
+            {/*</StyledTextArea>*/}
+            {/*}*/}
         </Content>
     </Container>
+    </>
 };

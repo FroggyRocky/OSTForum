@@ -11,7 +11,7 @@ const withAuthInstance = axios.create({
     baseURL: serverURL,
     withCredentials:true,
     headers: {
-        'xxx-auth-token': `Bearer ${window.localStorage.getItem('MyClickToken')}`,
+        'Authorization': `Bearer ${window.localStorage.getItem('MyClickToken')}`,
     }
 })
 

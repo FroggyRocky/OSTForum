@@ -1,4 +1,4 @@
-import {Flex} from "../../commonStyles/Flex.styled";
+import {Flex} from "../commonStyles/Flex.styled";
 import styled from "styled-components";
 import {StatisticsPanel} from "../StatisticsPanel";
 import {IoTimeOutline} from "react-icons/io5";

@@ -1,23 +1,25 @@
-import {createContext, useRef, useState} from "react";
-import {H1} from '../../commonStyles/H1.styled'
+import {createContext, useEffect, useRef, useState} from "react";
+import {H1} from '../../common/commonStyles/H1.styled'
 import {useFormik} from "formik";
 import {ArticleEditor} from "./ArticleEditor/ArticleEditor";
-import {Content} from "../../commonStyles/Content.styled";
+import {Content} from "../../common/commonStyles/Content.styled";
 import {FaFileImage} from "react-icons/fa";
 import {BsFillCheckCircleFill} from "react-icons/bs";
+import {BsFileEarmarkRichtextFill} from "react-icons/bs";
 import {convertToHTML} from 'draft-convert';
-import {AtomicBlockUtils, convertToRaw, EditorState, RichUtils} from "draft-js";
+import {AtomicBlockUtils, convertToRaw, EditorState, RichUtils, ContentState} from "draft-js";
 import {useAppDispatch, useAppSelector} from "../../../redux/hooks/hooks";
 import articlesAPI from "../../../api/articlesAPI";
 import {AiOutlineClose} from "react-icons/ai";
 import {ModalWindow} from "../../common/ModalWindow";
 import {setArticleCreatedState, setArticleCreatingState, setCommonErr} from "../../../redux/articles/articlesSlice";
 import {createArticle} from "../../../redux/articles/articlesThunks";
-import {AddArticleButton, AddImgBtn, BreakingLine, Form} from './createArticle.styles'
+import {AddArticleButton, AddImgWithTextBtn,AddImgWithOutTextBtn, BreakingLine, Form, CoversContainer} from './createArticle.styles'
 import {CustomTextAreaWithCounter} from "../../common/Forms/CustomTextAreaWithCounter";
 import {CustomInputWithCounter} from "../../common/Forms/CustomInputWithCounter";
 import {RiImageAddFill} from "react-icons/ri";
 import * as Yup from 'yup';
+import {useSearchParams} from "react-router-dom";
 
 export const CreateArticlePageContext = createContext<any>('')
 
@@ -30,11 +32,26 @@ export function CreateArticle(props: Props) {
         () => EditorState.createEmpty(),
     );
     const isArticleCreated = useAppSelector(state => state.articles.isArticleCreated)
+    const editingArticle = useAppSelector(state => state.articles.editingArticle)
     const err = useAppSelector(state => state.articles.commonError)
     const dispatch = useAppDispatch()
     const [isAddLinkInputOpen, setAddLinkInputState] = useState(false)
-    const fileInputRef = useRef() as React.MutableRefObject<HTMLInputElement>;
-    const [isAttaching, setImgAttachmentState] = useState(false)
+    const fileWithTextInputRef = useRef() as React.MutableRefObject<HTMLInputElement>;
+    const fileWithOutTextInputRef = useRef() as React.MutableRefObject<HTMLInputElement>;
+    const [isImgWithTextAttaching, setImgWithTextAttachmentState] = useState(false);
+    const [isImgWithOutTextAttaching, setImgWithOutTextAttachmentState] = useState(false)
+    const categories = useAppSelector(state => state.auth.configs.categories)
+    useEffect( () => {
+        const location = window.location.search
+        const id = new URLSearchParams(location).get('id');
+        if(id && Object.keys(editingArticle).length !== 0) {
+            const newState = ContentState.createFromBlockArray(
+                editingArticle.editorState.contentBlocks,
+                editingArticle.editorState.entityMap
+            )
+            setEditorState(EditorState.createWithContent(newState))
+        }
+    },[editingArticle,window.location.search])
     const CreateArticleSchema = Yup.object().shape({
         header: Yup.string()
             .min(1)
@@ -54,7 +71,11 @@ export function CreateArticle(props: Props) {
             description: '',
             previewDescription: '',
             category: '',
-            mainImg: {
+            coverImg_withText: {
+                file: '',
+                src: ''
+            },
+            coverImg_withOutText: {
                 file: '',
                 src: ''
             },
@@ -122,12 +143,18 @@ export function CreateArticle(props: Props) {
 
     async function onAddArticle() {
         dispatch(setArticleCreatingState(true))
-        const {header, description, previewDescription, mainImg, category} = formik.values
-        if (mainImg.file) {
+        const {header, description, previewDescription, coverImg_withText, coverImg_withOutText, category, } = formik.values
+        if (coverImg_withText.file) {
             const fd2 = new FormData()
-            fd2.append('file', mainImg.file)
+            fd2.append('file', coverImg_withText.file)
             const s3 = await articlesAPI.uploadImage(fd2)
-            mainImg.src = s3.data
+            coverImg_withText.src = s3.data
+        }
+        if(coverImg_withOutText.file) {
+            const fd2 = new FormData()
+            fd2.append('file', coverImg_withOutText.file)
+            const s3 = await articlesAPI.uploadImage(fd2)
+            coverImg_withOutText.src = s3.data
         }
         const contentState = await editorState.getCurrentContent()
         const entityKeys = convertToRaw(contentState).entityMap
@@ -151,8 +178,9 @@ export function CreateArticle(props: Props) {
             header,
             description,
             previewDescription,
-            mainImg: mainImg.src,
-            category,
+            coverImg_withText: coverImg_withText.src,
+            coverImg_withOutText:coverImg_withOutText.src,
+            categoryId: categories.find(el => el.name === category)?.id,
             text: html
         }
         dispatch(createArticle(data))
@@ -177,8 +205,10 @@ export function CreateArticle(props: Props) {
             reader.onloadend = async () => {
                 const src = await reader.result
                 if (src) {
-                    if (name === 'mainImg') {
-                        formik.setFieldValue('mainImg', {src: src, file: files[0]})
+                    if (name === 'coverImg_withText') {
+                        formik.setFieldValue('coverImg_withText', {src: src, file: files[0]})
+                    } else if(name === 'coverImg_withOutText') {
+                        formik.setFieldValue('coverImg_withOutText', {src: src, file: files[0]})
                     } else {
                         if (src) return pasteImg(src.toString(), files[0])
                     }
@@ -187,10 +217,16 @@ export function CreateArticle(props: Props) {
         }
     }
 
-    function deleteMainImg() {
+    function deleteCoverImg_withText(e:any) {
+        const id = e.currentTarget.id
         setTimeout(() => {
-            formik.setFieldValue('mainImg', {src: '', file: ''})
-            setImgAttachmentState(false)
+            if(id === 'withText') {
+                formik.setFieldValue('coverImg_withText', {src: '', file: ''})
+                setImgWithTextAttachmentState(false)
+            } else if (id === 'withOutText') {
+                formik.setFieldValue('coverImg_withOutText', {src: '', file: ''})
+                setImgWithOutTextAttachmentState(false)
+            }
         }, 0)
 
     }
@@ -205,33 +241,56 @@ export function CreateArticle(props: Props) {
     function closeErrModal() {
         dispatch(setCommonErr(''))
     }
-function imgDrop(e:any) {e.preventDefault()
-    let imgFile = e.dataTransfer.files[0]
-    if(imgFile) {
-        const reader = new FileReader()
-        reader.readAsDataURL(imgFile)
-        reader.onload = () => {
-            formik.setFieldValue('mainImg', {src: reader.result, file: imgFile})
+
+    function imgDrop(e: any) {
+        e.preventDefault()
+        const id = e.currentTarget.id
+        console.log(id);
+        let imgFile = e.dataTransfer.files[0]
+        if (imgFile) {
+            const reader = new FileReader()
+            reader.readAsDataURL(imgFile)
+            console.log(e.currentTarget.id)
+            reader.onload = () => {
+                if(id === 'withText') {
+                    formik.setFieldValue('coverImg_withText', {src: reader.result, file: imgFile})
+                } else if (id === 'withOutText') {
+                    formik.setFieldValue('coverImg_withOutText', {src: reader.result, file: imgFile})
+                }
+            }
         }
     }
-}
-function dragLeave(e:any) {
+
+    function dragLeave(e: any) {
         e.preventDefault()
-    setImgAttachmentState(false)
+        const id = e.currentTarget.id
+        if(id === 'withText') {
+            setImgWithTextAttachmentState(false)
+        } else if (id === 'withOutText') {
+            setImgWithOutTextAttachmentState(false)
+        }
+
     }
-    function dragOver(e:any) {
+
+    function dragOver(e: any) {
         e.preventDefault()
     }
-    function dragEnter(e:any) {
+
+    function dragEnter(e: any) {
         e.preventDefault()
-        setImgAttachmentState(true)
+        const id = e.currentTarget.id
+        if(id === 'withText') {
+            setImgWithTextAttachmentState(true)
+        } else if (id === 'withOutText') {
+            setImgWithOutTextAttachmentState(true)
+        }
     }
 
     return <>
         {isArticleCreated === true && <ModalWindow smallModal={true} closeModal={closeModal} header={'Success'}
                                                    text='Article successfully created'/>}
         {err && <ModalWindow smallModal={true} closeModal={closeErrModal} header={'Failure'}
-                             text={err} />}
+                             text={err}/>}
         <Content style={{padding: '60px 0'}}>
             <H1 style={{textAlign: 'center'}}>Add new articles</H1>
             <Form>
@@ -246,26 +305,52 @@ function dragLeave(e:any) {
                                            currentValueLength={formik.values.description.length} name='description'
                                            handleChange={formik.handleChange}
                                            placeholder='Description' maxLength={240}/>
-                <label htmlFor="upload">
-                    <AddImgBtn onDragEnter={dragEnter} onDrop={imgDrop} onDragOver={dragOver}
-                               onDragLeave={dragLeave} flexDirection='column'
-                               imgSrc={formik.values.mainImg.src || ''} isAttaching={isAttaching}>
-                        {!formik.values.mainImg.src && <input ref={fileInputRef} name='mainImg' onChange={onAddImg}
-                                                              style={{display: 'none'}}
-                                                              type="file" accept='image/*' id={'upload'}/>
+                <CoversContainer>
+                <label htmlFor="uploadWithText">
+                    <AddImgWithTextBtn onDragEnter={dragEnter} onDrop={imgDrop} onDragOver={dragOver}
+                               onDragLeave={dragLeave} flexDirection='column' id={'withText'}
+                               imgSrc={formik.values.coverImg_withText.src || ''} isAttaching={isImgWithTextAttaching}>
+                        {!formik.values.coverImg_withText.src &&
+                            <input ref={fileWithTextInputRef} name='coverImg_withText' onChange={onAddImg}
+                                   style={{display: 'none'}}
+                                   type="file" accept='image/*' id={'uploadWithText'}/>
                         }
-                        {formik.values.mainImg.src &&
+                        {formik.values.coverImg_withText.src &&
                             <AiOutlineClose style={{position: 'absolute', left: '93%', top: '5%'}}
-                                            color='#F05050' size={30} onClick={deleteMainImg}/>}
-                        {isAttaching && !formik.values.mainImg.src && <RiImageAddFill color='#525252' size={120}/>}
-                        {!formik.values.mainImg.src && !isAttaching && <>
-                            <FaFileImage color='#525252' opacity='0.5' size={120}/>
-                            <p>Add image</p>
+                                            color='#F05050' size={30} id={'withText'} onClick={deleteCoverImg_withText}/>}
+                        {isImgWithTextAttaching && !formik.values.coverImg_withText.src &&
+                            <RiImageAddFill color='#525252' size={120}/>}
+                        {!formik.values.coverImg_withText.src && !isImgWithTextAttaching && <>
+                            <BsFileEarmarkRichtextFill color='#525252' opacity='0.5' size={120}/>
+                            <p>Add preview image <b>with text</b></p>
                             <p>min. size - 1170x439</p>
                         </>
                         }
-                    </AddImgBtn>
+                    </AddImgWithTextBtn>
                 </label>
+                <label htmlFor="uploadWithOutText">
+                    <AddImgWithOutTextBtn onDragEnter={dragEnter} onDrop={imgDrop} onDragOver={dragOver}
+                               onDragLeave={dragLeave} flexDirection='column' id={'withOutText'}
+                               imgSrc={formik.values.coverImg_withOutText.src || ''} isAttaching={isImgWithOutTextAttaching}>
+                        {!formik.values.coverImg_withOutText.src &&
+                            <input ref={fileWithOutTextInputRef} name='coverImg_withOutText' onChange={onAddImg}
+                                   style={{display: 'none'}}
+                                   type="file" accept='image/*' id={'uploadWithOutText'}/>
+                        }
+                        {formik.values.coverImg_withOutText.src &&
+                            <AiOutlineClose style={{position: 'absolute', left: '93%', top: '5%'}}
+                                            color='#F05050' size={30} onClick={deleteCoverImg_withText} id={'withOutText'} />}
+                        {isImgWithOutTextAttaching && !formik.values.coverImg_withText.src &&
+                            <RiImageAddFill color='#525252' size={120}/>}
+                        {!formik.values.coverImg_withOutText.src && !isImgWithOutTextAttaching && <>
+                            <FaFileImage color='#525252' opacity='0.5' size={120}/>
+                            <p>Add preview image <b>without text</b></p>
+                            <p>min. size - 1170x439</p>
+                        </>
+                        }
+                    </AddImgWithOutTextBtn>
+                </label>
+                </CoversContainer>
             </Form>
         </Content>
         <BreakingLine/>
