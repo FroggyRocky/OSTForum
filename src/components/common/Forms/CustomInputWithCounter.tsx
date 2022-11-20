@@ -1,5 +1,8 @@
 import styled, {css} from 'styled-components'
+import {ErrorMessage} from "../../AccountDashboard/AccountArticles/createArticle.styles";
+const Container = styled.div`
 
+`
 const InputContained = styled.div`
     position: relative;
 `
@@ -37,12 +40,16 @@ type Props = {
     maxLength:number,
     inputType?:string,
     currentValueLength:number,
-    value:string
+    value:string,
+    error:string | undefined
 };
 
 export const CustomInputWithCounter = (props: Props) => {
-    return  <InputContained>
+    return <Container>
+    <InputContained>
         <Input name={props.name} value={props.value}  onChange={props.handleChange} placeholder={props.placeholder} maxLength={props.maxLength} />
         <Counter isLimitAchieved={props.currentValueLength === props.maxLength}>{props.currentValueLength}/{props.maxLength}</Counter>
     </InputContained>
+        {props.error && <ErrorMessage style={{marginTop:'30px'}}>{props.error}</ErrorMessage>}
+    </Container>
 };

@@ -17,6 +17,9 @@ const HeaderBg = styled.div<{ image?: string }>`
   background-repeat: no-repeat;
   position: relative;
   border-radius: 20px 20px 0 0;
+  @media (max-width: 1400px) {
+    height: 100%;
+  }
   @media(max-width: ${mediaSizes.mobile}) {
     height: 142px;
     width:100%;
@@ -71,7 +74,7 @@ position: absolute;
   z-index: 100;
   right: 2%;
   top: 5%;
-  color: #6FCB57;
+  color: darkred;
   cursor: pointer;
   &:hover {
     color: #F05050;

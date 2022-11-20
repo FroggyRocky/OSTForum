@@ -1,17 +1,19 @@
 // @flow
 import * as React from 'react';
-import {useState} from 'react';
+import {useCallback, useState} from 'react';
 import {IoSearch} from 'react-icons/io5'
 import {Flex} from "../common/commonStyles/Flex.styled";
-import styled from "styled-components";
+import styled, {css} from "styled-components";
 import {ReactComponent as Close} from "../../assets/closeBurger.svg";
 import {useAppSelector} from "../../redux/hooks/hooks";
 import {NavLink} from "react-router-dom";
 import {IArticlesPreview} from "../../redux/articles/articleTypes";
 import {useClickOutside} from "../../services/useClickOutside";
-
+import {mediaSizes} from "../common/commonStyles/MediaSizes";
+import {isMobile} from "react-device-detect";
 const Wrapper = styled.div`
   position: relative;
+  z-index:5;
 `
 const IconContainer = styled(Flex)`
   width: 30px;
@@ -24,9 +26,8 @@ const Input = styled.input`
   height: 30px;
   border-radius: 5px;
   padding-left: 10px;
-
   &::placeholder {
-    font-family: 'Gotham Pro', sans-serif;
+    font-family: var(--family-text);
     font-weight: 400;
     font-size: 14px;
     line-height: 15px;
@@ -38,7 +39,7 @@ const Input = styled.input`
   }
 
 `
-const SearchDropDown = styled.div`
+const SearchDropDown = styled.div<{ismobile:boolean}>`
   background-color: white;
   color: black;
   font-family: var(--family-text);
@@ -51,21 +52,28 @@ const SearchDropDown = styled.div`
   top: 150%;
   right: 0;
   border-radius: 10px;
-  overflow-y: auto;
-
-  &::-webkit-scrollbar {
-    width: 5px;
-    margin: 0;
-    border: none;
+  overflow-y: scroll;
+  @media (max-width: ${mediaSizes.mobile}) {
+    width: 260px;
+    z-index: 5;
+    overflow-y: auto;
   }
+  ${({ismobile}) => !ismobile && css`
+    &::-webkit-scrollbar {
+      width: 5px;
+      margin: 0;
+      border: none;
+    }
 
-  &::-webkit-scrollbar-track {
-    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
-  }
+    &::-webkit-scrollbar-track {
+      -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+    }
 
-  &::-webkit-scrollbar-thumb {
-    background-color: darkgrey;
-  }
+    &::-webkit-scrollbar-thumb {
+      background-color: darkgrey;
+    }
+  `}
+ 
 `
 const NoMatchedFound = styled.p`
     font-family: var(--family-header);
@@ -73,28 +81,34 @@ const NoMatchedFound = styled.p`
   text-align: center;
   margin-top: 18%;
 `
-const SearchDropDownContent = styled.div`
+const SearchDropDownContent = styled.div<{ismobile:boolean}>`
   padding: 5px 0px;
   color: black;
   text-decoration: none;
   & > a {
+    color: black;
+    position: relative;
+    z-index: 15;
     text-decoration: none;
     display: block;
     color: black;
     font-family: var(--family-text);
-    white-space: nowrap;
     overflow-x: hidden;
     text-overflow: ellipsis;
+    white-space:nowrap;
+    min-width: 0;
     cursor: pointer;
     padding: 10px 0 10px 10px;
     border-radius: 10px;
   }
   
-
+${({ismobile}) => !ismobile && css `
   & > a:hover {
     background-color: #D9E3EC;
     font-weight: bold;
   }
+`}
+ 
 
 `
 
@@ -143,22 +157,22 @@ function handleFocus() {
             setSearchDropDownState(true)
         }
 }
-   const Articles = () => {
-        if(filteredArticles && filteredArticles?.length > 0) {
+   const Articles = useCallback(() => {
+       if(filteredArticles && filteredArticles?.length > 0) {
            return filteredArticles.map(el => {
-                const pathData = [{
-                    pathName: 'Home',
-                    path: '/'
-                },
-                ]
-                return <NavLink key={el.id} state={pathData} to={`/article/${encodeURI(el.header)}`}>
-                    {el.header}
-                </NavLink>
-            })
-        } else {
-            return <NoMatchedFound>NO MATCHES FOUND</NoMatchedFound>
-        }
-   }
+               const pathData = [{
+                   pathName: 'Home',
+                   path: '/'
+               },
+               ]
+               return <NavLink key={el.id} state={pathData} to={`/article/${el.id}`}>
+                   {el.header}
+               </NavLink>
+           })
+       } else {
+           return <NoMatchedFound>NO MATCHES FOUND</NoMatchedFound>
+       }
+   }, [filteredArticles])
     return (<Wrapper>
             <div ref={clickOutsideRef}>
             <Flex>
@@ -173,8 +187,8 @@ function handleFocus() {
                     </IconContainer>
                 }
             </Flex>
-            {isSearchDropDownOpen && <SearchDropDown>
-                <SearchDropDownContent>
+            {isSearchDropDownOpen && <SearchDropDown ismobile={isMobile}>
+                <SearchDropDownContent ismobile={isMobile} >
                     {Articles()}
                 </SearchDropDownContent>
             </SearchDropDown>}

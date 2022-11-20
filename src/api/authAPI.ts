@@ -1,6 +1,6 @@
 import axios from "axios";
 import {serverURL} from "./URL";
-import {IUserLogin, IConfigs} from '../redux/auth/authTypes'
+import {IUserLogin, IConfigs} from '../redux/auth/authConfigsTypes'
 
 const instance = axios.create({
     baseURL:serverURL,

@@ -1,6 +1,6 @@
 import axios from 'axios'
 import {serverURL} from "./URL";
-import {ICreatedArticle} from "../redux/articles/articleTypes";
+import {ICreatedArticle, IEditingArticle, IUpdateArticle} from "../redux/articles/articleTypes";
 
 const instance = axios.create({
     baseURL: serverURL,
@@ -19,8 +19,8 @@ const articlesAPI = {
     async getArticles() {
         return await instance.get(`/get-articles`)
     },
-    async getArticle(header:string) {
-        return await instance.get(`/get-article/${header}`)
+    async getArticle(id:number) {
+        return await instance.get(`/get-article/${id}`)
     },
     async uploadImage(image: FormData) {
         return withAuthInstance.post(`/s3-upload`, image, {
@@ -32,6 +32,9 @@ const articlesAPI = {
     async createArticle(data: ICreatedArticle) {
         return withAuthInstance.post(`/create-article`, data)
     },
+    async updateArticle(data:IUpdateArticle) {
+        return withAuthInstance.put(`/update-article`, data)
+    }
 }
 
 export default articlesAPI

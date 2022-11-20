@@ -15,31 +15,31 @@ import {mediaSizes} from "../common/commonStyles/MediaSizes";
 import {TransparentHyperLink} from "../common/commonStyles/CommonStyles";
 import {isMobile, isMobileOnly} from "react-device-detect";
 import { AiOutlineClose } from "react-icons/ai";
-const Wrapper = styled(Flex)<{isMobile:boolean}>`
+const Wrapper = styled(Flex)<{ismobile:boolean}>`
   width: 100%;
   background-color: rgba(246, 251, 255, 0.5);
   height: 106px;
   display: flex;
   z-index: 15;
   @media (max-width: ${mediaSizes.laptop}) {
-    ${({isMobile}) => isMobile && css`
+    ${({ismobile}) => ismobile && css`
       height: 46px;
     `}
   }
 `
-const HeaderStyledLogo = styled(Logo)<{isMobile:boolean}>`
+const HeaderStyledLogo = styled(Logo)<{ismobile:boolean}>`
   width: 35px;
   height: 35px;
   margin-right: 20px;
   @media (max-width: ${mediaSizes.mobile}) {
-    ${({isMobile}) => isMobile && css`
+    ${({ismobile}) => ismobile && css`
       width: 20px;
       height: 20px;
     `}
     margin-right: 10px;
   }
 `
-const HeaderLogoText = styled.span<{isMobile:boolean, isSearchOpened:boolean}>`
+const HeaderLogoText = styled.span<{ismobile:boolean, isSearchOpened:boolean}>`
   font-family: var(--family-header);
   font-weight: 700;
   font-size: 30px;
@@ -48,7 +48,7 @@ const HeaderLogoText = styled.span<{isMobile:boolean, isSearchOpened:boolean}>`
     ${({isSearchOpened}) => isSearchOpened && css`
       display: none;
     `}
-    ${({isMobile}) => isMobile && css`
+    ${({ismobile}) => ismobile && css`
       font-size: 20px;
     `}
     font-size: 23px;
@@ -83,7 +83,7 @@ const Navigation = styled(Flex)`
   }
 `
 
-const TelegramButton = styled.button<{isMobile:boolean}>`
+const TelegramButton = styled.button<{ismobile:boolean}>`
   border-radius: 100%;
   background: linear-gradient(180deg, #8492D1 0%, #58649C 100%), #58649C;
   border: none;
@@ -92,7 +92,7 @@ const TelegramButton = styled.button<{isMobile:boolean}>`
   justify-content: center;
   width: 45px;
   height: 45px;
-  ${({isMobile}) => isMobile && css`
+  ${({ismobile}) => ismobile && css`
     width: 35px;
     height: 35px;
   `}
@@ -110,7 +110,7 @@ const MobileSearch = styled.div`
     margin: 0 10px 0 15px;
   }
 `
-const SearchButton = styled.button<{isMobile:boolean}>`
+const SearchButton = styled.button<{ismobile:boolean}>`
   width: 45px; 
   height: 45px;
   border-radius: 15px;
@@ -119,7 +119,7 @@ const SearchButton = styled.button<{isMobile:boolean}>`
   display: flex;
   align-items: center;
   justify-content: center;
-  ${({isMobile}) => isMobile && css`
+  ${({ismobile}) => ismobile && css`
     width: 35px;
     height: 35px;
   `}
@@ -201,7 +201,7 @@ export function Header(props: Props) {
 
     const {pathname} = useLocation()
     const path = pathname.split('/')[1]
-    const isAuth = useAppSelector(state => state.auth.isAuth)
+    const isAuth = useAppSelector(state => state.authConfigs.isAuth)
     const user: IUser | null = useAppSelector(state => state.user.userData)
     const [isMobNavigationPanelOpen, toggleMobileNavigationPanel] = useState(false)
     const [isMobSearchOpen, toggleMobSearchState] = useState(false)
@@ -220,12 +220,12 @@ export function Header(props: Props) {
         }
     }
 
-    return <Wrapper isMobile={isMobile}>
+    return <Wrapper ismobile={isMobile}>
         <Main>
                 <Link style={{zIndex: 150}} to='/'>
                     <Flex justifyContent='flex-start' alignItems='center'>
-                        <HeaderStyledLogo isMobile={isMobile}/>
-                        <HeaderLogoText isSearchOpened={isMobSearchOpen} isMobile={isMobile}>MY CLICK</HeaderLogoText>
+                        <HeaderStyledLogo ismobile={isMobile}/>
+                        <HeaderLogoText isSearchOpened={isMobSearchOpen} ismobile={isMobile}>MY CLICK</HeaderLogoText>
                     </Flex>
                 </Link>
 
@@ -241,7 +241,7 @@ export function Header(props: Props) {
                 <ActionPanelMob>
                     {!isMobSearchOpen &&
                         <TransparentHyperLink href='https://t.me/myclickmedia' target={'_blank'}>
-                            <TelegramButton isMobile={isMobile}>
+                            <TelegramButton ismobile={isMobile}>
                                 <FaTelegramPlane style={{margin:'2px 3px 0 0'}} size={isMobile ? 15 : 30} color='white'/>
                             </TelegramButton>
                         </TransparentHyperLink>
@@ -250,7 +250,7 @@ export function Header(props: Props) {
                         {isMobSearchOpen ?
                             <Search mob={true} onToggleMobSearch={onToggleMobSearch}/>
                             :
-                            <SearchButton isMobile={isMobile} onClick={() => onToggleMobSearch(true)}>
+                            <SearchButton ismobile={isMobile} onClick={() => onToggleMobSearch(true)}>
                                 <GoSearch size={isMobile ? 15 : 30} color='white'/>
                             </SearchButton>
                         }

@@ -24,7 +24,8 @@ class S3 {
     async uploadImage(req, res) {
         try {
             let file = req.files.file
-            uploadParams.Key = file.name
+            const fileName = uuidv4() + file.name.replace(/\s/g, '');
+            uploadParams.Key = fileName
             uploadParams.Body = file.data
             const response = await s3.upload(uploadParams).promise()
             res.status(200).send(response.Location)

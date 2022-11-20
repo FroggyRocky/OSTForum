@@ -7,7 +7,7 @@ export const BreakingLine = styled.hr`
   position: absolute;
   align-self: start;
 `
-export const Form = styled.form`
+export const FormContent = styled.div`
   display: flex;
   flex-direction: column;
   gap: 30px;
@@ -82,9 +82,15 @@ export const AddImgWithTextBtn = styled(Flex)<{ imgSrc: string, isAttaching: boo
   border-radius: 15px 0 0 15px;
   border-right: 1px solid #58649C;
 `
+export const ArticleEditorContainer = styled.div`
+  margin: 60px 0
+`
 export const AddImgWithOutTextBtn = styled(Flex)<{ imgSrc: string, isAttaching: boolean }>`
   ${AddImgBtnBaseStyles};
   border-radius: 0 15px 15px 0;
+`
+export const AddArticleButtonContainer = styled.div`
+margin: 0 0 60px 0;
 `
 export const AddArticleButton = styled.button`
   width: 100%;
@@ -93,7 +99,6 @@ export const AddArticleButton = styled.button`
   box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.15);
   border-radius: 15px;
   border: none;
-  margin: 0px 0 60px 0;
 
   & > p {
     font-family: var(--family-text);
@@ -119,4 +124,11 @@ export const AddArticleButton = styled.button`
       opacity: 1;
     }
   }
+`
+export const ErrorMessage = styled.p`
+color: #F05050;
+  font-family: var(--family-text);
+  font-weight: 400;
+  font-size: 22px;
+  line-height: 13px;
 `

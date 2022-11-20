@@ -1,7 +1,7 @@
 import styled, {css} from "styled-components";
 import {mediaSizes, firstPageMediaSizes} from "../../common/commonStyles/MediaSizes";
 import {Link} from "react-router-dom";
-
+import defaultCardCover from '../../../assets/defaultCardCover.png'
 export const Wrapper = styled.div`
   z-index: 1;
   position: relative;
@@ -14,6 +14,9 @@ export const Wrapper = styled.div`
     width: 100%;
     min-width: 100%;
     max-width: 100%;
+  }
+  @media(max-width: ${mediaSizes.mobile}) {
+   z-index: 2;
   }
 `
 
@@ -42,7 +45,7 @@ export const StyledLink = styled(Link)<{ translation?: string | number }>`
 export const Card = styled.div<{ imgSrc: string, translation?: string | number,isThereOnlyOneItem:boolean}>`
   width: 570px;
   height: 288px;
-  background-image: url("${({imgSrc}) => imgSrc}");
+  background-image: url(${({imgSrc}) => imgSrc ? `${imgSrc}` : defaultCardCover});
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;

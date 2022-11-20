@@ -10,13 +10,13 @@ import {Cases} from "./components/Landing/AdditionalPages/Cases";
 import {Login} from "./components/Login/Login";
 import {AccountDashboard} from "./components/AccountDashboard/AccountDashboard";
 import {useAppDispatch, useAppSelector} from "./redux/hooks/hooks";
-import {auth} from "./redux/auth/authThunks";
+import {auth} from "./redux/auth/authConfigsThunks";
 import {Loader} from "./components/common/Loader";
 
 function App() {
 
     const dispatch = useAppDispatch()
-    const isInitialized = useAppSelector(state => state.auth.isInitialized)
+    const isInitialized = useAppSelector(state => state.authConfigs.isInitialized)
 useEffect(() => {
     dispatch(auth())
 }, [])
@@ -30,7 +30,7 @@ if(!isInitialized) return <Loader/>
             <Routes>
                 <Route exact index path='/' element={<Landing/>}/>
                 <Route path='/article' element={<Layout/>}>
-                    <Route path=':header' element={<Article/>}/>
+                    <Route path=':id' element={<Article/>}/>
                 </Route>
                 <Route path='' element={<Layout/>}>
                     <Route path='/affiliate' element={<Affiliate/>}/>

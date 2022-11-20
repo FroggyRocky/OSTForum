@@ -63,12 +63,12 @@ export const ArticleEditor = (props: Props) => {
         onChange((RichUtils.toggleBlockType(props.editorState, type)))
     }
 
-    return <div style={{margin: '60px 0'}}>
+    return <>
         <ArticleEditorContext.Provider value={{onPanelToggle}}>
             <EditorPanel editorState={props.editorState}  formik={props.formik} />
         </ArticleEditorContext.Provider>
         <div>
         <Editor decorators={[decorators]} plugins={[imagePlugin]} editorState={props.editorState} onChange={onChange}/>
         </div>
-    </div>
+</>
 };

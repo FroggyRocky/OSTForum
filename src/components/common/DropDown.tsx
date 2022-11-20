@@ -5,7 +5,7 @@ import './dropdown.css'
 type Props = {
     selectOptions:Array<any>,
     value:string,
-    touched:boolean,
+    isOpen:boolean,
     setValue:(value:string) => void,
     setTouched:(value:boolean) => void,
 };
@@ -26,7 +26,7 @@ export const DropDown = (props: Props) => {
 
 
     return <>
-        {props.touched && <section className='dropDown__dropDown'>
+        {props.isOpen && <section className='dropDown__dropDown'>
                 {selectOptions}
         </section>
         }

@@ -1,5 +1,9 @@
 import styled, {css} from 'styled-components'
+import {ErrorMessage} from "../../AccountDashboard/AccountArticles/createArticle.styles";
 
+const Container = styled.div`
+
+`
 const TextAreaContained = styled.div`
     position: relative;
 `
@@ -39,11 +43,15 @@ type Props = {
     maxLength:number,
     inputType?:string,
     currentValueLength:number,
-    value:string
+    value:string,
+    error:string | undefined
 };
 export const CustomTextAreaWithCounter = (props: Props) => {
-    return <TextAreaContained>
+    return <Container>
+        <TextAreaContained>
         <TextArea name={props.name} value={props.value} maxLength={props.maxLength} onChange={props.handleChange} placeholder={props.placeholder} />
         <Counter isLimitAchieved={props.currentValueLength === props.maxLength}>{props.currentValueLength}/{props.maxLength}</Counter>
     </TextAreaContained>
+        {props.error && <ErrorMessage style={{marginTop:'30px'}}>{props.error}</ErrorMessage>}
+    </Container>
 };

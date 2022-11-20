@@ -38,10 +38,10 @@ export function PathWidget(props: Props) {
         if (props.historyPath && props.historyPath.length) {
             return props.historyPath.map((el, index) => {
                 if (!props.targetPath && props.historyPath.length - 1 === index) {
-                    return <Link to={el.path}>{el.pathName}</Link>
+                    return <Link key={index + 1} to={el.path}>{el.pathName}</Link>
                 } else {
                     return <>
-                        <Link to={el.path}>{el.pathName}</Link>
+                        <Link key={index + 1} to={el.path}>{el.pathName}</Link>
                         <PathArrow>{`>`}</PathArrow>
                     </>
                 }

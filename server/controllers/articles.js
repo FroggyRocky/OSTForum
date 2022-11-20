@@ -1,5 +1,6 @@
 const db = require('../dbmodel')
 const Sequelize = require('sequelize')
+
 class Articles {
     async getArticles(req, res) {
         const articles = await db.Articles.findAll({
@@ -16,15 +17,11 @@ class Articles {
         })
         res.send(articles)
     }
+
     async getArticle(req, res) {
         try {
-            const articleHeader = req.header
-            const article = await db.Articles.findOne({
-                where:{
-                  header: {
-                      [Sequelize.Op.like]:'%' + articleHeader + '%'
-                  }
-                },
+            const articleId = req.params.id
+            const article = await db.Articles.findByPk(articleId, {
                 include: [
                     {
                         model: db.Comments,
@@ -50,12 +47,13 @@ class Articles {
             res.sendStatus(500)
         }
     }
+
     async createArticle(req, res) {
         try {
             const accountId = req.accountId
             const data = {
                 ...req.body,
-                userId:accountId
+                userId: accountId
             }
             const response = await db.Articles.create(data)
             res.status(200).send(response)
@@ -64,17 +62,18 @@ class Articles {
             res.sendStatus(500)
         }
     }
-    async getArticleComments(req,res) {
+
+    async getArticleComments(req, res) {
         try {
             const comments = await db.Comments.findAll({
-                where:{
-                    articleId:req.params.articleId
+                where: {
+                    articleId: req.params.articleId
                 },
                 attributes: {exclude: ['updatedAt', 'userId', 'articleId']},
                 include: [
-                            {
-                                model: db.Users.scope('withoutSecretData')
-                            }
+                    {
+                        model: db.Users.scope('withoutSecretData')
+                    }
                 ]
             })
             res.status(200).send(comments)
@@ -83,7 +82,8 @@ class Articles {
             res.sendStatus(500)
         }
     }
-    async deleteComment(req,res) {
+
+    async deleteComment(req, res) {
         try {
             const commentId = req.params.id
             await db.Comments.destroy({
@@ -97,7 +97,8 @@ class Articles {
             res.sendStatus(500)
         }
     }
-    async createComment(req,res) {
+
+    async createComment(req, res) {
         const commentData = req.body
         commentData.userId = req.accountId
         try {
@@ -108,14 +109,27 @@ class Articles {
             res.sendStatus(500)
         }
     }
-    async decodeArticleDestination(req,res,next) {
+
+    async updateArticle(req, res) {
         try {
-            const {header} = req.params
-            req.header = decodeURI(header)
-            next()
+            const accountId = req.accountId
+            const {articleId, ...updateData} = req.body
+            const article = await db.Articles.findByPk(articleId, {raw: true})
+            if (accountId === article.userId) {
+                await db.Articles.update(
+                    {...updateData},
+                    {
+                        where: {
+                            id: articleId
+                        }
+                    })
+                res.sendStatus(200)
+            } else {
+                res.sendStatus(403)
+            }
         } catch (e) {
             console.log(e)
-            res.send(400)
+            res.sendStatus(500)
         }
     }
 }

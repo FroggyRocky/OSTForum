@@ -1,3 +1,4 @@
+
 .commonPagination {
     list-style: none;
     font-family: var(--family-text);
@@ -24,11 +25,14 @@
     -webkit-text-stroke: 1px #000000;
 }
 
-@media (max-width:768px) {
+@media (max-width:760px) {
     .commonPagination > li:nth-child(odd) {
 
     }
     .commonPagination {
 
+    }
+    .commonPagination > li {
+        margin: 0 6px;
     }
 }

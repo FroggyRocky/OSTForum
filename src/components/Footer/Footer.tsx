@@ -89,7 +89,7 @@ export const Footer = (props: Props) => {
             <StyledLogo flexDirection='column'>
                 <Flex>
                     <StyledIcon/>
-                    <LogoText isMobile={isMobile}>MY CLICK</LogoText>
+                    <LogoText ismobile={isMobile}>MY CLICK</LogoText>
                 </Flex>
                     <p>Every click has a story, be part of MyClick!</p>
         </StyledLogo>

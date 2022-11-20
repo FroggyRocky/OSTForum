@@ -50,6 +50,15 @@ export interface IEditingArticle {
         contentBlocks: ContentBlock[],
         entityMap: any
     },
+    articleId:number,
+    header:string,
+    description:string,
+    previewDescription:string,
     coverImg_withText:string,
-    coverImg_withOutText:string
+    coverImg_withOutText:string,
+    categoryName:string
+}
+
+export interface IUpdateArticle extends ICreatedArticle {
+    articleId:number
 }

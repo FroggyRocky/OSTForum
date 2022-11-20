@@ -2,14 +2,14 @@ import {combineReducers, configureStore, getDefaultMiddleware} from '@reduxjs/to
 import {articleSlice} from './articles/articlesSlice'
 import {userSlice} from './user/userSlice'
 import {currentCreatedArticle} from "./currentEditedArticle/currentEditedArticleSlice";
-import {authSlice} from "./auth/authSlice";
+import {authConfigsSlice} from "./auth/authConfigsSlice";
 import {commentsAPI} from "../api/commentsAPI";
 
 const rootReducer = combineReducers({
     articles: articleSlice.reducer,
     user:userSlice.reducer,
     currentEditedArticle:currentCreatedArticle.reducer,
-    auth:authSlice.reducer,
+    authConfigs:authConfigsSlice.reducer,
     [commentsAPI.reducerPath]:commentsAPI.reducer
 })
 

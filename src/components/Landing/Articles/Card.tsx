@@ -1,16 +1,25 @@
 import styled from "styled-components";
 import {Flex} from '../../common/commonStyles/Flex.styled'
 import {IoTimeOutline} from 'react-icons/io5'
-import inst from '../../../assets/instFlag.png';
-import fb from '../../../assets/instFlag.png';
+import instFbFlag from '../../../assets/instFbFlag.png'
+import affiliateFlag from '../../../assets/affiliateFlag.png'
+import casesFlag from '../../../assets/casesFlag.png'
+import cryptoFlag from '../../../assets/cryptoFlag.png';
+import tikTokFlag from '../../../assets/tikTokFlag.png'
+import eCommerceFlag from '../../../assets/eCommerceFlag.png'
 import {NavLink} from "react-router-dom";
 import {calcDate} from "../../../services/calcDate";
 import {mediaSizes} from "../../common/commonStyles/MediaSizes";
-
+import defaultCardCover from '../../../assets/defaultCardCover.png'
 type CardImage = {
     src?: string
     alt: string
 }
+const Link = styled(NavLink)`
+@media (max-width: 550px) {
+  flex-grow: 1;
+}
+`
 const Container = styled.div`
   background-color: white;
   border-radius: 15px;
@@ -27,15 +36,22 @@ const Container = styled.div`
     height: auto;
   }
 `
-const CardImage = styled.img<CardImage>`
-  src: ${({src}) => src};
-  alt: ${({alt}) => alt};
-  width: 100%;
+const CardImageContainer = styled.div`
+  position: relative;
   height: 288px;
   margin: 0;
-  border-radius: 15px 15px 0 0;
   @media (max-width: ${mediaSizes.mobile}) {
     height: 50%;
+  }
+`
+const CardImage = styled.img<CardImage>`
+  alt: ${({alt}) => alt};
+  src:${({src}) => src && src};
+  height: 100%;
+  border-radius: 15px 15px 0 0;
+  width: 100%;
+  @media(max-width: ${mediaSizes.mobile}) {
+    width: 100%;
   }
 `
 const Info = styled.div`
@@ -94,8 +110,10 @@ const Text = styled.div`
 const Flag = styled.img`
   src: ${({src}) => src};
   alt: ${({alt}) => alt};
+  width: 38px;
+  height: 52px;
   position: absolute;
-  top: -3px;
+  top: 0px;
   right: 0;
   margin: 0;
   flex-shrink: 0;
@@ -108,8 +126,11 @@ const FlagMob = styled.img`
   @media (max-width: ${mediaSizes.mobile}) {
     display: block;
     position: absolute;
-    right: 10%;
+    right: 0%;
     top: 0;
+    width: 22px;
+    height: 30px;
+    z-index: 50;
   }
 `
 const Date = styled(Flex)`
@@ -141,24 +162,34 @@ type Props = {
 };
 
 export const Card = (props: Props) => {
-
-
     const chooseFlag = () => {
         switch (props.category) {
             case 'facebook':
-                return inst;
+                return instFbFlag;
             case 'instagram':
-                return fb;
+                return instFbFlag;
+            case 'affiliate':
+                return affiliateFlag
+            case 'cases':
+                return casesFlag
+            case 'crypto':
+                return cryptoFlag
+            case 'tikTok':
+                return tikTokFlag
+            case 'e-commerce':
+                return eCommerceFlag
             default:
                 break;
         }
     }
 
 
-    return <NavLink to={`/article/${encodeURI(props.header)}`} state={props.historyPath}>
+    return <Link to={`/article/${props.id}`} state={props.historyPath}>
         <Container>
-            <CardImage src={props.coverImg_withText} alt='Article_head_image'/>
+            <CardImageContainer>
+                <CardImage src={props.coverImg_withText} alt='Article_head_image'/>
             {props.category && <FlagMob src={chooseFlag()} alt="flag"/>}
+            </CardImageContainer>
             <Info>
                 {props.category && <Flag src={chooseFlag()} alt="flag"/>}
                 <Text>
@@ -178,5 +209,5 @@ export const Card = (props: Props) => {
                 </Flex>
             </Info>
         </Container>
-    </NavLink>
+    </Link>
 };

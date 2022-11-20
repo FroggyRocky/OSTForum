@@ -56,7 +56,7 @@ export const AccountDashboard = (props: Props) => {
     const isArticleCreating = useAppSelector(state => state.articles.isArticleCreating)
     const navigate = useNavigate()
     const user: IUser = useAppSelector(state => state.user.userData)
-    const isAuth = useAppSelector(state => state.auth.isAuth)
+    const isAuth = useAppSelector(state => state.authConfigs.isAuth)
 
 
     useEffect(() => {
@@ -75,7 +75,7 @@ export const AccountDashboard = (props: Props) => {
                     <Navigation>
                         <span>Statistics</span>
                         <span>
-                   <NavLink to={'/dashboard/articles/create:id?'}>Add article</NavLink>
+                   <NavLink to={'/dashboard/articles/create'}>Add article</NavLink>
                </span>
                         <span>Settings</span>
                     </Navigation>

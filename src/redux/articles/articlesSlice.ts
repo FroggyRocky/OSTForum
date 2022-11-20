@@ -21,7 +21,7 @@ export const articleSlice = createSlice({
         setArticles(state, action: PayloadAction<IArticle[]>) {
             state.articles = action.payload
         },
-        setCurrentArticle(state, action: PayloadAction<IArticle>) {
+        setCurrentArticle(state, action: PayloadAction<IArticle | null>) {
             state.currentArticle = action.payload
         },
         setArticleCreatingState(state, action: PayloadAction<boolean>) {
@@ -46,4 +46,4 @@ export const articleSlice = createSlice({
     }
 })
 
-export const {setArticleCreatedState, setArticleCreatingState, setCommonErr, updateArticleComments, setEditingArticle} = articleSlice.actions
+export const {setArticleCreatedState, setArticleCreatingState, setCommonErr, updateArticleComments, setEditingArticle, setCurrentArticle} = articleSlice.actions

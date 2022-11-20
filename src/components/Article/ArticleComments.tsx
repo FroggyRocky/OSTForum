@@ -235,6 +235,7 @@ const ShareDropDown = styled.div`
   line-height: 13px;
   color: #525252;
   position: absolute;
+  width: 200px;
   z-index: 20;
   margin-top: 10px;
   user-select: none;
@@ -243,7 +244,7 @@ const ShareDropDown = styled.div`
     align-items: center;
     padding: 15px 0;
     cursor: pointer;
-    color: #525252;
+    color: #525252; 
 &:visited {
   color: #525252;
 }
@@ -297,7 +298,7 @@ background-color: white;
       color: #525252;
     }
   }
-  
+
 `
 
 type Props = {
@@ -326,10 +327,11 @@ export const ArticleComments = (props: Props) => {
             .min(2)
 
     })
-    function copyLink() {
+    async function copyLink(e:any) {
+        e.preventDefault()
         try {
-            const url = window.location.href
-            navigator.clipboard.writeText(url);
+            const url = `${window.location.href}?article=${encodeURIComponent(props.articleHeader)}`
+           await navigator.clipboard.writeText(url);
             setLinkCopyState(true)
         } catch (e) {
             console.log(e)
@@ -399,17 +401,17 @@ export const ArticleComments = (props: Props) => {
         <ShareModal id={'shareModal_bg'} onClick={closeShareModal}>
             <ShareModalContent>
                 <a target="_blank" rel="noopener noreferrer"
-                   href={`https://twitter.com/intent/tweet?text=${props.articleHeader}&url=${encodeURI(window.location.href)}`}>
+                   href={`https://twitter.com/intent/tweet?text=${props.articleHeader}&url=${window.location.href}&article=${encodeURIComponent(props.articleHeader)}`}>
                     <AiFillTwitterCircle color={'#58649C'} size={22}/>
                     <p>Twitter</p>
                 </a>
                 <a target="_blank" rel="noopener noreferrer"
-                   href={`https://www.reddit.com/submit?url=${encodeURI(window.location.href)}&title=${props.articleHeader}`}>
+                   href={`https://www.reddit.com/submit?url=${window.location.href}&article=${encodeURIComponent(props.articleHeader)}&title=${props.articleHeader}`}>
                     <FaReddit color={'#58649C'} size={22}/>
                     <p>Reddit</p>
                 </a>
                 <a target="_blank" rel="noopener noreferrer"
-                   href={`https://www.facebook.com/sharer/sharer.php?u=${encodeURI(window.location.href)}&quote=${props.articleHeader}`}>
+                   href={`https://www.facebook.com/sharer/sharer.php?u=${window.location.href}&article=${encodeURIComponent(props.articleHeader)}&quote=${props.articleHeader}`}>
                     <IoLogoFacebook color={'#58649C'} size={22}/>
                     <p>Facebook</p>
                 </a>
@@ -434,17 +436,17 @@ export const ArticleComments = (props: Props) => {
                                  dislikes={props.dislikes} views={props.views} setShareMobileModalState={setShareMobileModalState} />
                     {isShareDropDownOpen && <ShareDropDown>
                         <a target="_blank" rel="noopener noreferrer"
-                           href={`https://twitter.com/intent/tweet?text=${props.articleHeader}&url=${encodeURI(window.location.href)}`}>
+                           href={`https://twitter.com/intent/tweet?text=${props.articleHeader}&url=${window.location.href}&article=${encodeURIComponent(props.articleHeader)}`}>
                             <AiFillTwitterCircle color={'#58649C'} size={40}/>
                             <p>Twitter</p>
                         </a>
                         <a target="_blank" rel="noopener noreferrer"
-                           href={`https://www.reddit.com/submit?url=${encodeURI(window.location.href)}&title=${props.articleHeader}`}>
+                           href={`https://www.reddit.com/submit?url=${window.location.href}&article=${encodeURIComponent(props.articleHeader)}&title=${props.articleHeader}`}>
                             <FaReddit color={'#58649C'} size={40}/>
                             <p>Reddit</p>
                         </a>
                         <a target="_blank" rel="noopener noreferrer"
-                           href={`https://www.facebook.com/sharer/sharer.php?u=${encodeURI(window.location.href)}&quote=${props.articleHeader}`}>
+                           href={`https://www.facebook.com/sharer/sharer.php?u=${window.location.href}&article=${encodeURIComponent(props.articleHeader)}&quote=${props.articleHeader}`}>
                             <IoLogoFacebook color={'#58649C'} size={40}/>
                             <p>Facebook</p>
                         </a>

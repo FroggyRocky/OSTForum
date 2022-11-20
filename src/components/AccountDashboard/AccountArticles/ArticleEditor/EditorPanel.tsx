@@ -4,17 +4,20 @@ import {Flex} from "../../../common/commonStyles/Flex.styled";
 import {AiOutlineLink} from "react-icons/ai";
 import {BsFillBookmarkFill, BsImageFill} from "react-icons/bs";
 import {MdArrowDropDown} from "react-icons/md";
-import {useContext} from "react";
+import {useContext, useState} from "react";
 import {CreateArticlePageContext} from "../CreateArticle";
 import styled from "styled-components";
 import {DropDown} from "../../../common/DropDown";
 import {useAppSelector} from "../../../../redux/hooks/hooks";
 import {useClickOutside} from "../../../../services/useClickOutside";
 
-const Button = styled(EditorPanelButton)`
+const Button = styled(EditorPanelButton).attrs(props => ({
+    type: 'button',
+}))`
   position: relative;
   z-index: 1;
   cursor: pointer;
+  type:button;
 `
 const CategoryContainer = styled.div`
   position: relative;
@@ -30,7 +33,9 @@ const Input = styled.input`
   line-height: 32px;
   padding: 0 5px;
 `
-const LinkBtn = styled.button`
+const LinkBtn = styled.button.attrs(props => ({
+    type: 'button',
+}))`
   font-family: var(--family-text);
   border: none;
   border-radius: 8px;
@@ -58,14 +63,14 @@ type Props = {
 };
 export const EditorPanel = (props: Props) => {
 
-
     const CreateArticleContext = useContext<IUserContext>(CreateArticlePageContext)
-    const {setTouched: setCategoryTouched, setValue: setCategoryValue} = props.formik.getFieldHelpers('category')
-    const {value: categoryValue, touched: categoryTouched} = props.formik.getFieldMeta('category')
+    const {setValue: setCategoryValue} = props.formik.getFieldHelpers('category')
+    const {value: categoryValue} = props.formik.getFieldMeta('category')
+    const [isCategoryDropDownOpen, setCategoryDropDownState] = useState(false)
     const {setValue: setHyperLinkValue} = props.formik.getFieldHelpers('hyperLink')
     const {value: hyperLinkValue} = props.formik.getFieldMeta('hyperLink')
     const categoryFlagsRef = useClickOutside(closeCategoryFlagsSelector)
-    const categories = useAppSelector(state => state.auth.configs.categories)
+    const categories = useAppSelector(state => state.authConfigs.configs.categories)
     const BLOCK_TYPES_HEADINGS = [
         {label: 'h1', id: 'header-one'},
         {label: 'h2', id: 'header-two'},
@@ -77,7 +82,7 @@ export const EditorPanel = (props: Props) => {
     })
 
     function closeCategoryFlagsSelector() {
-        setCategoryTouched(false)
+        setCategoryDropDownState(false)
     }
     function stateActive(id: string) {
         const currentBlockType = RichUtils.getCurrentBlockType(props.editorState);
@@ -109,20 +114,20 @@ export const EditorPanel = (props: Props) => {
                 <Button onClick={CreateArticleContext.onAddLink}>
                     <AiOutlineLink size={35}/>
                 </Button>
-                <Button type={'button'}>
+                <Button>
                     <label htmlFor="upload2" style={{width: '100%', height: '100%', position: 'absolute'}}></label>
                     <input type="file" id='upload2' style={{display: 'none'}} onChange={CreateArticleContext.onAddImg}/>
                     <BsImageFill/>
                 </Button>
-                <CategoryContainer ref={categoryFlagsRef} onClick={() => setCategoryTouched(!categoryTouched)}>
-                    <Button>
+                <CategoryContainer ref={categoryFlagsRef} onClick={() => setCategoryDropDownState(prev => !prev)}>
+                    <Button >
                         <Flex style={{cursor: 'pointer'}}>
                             <BsFillBookmarkFill/>
                             <MdArrowDropDown/>
                         </Flex>
                     </Button>
-                    <DropDown setValue={setCategoryValue} setTouched={setCategoryTouched} value={categoryValue}
-                              touched={categoryTouched}
+                    <DropDown setValue={setCategoryValue} setTouched={setCategoryDropDownState} value={categoryValue}
+                              isOpen={isCategoryDropDownOpen}
                               selectOptions={categories}/>
                 </CategoryContainer>
             </Flex>

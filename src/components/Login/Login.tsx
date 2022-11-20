@@ -3,7 +3,7 @@ import {Wrapper} from "../common/commonStyles/Wrapper.styled";
 import {Content} from "../common/commonStyles/Content.styled";
 import {useState, useEffect} from "react";
 import {useAppDispatch, useAppSelector} from "../../redux/hooks/hooks";
-import {loginUser} from "../../redux/auth/authThunks";
+import {loginUser} from "../../redux/auth/authConfigsThunks";
 import {useNavigate} from "react-router-dom";
 
 
@@ -74,7 +74,7 @@ export const Login = (props: Props) => {
     const dispatch = useAppDispatch()
     const [login, setLogin] = useState('')
     const [password, setPassword] = useState('')
-    const isAuth = useAppSelector(state => state.auth.isAuth)
+    const isAuth = useAppSelector(state => state.authConfigs.isAuth)
     const navigate = useNavigate()
 
     useEffect(() => {

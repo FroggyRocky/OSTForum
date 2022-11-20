@@ -1,6 +1,6 @@
 import {createContext, useEffect, useRef, useState} from "react";
 import {H1} from '../../common/commonStyles/H1.styled'
-import {useFormik} from "formik";
+import {useFormik, Form} from "formik";
 import {ArticleEditor} from "./ArticleEditor/ArticleEditor";
 import {Content} from "../../common/commonStyles/Content.styled";
 import {FaFileImage} from "react-icons/fa";
@@ -13,13 +13,23 @@ import articlesAPI from "../../../api/articlesAPI";
 import {AiOutlineClose} from "react-icons/ai";
 import {ModalWindow} from "../../common/ModalWindow";
 import {setArticleCreatedState, setArticleCreatingState, setCommonErr} from "../../../redux/articles/articlesSlice";
-import {createArticle} from "../../../redux/articles/articlesThunks";
-import {AddArticleButton, AddImgWithTextBtn,AddImgWithOutTextBtn, BreakingLine, Form, CoversContainer} from './createArticle.styles'
+import {createArticle, updateArticle} from "../../../redux/articles/articlesThunks";
+import {
+    AddArticleButton,
+    AddImgWithTextBtn,
+    AddImgWithOutTextBtn,
+    BreakingLine,
+    FormContent,
+    CoversContainer,
+    ErrorMessage,
+    AddArticleButtonContainer,
+    ArticleEditorContainer
+} from './createArticle.styles'
 import {CustomTextAreaWithCounter} from "../../common/Forms/CustomTextAreaWithCounter";
 import {CustomInputWithCounter} from "../../common/Forms/CustomInputWithCounter";
 import {RiImageAddFill} from "react-icons/ri";
 import * as Yup from 'yup';
-import {useSearchParams} from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 
 export const CreateArticlePageContext = createContext<any>('')
 
@@ -40,51 +50,66 @@ export function CreateArticle(props: Props) {
     const fileWithOutTextInputRef = useRef() as React.MutableRefObject<HTMLInputElement>;
     const [isImgWithTextAttaching, setImgWithTextAttachmentState] = useState(false);
     const [isImgWithOutTextAttaching, setImgWithOutTextAttachmentState] = useState(false)
-    const categories = useAppSelector(state => state.auth.configs.categories)
+    const categories = useAppSelector(state => state.authConfigs.configs.categories)
+    const navigate = useNavigate()
     useEffect( () => {
         const location = window.location.search
         const id = new URLSearchParams(location).get('id');
+        if(Object.keys(editingArticle).length === 0 && id) navigate('/dashboard/articles/create')
         if(id && Object.keys(editingArticle).length !== 0) {
             const newState = ContentState.createFromBlockArray(
                 editingArticle.editorState.contentBlocks,
                 editingArticle.editorState.entityMap
             )
             setEditorState(EditorState.createWithContent(newState))
+            if(editingArticle.coverImg_withText) formik.setFieldValue('coverImg_withText.src', editingArticle.coverImg_withText)
+            if(editingArticle.coverImg_withOutText) formik.setFieldValue('coverImg_withText.src', editingArticle.coverImg_withOutText)
+            formik.setFieldValue('header', editingArticle.header)
+            formik.setFieldValue('description', editingArticle.description)
+            formik.setFieldValue('previewDescription', editingArticle.previewDescription)
+            formik.setFieldValue('articleId', editingArticle.articleId)
+            formik.setFieldValue('category', editingArticle.categoryName)
         }
     },[editingArticle,window.location.search])
     const CreateArticleSchema = Yup.object().shape({
         header: Yup.string()
             .min(1)
             .max(55)
-            .required('Required'),
-        category: Yup.string().required('Required'),
-        previewDescription: Yup.string().max(95),
+            .required('Header is Required'),
+        category: Yup.string(),
+        previewDescription: Yup.string()
+            .max(95)
+            .required('Preview description is required'),
         description: Yup.string()
             .min(1)
             .max(240)
-            .required('Required'),
+            .required('Description is Required'),
         text: Yup.object().required('Required'),
     })
     const formik = useFormik({
+        validateOnChange:false,
+        //validateOnMount:false,
+        validateOnBlur:true,
         initialValues: {
+            articleId:'',
             header: '',
             description: '',
             previewDescription: '',
             category: '',
             coverImg_withText: {
                 file: '',
-                src: ''
+                src: '',
             },
             coverImg_withOutText: {
                 file: '',
-                src: ''
+                src: '',
             },
             text: '',
             hyperLink: '',
         },
         validationSchema: CreateArticleSchema,
-        onSubmit: values => {
-
+        onSubmit: async (values) => {
+            await onAddArticle(values)
         }
     })
 
@@ -141,49 +166,69 @@ export function CreateArticle(props: Props) {
         setAddLinkInputState(false)
     }
 
-    async function onAddArticle() {
-        dispatch(setArticleCreatingState(true))
-        const {header, description, previewDescription, coverImg_withText, coverImg_withOutText, category, } = formik.values
-        if (coverImg_withText.file) {
-            const fd2 = new FormData()
-            fd2.append('file', coverImg_withText.file)
-            const s3 = await articlesAPI.uploadImage(fd2)
-            coverImg_withText.src = s3.data
-        }
-        if(coverImg_withOutText.file) {
-            const fd2 = new FormData()
-            fd2.append('file', coverImg_withOutText.file)
-            const s3 = await articlesAPI.uploadImage(fd2)
-            coverImg_withOutText.src = s3.data
-        }
-        const contentState = await editorState.getCurrentContent()
-        const entityKeys = convertToRaw(contentState).entityMap
-        for (const key in entityKeys) {
-            const {file} = entityKeys[key].data
-            const fd = new FormData()
-            await fd.append('file', file)
-            const s3 = await articlesAPI.uploadImage(fd)
-            entityKeys[key].data.src = s3.data
-        }
-        const html = convertToHTML({
-            entityToHTML: (entity, originalText) => {
-                if (entity.type === 'IMAGE') {
-                    return <pre><img src={entity.data.src} alt='article_image'/></pre>
-                } else {
-                    return originalText
+    async function onAddArticle(values:typeof formik.values) {
+        try {
+            if (!formik.isValid) return
+            const rawText = editorState.getCurrentContent().getPlainText('\u0001')
+            if (rawText.length < 100) {
+                formik.setFieldError('text', 'Article\'s content has to be minimum up to 100 characters');
+                return;
+            }
+            dispatch(setArticleCreatingState(true))
+            const {header, description, previewDescription, coverImg_withText, coverImg_withOutText, category} = values
+            if (coverImg_withText.file && coverImg_withText.src.includes('base64')) {
+                const fd2 = new FormData()
+                fd2.append('file', coverImg_withText.file)
+                const s3 = await articlesAPI.uploadImage(fd2)
+                coverImg_withText.src = s3.data
+            }
+            if (coverImg_withOutText.file && coverImg_withOutText.src.includes('base64')) {
+                const fd3 = new FormData()
+                fd3.append('file', coverImg_withOutText.file)
+                const s3 = await articlesAPI.uploadImage(fd3)
+                coverImg_withOutText.src = s3.data
+            }
+            const contentState = await editorState.getCurrentContent()
+            const entityKeys = convertToRaw(contentState).entityMap
+            for (const key in entityKeys) {
+                if (entityKeys[key].type !== 'LINK' && entityKeys[key].data.src.includes('base64')) {
+                    const {file} = entityKeys[key].data
+                    const fd = new FormData()
+                    await fd.append('file', file)
+                    const s3 = await articlesAPI.uploadImage(fd)
+                    entityKeys[key].data.src = s3.data
                 }
             }
-        })(editorState.getCurrentContent());
-        const data = {
-            header,
-            description,
-            previewDescription,
-            coverImg_withText: coverImg_withText.src,
-            coverImg_withOutText:coverImg_withOutText.src,
-            categoryId: categories.find(el => el.name === category)?.id,
-            text: html
+            const html = convertToHTML({
+                entityToHTML: (entity, originalText) => {
+                    if (entity.type === 'IMAGE') {
+                        return <pre><img src={entity.data.src} alt='article_image'/></pre>
+                    } else if (entity.type === 'LINK' && entity.data?.url) {
+                        return <a href={entity.data.url} target="_blank" rel="noopener noreferrer"></a>
+                    } else {
+                        return originalText
+                    }
+                }
+            })(editorState.getCurrentContent());
+            const data = {
+                header,
+                description,
+                previewDescription,
+                coverImg_withText: coverImg_withText.src,
+                coverImg_withOutText: coverImg_withOutText.src,
+                categoryId: categories.find(el => el.name === category)?.id,
+                text: html
+            }
+            if (formik.values?.articleId) {
+                const updateData = {...data, articleId: +formik.values?.articleId}
+                dispatch(updateArticle(updateData))
+            } else {
+                dispatch(createArticle(data))
+            }
+        } catch(e) {
+            dispatch(setCommonErr('Something went wrong, try again later'))
+            dispatch(setArticleCreatingState(false))
         }
-        dispatch(createArticle(data))
     }
 
     async function pasteImg(src: string, file: File) {
@@ -206,9 +251,9 @@ export function CreateArticle(props: Props) {
                 const src = await reader.result
                 if (src) {
                     if (name === 'coverImg_withText') {
-                        formik.setFieldValue('coverImg_withText', {src: src, file: files[0]})
+                        await formik.setFieldValue('coverImg_withText', {src: src, file: files[0]})
                     } else if(name === 'coverImg_withOutText') {
-                        formik.setFieldValue('coverImg_withOutText', {src: src, file: files[0]})
+                        await formik.setFieldValue('coverImg_withOutText', {src: src, file: files[0]})
                     } else {
                         if (src) return pasteImg(src.toString(), files[0])
                     }
@@ -217,7 +262,7 @@ export function CreateArticle(props: Props) {
         }
     }
 
-    function deleteCoverImg_withText(e:any) {
+    function deleteCoverImg(e:any) {
         const id = e.currentTarget.id
         setTimeout(() => {
             if(id === 'withText') {
@@ -245,12 +290,10 @@ export function CreateArticle(props: Props) {
     function imgDrop(e: any) {
         e.preventDefault()
         const id = e.currentTarget.id
-        console.log(id);
         let imgFile = e.dataTransfer.files[0]
         if (imgFile) {
             const reader = new FileReader()
             reader.readAsDataURL(imgFile)
-            console.log(e.currentTarget.id)
             reader.onload = () => {
                 if(id === 'withText') {
                     formik.setFieldValue('coverImg_withText', {src: reader.result, file: imgFile})
@@ -286,22 +329,26 @@ export function CreateArticle(props: Props) {
         }
     }
 
-    return <>
+    return <form onSubmit={formik.handleSubmit}>
         {isArticleCreated === true && <ModalWindow smallModal={true} closeModal={closeModal} header={'Success'}
                                                    text='Article successfully created'/>}
         {err && <ModalWindow smallModal={true} closeModal={closeErrModal} header={'Failure'}
                              text={err}/>}
         <Content style={{padding: '60px 0'}}>
+
             <H1 style={{textAlign: 'center'}}>Add new articles</H1>
-            <Form>
+            <FormContent>
                 <CustomInputWithCounter value={formik.values.header} currentValueLength={formik.values.header.length}
+                                        error={formik.errors.header}
                                         name='header' handleChange={formik.handleChange} placeholder='Header'
                                         maxLength={55}/>
                 <CustomTextAreaWithCounter value={formik.values.previewDescription}
+                                           error={formik.errors.previewDescription}
                                            currentValueLength={formik.values.previewDescription.length}
                                            name='previewDescription' handleChange={formik.handleChange}
                                            placeholder='Preview Description' maxLength={95}/>
                 <CustomTextAreaWithCounter value={formik.values.description}
+                                           error={formik.errors.description}
                                            currentValueLength={formik.values.description.length} name='description'
                                            handleChange={formik.handleChange}
                                            placeholder='Description' maxLength={240}/>
@@ -317,7 +364,7 @@ export function CreateArticle(props: Props) {
                         }
                         {formik.values.coverImg_withText.src &&
                             <AiOutlineClose style={{position: 'absolute', left: '93%', top: '5%'}}
-                                            color='#F05050' size={30} id={'withText'} onClick={deleteCoverImg_withText}/>}
+                                            color='#F05050' size={30} id={'withText'} onClick={deleteCoverImg}/>}
                         {isImgWithTextAttaching && !formik.values.coverImg_withText.src &&
                             <RiImageAddFill color='#525252' size={120}/>}
                         {!formik.values.coverImg_withText.src && !isImgWithTextAttaching && <>
@@ -339,7 +386,7 @@ export function CreateArticle(props: Props) {
                         }
                         {formik.values.coverImg_withOutText.src &&
                             <AiOutlineClose style={{position: 'absolute', left: '93%', top: '5%'}}
-                                            color='#F05050' size={30} onClick={deleteCoverImg_withText} id={'withOutText'} />}
+                                            color='#F05050' size={30} onClick={deleteCoverImg} id={'withOutText'} />}
                         {isImgWithOutTextAttaching && !formik.values.coverImg_withText.src &&
                             <RiImageAddFill color='#525252' size={120}/>}
                         {!formik.values.coverImg_withOutText.src && !isImgWithOutTextAttaching && <>
@@ -351,18 +398,25 @@ export function CreateArticle(props: Props) {
                     </AddImgWithOutTextBtn>
                 </label>
                 </CoversContainer>
-            </Form>
+            </FormContent>
         </Content>
         <BreakingLine/>
         <Content>
+            <ArticleEditorContainer>
             <CreateArticlePageContext.Provider
                 value={{onAddImg, onAddLink, confirmLink, isAddLinkInputOpen, setAddLinkInputState, removeLink}}>
                 <ArticleEditor formik={formik} editorState={editorState} setEditorState={setEditorState}/>
             </CreateArticlePageContext.Provider>
-            <AddArticleButton onClick={onAddArticle}>
+                {formik.errors.text && <ErrorMessage style={{marginTop:'30px'}}>{formik.errors.text}</ErrorMessage>}
+            </ArticleEditorContainer>
+            <AddArticleButtonContainer>
+            <AddArticleButton type={'submit'}>
                 <BsFillCheckCircleFill size={120} opacity='0.5' color='#58649C'/>
                 <p>Add Article</p>
             </AddArticleButton>
+                {!formik.isValid && <ErrorMessage style={{marginTop:'30px'}}>You haven't passed validation, check if all the fields are field correctly</ErrorMessage>}
+            </AddArticleButtonContainer>
+
         </Content>
-    </>
+    </form>
 }

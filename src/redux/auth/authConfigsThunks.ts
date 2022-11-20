@@ -1,7 +1,7 @@
 import {AppDispatch} from "../store";
-import {authSlice} from "./authSlice";
+import {authConfigsSlice} from "./authConfigsSlice";
 import {fetchAccountData} from "../user/userThunks";
-import {IUserLogin} from './authTypes'
+import {IUserLogin} from './authConfigsTypes'
 import {authAPI} from "../../api/authAPI";
 import {AxiosError} from "axios";
 import {fetchArticles} from "../articles/articlesThunks";
@@ -11,15 +11,15 @@ export const loginUser = (data: IUserLogin) => async (dispatch: AppDispatch) => 
     if (res.status === 200 && res.data.token) {
         window.localStorage.setItem('MyClickToken', res.data.token)
         dispatch(fetchAccountData())
-        dispatch(authSlice.actions.setAuthState(true))
+        dispatch(authConfigsSlice.actions.setAuthState(true))
     } else {
-        dispatch(authSlice.actions.setLoginErr(``))
-        dispatch(authSlice.actions.setAuthState(false))
+        dispatch(authConfigsSlice.actions.setLoginErr(``))
+        dispatch(authConfigsSlice.actions.setAuthState(false))
     }
 }
 export const fetchConfigs = () => async (dispatch: AppDispatch) => {
     const configs = await authAPI.fetchConfigs()
-    dispatch(authSlice.actions.setConfigs(configs))
+    dispatch(authConfigsSlice.actions.setConfigs(configs))
 }
 
 export const auth = () => async (dispatch: AppDispatch) => {
@@ -30,7 +30,7 @@ export const auth = () => async (dispatch: AppDispatch) => {
         }
         await dispatch(fetchConfigs())
         await dispatch(fetchArticles())
-        dispatch(authSlice.actions.setInitializerState(true))
+        dispatch(authConfigsSlice.actions.setInitializerState(true))
     } catch (e) {
         const err = e as AxiosError
         if (err.response?.status === 401 || err.response?.status === 403) {

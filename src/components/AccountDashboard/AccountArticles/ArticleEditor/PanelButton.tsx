@@ -45,7 +45,7 @@ export const PanelButton = (props: Props) => {
     const ArticleEditorProps = useContext(ArticleEditorContext)
 
 
-    return <EditorPanelButton active={activeBlockButton === props.id}
+    return <EditorPanelButton type='button' active={activeBlockButton === props.id}
                               onMouseDown={() => ArticleEditorProps.onPanelToggle(props.id)}>
         {props.label || props.children}
     </EditorPanelButton>

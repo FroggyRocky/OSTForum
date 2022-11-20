@@ -3,8 +3,12 @@ import styled from "styled-components";
 import {StatisticsPanel} from "../StatisticsPanel";
 import {IoTimeOutline} from "react-icons/io5";
 import { MdModeEditOutline } from "react-icons/md";
-import inst from "../../../assets/instFlag.png";
-import fb from "../../../assets/instFlag.png";
+import instFbFlag from '../../../assets/instFbFlag.png'
+import affiliateFlag from '../../../assets/affiliateFlag.png'
+import casesFlag from '../../../assets/casesFlag.png'
+import cryptoFlag from '../../../assets/cryptoFlag.png';
+import tikTokFlag from '../../../assets/tikTokFlag.png'
+import eCommerceFlag from '../../../assets/eCommerceFlag.png'
 
 
 
@@ -85,9 +89,9 @@ export const AccountArticleCard = (props: Props) => {
     const chooseFlag = () => {
         switch (props.category) {
             case 'facebook':
-                return inst;
+                return instFbFlag;
             case 'instagram':
-                return fb;
+                return instFbFlag;
             default:
                 break;
         }

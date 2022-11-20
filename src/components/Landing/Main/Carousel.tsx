@@ -67,10 +67,12 @@ export const Carousel = (props: Props) => {
         }
 
         function handleLeftClickMob() {
-            setTranslation(prev => {
-                const newTranslation = Math.min(prev + PAGEWIDTH, 0)
-                return newTranslation
-            })
+            if(isMobile) {
+                setTranslation(prev => {
+                    const newTranslation = Math.min(prev + PAGEWIDTH, 0)
+                    return newTranslation
+                })
+            }
         }
 
         function handleRightClickMob() {
@@ -89,6 +91,7 @@ export const Carousel = (props: Props) => {
         }
 
         function handleTouchMove(e: any) {
+            document.body.style.overflowY = "hidden";
             const touchDown = touchPosition
 
             if (touchDown === null) {
@@ -110,7 +113,9 @@ export const Carousel = (props: Props) => {
         }
 
         function handleTouchEnd() {
-            document.body.style.overflowY = "auto";
+            if(isMobile) {
+                document.body.style.overflowY = "auto";
+            }
         }
 
         const Articles = articlesData.map((el, index) => {
@@ -121,24 +126,24 @@ export const Carousel = (props: Props) => {
             ]
             if (index === +articlesData.length - 1) {
                 return <StyledLink translation={translation} ref={lastArticleRef} key={el.id}
-                                   to={`/article/${encodeURI(el.header)}`}
+                                   to={`/article/${el.id}`}
                                    state={pathData}>
-                    <Card isThereOnlyOneItem={articlesData.length <= 1} id={`${el.id}`} imgSrc={el.coverImg_withOutText || el.coverImg_withText}>
+                    <Card isThereOnlyOneItem={articlesData.length <= 1} id={`${el.id}`} imgSrc={el.coverImg_withText || el.coverImg_withOutText}>
                         <p>{el.header}</p>
                     </Card>
                 </StyledLink>
             } else if (index === 0) {
                 return <StyledLink translation={translation} ref={firstArticleRef} key={el.id}
-                                   to={`/article/${encodeURI(el.header)}`}
+                                   to={`/article/${el.id}`}
                                    state={pathData}>
-                    <Card isThereOnlyOneItem={articlesData.length <= 1} id={`${el.id}`} imgSrc={el.coverImg_withOutText || el.coverImg_withText}>
+                    <Card isThereOnlyOneItem={articlesData.length <= 1} id={`${el.id}`} imgSrc={el.coverImg_withText || el.coverImg_withOutText}>
                         <p>{el.header}</p>
                     </Card>
                 </StyledLink>
             } else {
-                return <StyledLink translation={translation} key={el.id} to={`/article/${encodeURI(el.header)}`}
+                return <StyledLink translation={translation} key={el.id} to={`/article/${el.id}`}
                                    state={pathData}>
-                    <Card isThereOnlyOneItem={articlesData.length <= 1} id={`${el.id}`} imgSrc={el.coverImg_withOutText || el.coverImg_withText}>
+                    <Card isThereOnlyOneItem={articlesData.length <= 1} id={`${el.id}`} imgSrc={el.coverImg_withText || el.coverImg_withOutText}>
                         <p>{el.header}</p>
                     </Card>
                 </StyledLink>

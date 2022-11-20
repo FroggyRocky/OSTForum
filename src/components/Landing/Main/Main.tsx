@@ -6,7 +6,7 @@ import {useLocation} from "react-router-dom";
 import {useEffect} from "react";
 import {isMobile} from 'react-device-detect'
 
-const Wrapper = styled.div<{isMobile:boolean}>`
+const Wrapper = styled.div<{ismobile:boolean}>`
   padding: 102px 0;
   text-align: center;
   height: 1112px;
@@ -15,7 +15,7 @@ const Wrapper = styled.div<{isMobile:boolean}>`
   height: initial;  
     padding: 102px 0;
   }
-  ${({isMobile}) => isMobile && css `
+  ${({ismobile}) => ismobile && css `
   height: 100vh;
     padding: 30px 0 0 0;
   `};
@@ -35,12 +35,13 @@ const H1 = styled.h1`
   background-clip: text;
   text-fill-color: transparent;
   width: 100%;
-  @media (max-width: ${mediaSizes.mobile}) {
+  @media (max-width: ${mediaSizes.laptop}) {
     margin-bottom: 20px;
     font-weight: 700;
     font-size: 40px;
     line-height: 40px;
     padding: 0 10px;
+    z-index: 2;
   }
 `
 const ButtonContainer = styled.div`
@@ -128,7 +129,7 @@ export const Main = (props: Props) => {
     }, [])
 
 
-    return <Wrapper isMobile={isMobile}>
+    return <Wrapper ismobile={isMobile}>
         <H1>The Most Popular Articles</H1>
         <Carousel/>
         <ButtonContainer>
