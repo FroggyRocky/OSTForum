@@ -113,7 +113,7 @@ const Flag = styled.img`
   width: 38px;
   height: 52px;
   position: absolute;
-  top: 0px;
+  top: -9px;
   right: 0;
   margin: 0;
   flex-shrink: 0;

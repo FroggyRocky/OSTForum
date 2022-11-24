@@ -80,7 +80,6 @@ export const Articles = (props: Props) => {
 
     const articles = useCallback(() => {
          if (selectedTopic) {
-             console.log(selectedTopic)
             if (selectedTopic === 'inst&fb') {
                 const filteredArticles = articlesData.filter(el => el.category?.name === 'instagram' || el.category?.name === 'facebook');
                 return createArticleComponents(filteredArticles)

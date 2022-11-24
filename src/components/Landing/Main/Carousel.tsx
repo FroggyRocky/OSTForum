@@ -13,6 +13,9 @@ import {useEffect, useRef, useState} from "react";
 import {useAppSelector} from "../../../redux/hooks/hooks";
 import {isMobile} from 'react-device-detect'
 
+
+const CAROUSEL_ARTICLES_MAX = 8
+
 type Props = {};
 export const Carousel = (props: Props) => {
         const [isFirstArticleVisible, setFirstArticleVisibility] = useState<boolean>()
@@ -118,13 +121,13 @@ export const Carousel = (props: Props) => {
             }
         }
 
-        const Articles = articlesData.map((el, index) => {
+        const Articles = articlesData.slice(0, CAROUSEL_ARTICLES_MAX).map((el, index) => {
             const pathData = [{
                 pathName: 'Home',
                 path: '/'
             },
             ]
-            if (index === +articlesData.length - 1) {
+            if (index === CAROUSEL_ARTICLES_MAX - 1) {
                 return <StyledLink translation={translation} ref={lastArticleRef} key={el.id}
                                    to={`/article/${el.id}`}
                                    state={pathData}>

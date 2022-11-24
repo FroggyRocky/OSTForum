@@ -338,18 +338,18 @@ export function CreateArticle(props: Props) {
 
             <H1 style={{textAlign: 'center'}}>Add new articles</H1>
             <FormContent>
-                <CustomInputWithCounter value={formik.values.header} currentValueLength={formik.values.header.length}
+                <CustomInputWithCounter value={formik.values.header} currentValueLength={formik.values.header?.length || 0}
                                         error={formik.errors.header}
                                         name='header' handleChange={formik.handleChange} placeholder='Header'
                                         maxLength={55}/>
                 <CustomTextAreaWithCounter value={formik.values.previewDescription}
                                            error={formik.errors.previewDescription}
-                                           currentValueLength={formik.values.previewDescription.length}
+                                           currentValueLength={formik.values.previewDescription?.length || 0}
                                            name='previewDescription' handleChange={formik.handleChange}
                                            placeholder='Preview Description' maxLength={95}/>
                 <CustomTextAreaWithCounter value={formik.values.description}
                                            error={formik.errors.description}
-                                           currentValueLength={formik.values.description.length} name='description'
+                                           currentValueLength={formik.values.description?.length || 0} name='description'
                                            handleChange={formik.handleChange}
                                            placeholder='Description' maxLength={240}/>
                 <CoversContainer>
