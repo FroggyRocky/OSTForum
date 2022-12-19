@@ -3,11 +3,11 @@ export interface IUserLogin {
     password:string
 }
 
-interface Categories {
+export interface ICategory {
     id:number,
     name:string
 }
 
 export interface IConfigs {
-    categories:Array<Categories>,
+    categories:Array<ICategory>,
 }

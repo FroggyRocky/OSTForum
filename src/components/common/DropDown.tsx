@@ -1,23 +1,21 @@
 import './dropdown.css'
 
 
-
 type Props = {
-    selectOptions:Array<any>,
-    value:string,
-    isOpen:boolean,
-    setValue:(value:string) => void,
-    setTouched:(value:boolean) => void,
+    selectOptions: Array<any>,
+    currentValue: any,
+    isOpen: boolean,
+    setValue: (value: any) => void,
+    setTouched: (value: boolean) => void,
 };
 
 export const DropDown = (props: Props) => {
-    function selectOption(option:any) {
-        props.setValue(option)
-    }
+
 
     const selectOptions = props.selectOptions.map((el, index) => {
-        return <div className={`dropDown__optionContainer ${el.name === props.value && 'dropDown__optionContainer_active'}`}
-            key={el.id || index} onClick={() => selectOption(el.name)}>
+        return <div
+            className={`dropDown__optionContainer ${(props.currentValue?.includes(el.id) || props.currentValue?.includes(el.name)) && 'dropDown__optionContainer_active'}`}
+            key={el.id || index} onClick={() => props.setValue(el)}>
             <div className='dropDown__option'>
                 <span>{el.name}</span>
             </div>
@@ -27,7 +25,7 @@ export const DropDown = (props: Props) => {
 
     return <>
         {props.isOpen && <section className='dropDown__dropDown'>
-                {selectOptions}
+            {selectOptions}
         </section>
         }
     </>

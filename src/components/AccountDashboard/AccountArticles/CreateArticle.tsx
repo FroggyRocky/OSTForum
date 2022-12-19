@@ -68,7 +68,7 @@ export function CreateArticle(props: Props) {
             formik.setFieldValue('description', editingArticle.description)
             formik.setFieldValue('previewDescription', editingArticle.previewDescription)
             formik.setFieldValue('articleId', editingArticle.articleId)
-            formik.setFieldValue('category', editingArticle.categoryName)
+            formik.setFieldValue('categoryIds', editingArticle.categoryIds)
         }
     },[editingArticle,window.location.search])
     const CreateArticleSchema = Yup.object().shape({
@@ -88,14 +88,13 @@ export function CreateArticle(props: Props) {
     })
     const formik = useFormik({
         validateOnChange:false,
-        //validateOnMount:false,
         validateOnBlur:true,
         initialValues: {
             articleId:'',
             header: '',
             description: '',
             previewDescription: '',
-            category: '',
+            categoryIds: [],
             coverImg_withText: {
                 file: '',
                 src: '',
@@ -175,7 +174,7 @@ export function CreateArticle(props: Props) {
                 return;
             }
             dispatch(setArticleCreatingState(true))
-            const {header, description, previewDescription, coverImg_withText, coverImg_withOutText, category} = values
+            const {header, description, previewDescription, coverImg_withText, coverImg_withOutText, categoryIds} = values
             if (coverImg_withText.file && coverImg_withText.src.includes('base64')) {
                 const fd2 = new FormData()
                 fd2.append('file', coverImg_withText.file)
@@ -216,7 +215,7 @@ export function CreateArticle(props: Props) {
                 previewDescription,
                 coverImg_withText: coverImg_withText.src,
                 coverImg_withOutText: coverImg_withOutText.src,
-                categoryId: categories.find(el => el.name === category)?.id,
+                categoryIds: categoryIds.length !== 0 ? categoryIds : null,
                 text: html
             }
             if (formik.values?.articleId) {

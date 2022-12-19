@@ -3,15 +3,12 @@ const Sequelize = require('sequelize')
 
 class Articles {
     async getArticles(req, res) {
-        const articles = await db.Articles.findAll({
+        const articles = await db.Article.findAll({
             attributes: {exclude: ['updatedAt', 'userId', 'text', 'categoryId']},
             include: [
                 {
                     model: db.Comments
                 },
-                {
-                    model: db.Categories,
-                }
             ],
             order: [['usersLiked', 'desc']],
         })
@@ -21,7 +18,7 @@ class Articles {
     async getArticle(req, res) {
         try {
             const articleId = req.params.id
-            const article = await db.Articles.findByPk(articleId, {
+            const article = await db.Article.findByPk(articleId, {
                 include: [
                     {
                         model: db.Comments,
@@ -35,10 +32,6 @@ class Articles {
                     {
                         model: db.Users
                     },
-                    {
-                        model: db.Categories,
-                    }
-
                 ]
             })
             res.send(article)
@@ -55,7 +48,7 @@ class Articles {
                 ...req.body,
                 userId: accountId
             }
-            const response = await db.Articles.create(data)
+            const response = await db.Article.create(data)
             res.status(200).send(response)
         } catch (e) {
             console.log(e)
@@ -114,9 +107,9 @@ class Articles {
         try {
             const accountId = req.accountId
             const {articleId, ...updateData} = req.body
-            const article = await db.Articles.findByPk(articleId, {raw: true})
+            const article = await db.Article.findByPk(articleId, {raw: true})
             if (accountId === article.userId) {
-                await db.Articles.update(
+                await db.Article.update(
                     {...updateData},
                     {
                         where: {

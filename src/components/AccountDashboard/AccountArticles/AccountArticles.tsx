@@ -39,7 +39,7 @@ export const AccountArticles = (props: Props) => {
         return <AccountArticleCard key={el.id} views={el.usersViewed.length} dislikes={el.usersDisliked.length}
                                    likes={el.usersLiked.length} header={el.header} description={el.description}
                                    comments={el.comments.length}
-                                   createdAt={el.createdAt} coverImg_withText={el.coverImg_withText} category={el.category.name}/>
+                                   createdAt={el.createdAt} coverImg_withText={el.coverImg_withText} categoryIds={el.categoryIds}/>
     })
 
     return <Content style={{padding: '30px 0 60px 0'}}>

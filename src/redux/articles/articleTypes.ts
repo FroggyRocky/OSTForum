@@ -1,11 +1,6 @@
 import {IUser} from "../user/userType";
 import {ContentBlock} from "draft-js";
 
-export interface ICategory {
-    id: number,
-    name: string
-}
-
 export interface IComments {
     id: number,
     text: string,
@@ -28,7 +23,7 @@ export interface IArticlesPreview {
     usersViewed: Array<number>
     createdAt: string,
     comments: Array<IComments>,
-    category: ICategory,
+    categoryIds: Array<number> | null
 }
 
 export interface IArticle extends IArticlesPreview {
@@ -42,7 +37,7 @@ export interface ICreatedArticle {
     previewDescription: string,
     coverImg_withText: string,
     text: string,
-    categoryId: number | undefined
+    categoryIds: Array<number> | null
 }
 
 export interface IEditingArticle {
@@ -56,7 +51,7 @@ export interface IEditingArticle {
     previewDescription:string,
     coverImg_withText:string,
     coverImg_withOutText:string,
-    categoryName:string
+    categoryIds:Array<number> | null
 }
 
 export interface IUpdateArticle extends ICreatedArticle {

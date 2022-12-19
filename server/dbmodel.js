@@ -1,7 +1,7 @@
 const db = require('./dbconnetction')
 const {DataTypes} = require("sequelize");
 
-const Articles = db.define('articles', {
+const Article = db.define('article', {
     header:DataTypes.STRING(55),
     text:DataTypes.TEXT,
     description:DataTypes.STRING(240),
@@ -17,6 +17,9 @@ const Articles = db.define('articles', {
     usersViewed:{
         type:DataTypes.ARRAY(DataTypes.INTEGER),
     }, // ID OF USERS WHO LIKED VIEWED THE ARTICLE,
+    categoryIds:{
+        type:DataTypes.ARRAY(DataTypes.INTEGER),
+    }
 })
 const Comments = db.define('comments', {
     text:DataTypes.STRING(100),
@@ -52,19 +55,17 @@ const RefreshTokens = db.define('refresh_tokens', {
     token:DataTypes.STRING
 })
 
-Users.hasMany(Articles);
-Articles.belongsTo(Users)
+Users.hasMany(Article);
+Article.belongsTo(Users)
 Users.hasMany(Comments);
 Comments.belongsTo(Users)
-Articles.hasMany(Comments);
-Comments.belongsTo(Articles);
-Categories.hasMany(Articles)
-Articles.belongsTo(Categories)
+Article.hasMany(Comments);
+Comments.belongsTo(Article);
 
 
 
 module.exports = {
-    Articles,
+    Article,
     Comments,
     Users,
     Categories,

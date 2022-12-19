@@ -64,8 +64,8 @@ type Props = {
 export const EditorPanel = (props: Props) => {
 
     const CreateArticleContext = useContext<IUserContext>(CreateArticlePageContext)
-    const {setValue: setCategoryValue} = props.formik.getFieldHelpers('category')
-    const {value: categoryValue} = props.formik.getFieldMeta('category')
+    const {setValue: setCategoryFormValue} = props.formik.getFieldHelpers('categoryIds')
+    const {value: categoryFormValue} = props.formik.getFieldMeta('categoryIds')
     const [isCategoryDropDownOpen, setCategoryDropDownState] = useState(false)
     const {setValue: setHyperLinkValue} = props.formik.getFieldHelpers('hyperLink')
     const {value: hyperLinkValue} = props.formik.getFieldMeta('hyperLink')
@@ -80,7 +80,20 @@ export const EditorPanel = (props: Props) => {
         return <PanelButton key={index} active={stateActive(el.id)} editorState={props.editorState} id={el.id}
                             label={el.label}/>
     })
-
+    function chooseCategory(option:{id:number, name:string}) {
+        const {id} = option;
+        const prevValue:number[] = categoryFormValue;
+        if(!prevValue || prevValue.length <= 0) {
+            setCategoryFormValue([id])
+        } else {
+            if (!prevValue?.includes(id)) {
+                setCategoryFormValue([...prevValue, id])
+            } else if (prevValue?.includes(id)) {
+                const filteredCategoryIds = prevValue?.filter(categoryId => +categoryId !== +id)
+                setCategoryFormValue(filteredCategoryIds)
+            }
+        }
+    }
     function closeCategoryFlagsSelector() {
         setCategoryDropDownState(false)
     }
@@ -119,14 +132,14 @@ export const EditorPanel = (props: Props) => {
                     <input type="file" id='upload2' style={{display: 'none'}} onChange={CreateArticleContext.onAddImg}/>
                     <BsImageFill/>
                 </Button>
-                <CategoryContainer ref={categoryFlagsRef} onClick={() => setCategoryDropDownState(prev => !prev)}>
-                    <Button >
+                <CategoryContainer ref={categoryFlagsRef}>
+                    <Button onClick={() => setCategoryDropDownState(prev => !prev)}>
                         <Flex style={{cursor: 'pointer'}}>
                             <BsFillBookmarkFill/>
                             <MdArrowDropDown/>
                         </Flex>
                     </Button>
-                    <DropDown setValue={setCategoryValue} setTouched={setCategoryDropDownState} value={categoryValue}
+                    <DropDown setValue={chooseCategory} setTouched={setCategoryDropDownState} currentValue={categoryFormValue}
                               isOpen={isCategoryDropDownOpen}
                               selectOptions={categories}/>
                 </CategoryContainer>

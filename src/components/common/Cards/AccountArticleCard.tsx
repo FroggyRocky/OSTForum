@@ -9,7 +9,7 @@ import casesFlag from '../../../assets/casesFlag.png'
 import cryptoFlag from '../../../assets/cryptoFlag.png';
 import tikTokFlag from '../../../assets/tikTokFlag.png'
 import eCommerceFlag from '../../../assets/eCommerceFlag.png'
-
+import {ICategory} from "../../../redux/auth/authConfigsTypes";
 
 
 type CardImage = {
@@ -72,7 +72,7 @@ const Date = styled(Flex)`
 
 
 type Props = {
-    category?:string,
+    categoryIds?:number[] | null,
     coverImg_withText:string,
     header:string,
     description:string,
@@ -86,21 +86,12 @@ type Props = {
 
 export const AccountArticleCard = (props: Props) => {
 
-    const chooseFlag = () => {
-        switch (props.category) {
-            case 'facebook':
-                return instFbFlag;
-            case 'instagram':
-                return instFbFlag;
-            default:
-                break;
-        }
-    }
+
 
     return <Container>
         <CardImage src={props.coverImg_withText} alt='Article_head_image'/>
         <Info>
-            <Flag src={chooseFlag()} alt="flag"/>
+            {/*<Flag src={chooseFlag()} alt="flag"/>*/}
             <Text>
                 <h1>{props.header}</h1>
                 <p>

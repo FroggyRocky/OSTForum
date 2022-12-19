@@ -123,7 +123,7 @@ export const Article = (props: Props) => {
              previewDescription:currentArticle.previewDescription,
              coverImg_withOutText:currentArticle.coverImg_withOutText,
              coverImg_withText:currentArticle.coverImg_withText,
-             categoryName:currentArticle.category?.name || ''
+             categoryIds:currentArticle.categoryIds
          }
         dispatch(setEditingArticle(editingData))
          navigate(`/dashboard/articles/create?id=${currentArticle.id}`)

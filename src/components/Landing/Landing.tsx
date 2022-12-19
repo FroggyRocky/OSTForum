@@ -14,8 +14,7 @@ import {Articles} from "./Articles/Articles";
 import {Wrapper} from "../common/commonStyles/Wrapper.styled";
 import {Footer} from "../Footer/Footer";
 import {useAppDispatch} from "../../redux/hooks/hooks";
-import {useEffect, useRef} from "react";
-import {fetchArticles} from "../../redux/articles/articlesThunks";
+import {useRef} from "react";
 import {mediaSizes, firstPageMediaSizes} from "../common/commonStyles/MediaSizes";
 import {isMobile} from 'react-device-detect'
 

@@ -1,70 +1,24 @@
-import styled, {css} from "styled-components";
 import {Content} from "../../common/commonStyles/Content.styled";
-import {Flex} from "../../common/commonStyles/Flex.styled";
 import {Card} from './Card'
 import {Pagination} from "../../common/Pagination";
 import {TgButton} from "../../common/TgButton";
 import {useAppSelector} from "../../../redux/hooks/hooks";
 import {useCallback, useState} from "react";
-import {mediaSizes} from "../../common/commonStyles/MediaSizes";
 import {IArticlesPreview} from "../../../redux/articles/articleTypes";
 import defaultCardCover from '../../../assets/defaultCardCover.png'
-const TopicsContainer = styled(Flex)`
-  padding: 0 0 41px 0;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 10px;
-  @media (max-width: ${mediaSizes.mobile}) {
-    display: flex;
-    //gap: 20px;
-    justify-content: start;
-  }
-`
-const Topic = styled.span<{isSelected:boolean}>`
-  font-family: var(--family-text);
-  font-weight: 400;
-  font-size: 20px;
-  line-height: 19px;
-  text-decoration-line: underline;
-  color: #272727;
-  cursor: pointer;
-  text-transform: capitalize;
-  ${({isSelected}) => isSelected && css`
-  color: #58649C;
-    font-weight: bold;
-  `}
-  @media (max-width: ${mediaSizes.mobile}) {
-  padding-bottom: 20px;
-  padding-right: 5px;
-    &:nth-child(2) {
-      margin: 0 0;
-    }
-
-    &:nth-child(4), &:nth-child(5), &:nth-child(6) {
-      display: none;
-    }
-  }
-`
-const ArticlesContainer = styled(Flex)`
-  margin-bottom: 50px;
-  position: relative;
-  gap: 30px;
-  @media (max-width: ${mediaSizes.laptop}) {
-    gap: 0;
-  }
-`
+import {ArticlesContainer, CategoriesContainer, Category} from './articles.styles'
+import {ICategory} from "../../../redux/auth/authConfigsTypes";
 
 type Props = {
     articlesPageRef: any
 }
+const articlesPerPageLimit = 8
 
 export const Articles = (props: Props) => {
     const articlesData = useAppSelector(state => state.articles.articles)
     const categories = useAppSelector(state => state.authConfigs.configs.categories)
-    const articlesPerPageLimit = 8
     const [currentPage, setCurrentPage] = useState(0)
-    const [selectedTopic, setSelectedTopic] = useState('')
+    const [selectedCategoryIds, setSelectedCategoryIds] = useState<Array<number>>([])
     const endIndex = (currentPage + 1) * articlesPerPageLimit
     const startIndex = endIndex - articlesPerPageLimit
     const historyPath = [
@@ -78,66 +32,87 @@ export const Articles = (props: Props) => {
         }
     ]
 
-    const articles = useCallback(() => {
-         if (selectedTopic) {
-            if (selectedTopic === 'inst&fb') {
-                const filteredArticles = articlesData.filter(el => el.category?.name === 'instagram' || el.category?.name === 'facebook');
-                return createArticleComponents(filteredArticles)
+    function isSelected(properIds: number[], selectedIds: number[]) {
+        return selectedIds.some(id => properIds.indexOf(id) >= 0)
+    }
 
-            } else if(selectedTopic !== 'inst&fb') {
-                const filteredArticles = articlesData.filter(el => {
-                 return el.category?.name === selectedTopic
-                });
-                return createArticleComponents(filteredArticles)
-            }
+    const articles = useCallback(() => {
+        if (selectedCategoryIds.length !== 0) {
+            const filteredArticles = articlesData.filter(article => {
+                if (!article.categoryIds || article.categoryIds.length === 0) return
+                if (selectedCategoryIds.some(id => article.categoryIds!.indexOf(id) >= 0)) {
+                    return article
+                } else {
+                    return;
+                }
+            });
+            return createArticleComponents(filteredArticles)
         } else {
-             const filteredArticles = articlesData
-             return createArticleComponents(filteredArticles)
-         }
-    }, [currentPage, articlesData, selectedTopic])
+            const filteredArticles = articlesData
+            return createArticleComponents(filteredArticles)
+        }
+    }, [currentPage, articlesData, selectedCategoryIds])
 
     const topics = categories.map(el => {
-        if(el.name !== 'facebook' && el.name !== 'instagram') {
-            return <Topic key={el.id} isSelected={selectedTopic === el.name} onClick={() => selectTopic(el.name)}>{el.name}</Topic>
+        if (el.name !== 'facebook' && el.name !== 'instagram') {
+            return <Category key={el.id} isSelected={isSelected(selectedCategoryIds, [el.id])}
+                             onClick={() => setSelectedCategoryIds([el.id])}>{el.name}</Category>
         }
     })
 
-function createArticleComponents(articles:IArticlesPreview[]) {
+    function createArticleComponents(articles: IArticlesPreview[]) {
         return articles.map(el => {
-            return <Card key={el.id} header={el.header} coverImg_withText={el.coverImg_withText || el.coverImg_withOutText || defaultCardCover}
+            let cardCategories = [] as Array<ICategory>
+            if(el.categoryIds && el.categoryIds.length !== 0) {
+                cardCategories = categories.filter(category => el.categoryIds!.indexOf(category.id) >= 0)
+            }
+            return <Card key={el.id} header={el.header}
+                         coverImg_withText={el.coverImg_withText || el.coverImg_withOutText || defaultCardCover}
                          description={el.description} id={el.id}
                          dislikes={el.usersDisliked?.length || 0} likes={el.usersLiked?.length || 0}
                          views={el.usersViewed?.length || 0} historyPath={historyPath}
                          previewDescription={el.previewDescription}
-                         category={el.category?.name || ''} comments={el.comments?.length || 0}
-                         createdAt={el.createdAt}/>
+                         categories={cardCategories}
+                         comments={el.comments?.length || 0} createdAt={el.createdAt}/>
         })
     }
 
-function selectTopic(topic:string) {
-        if(selectedTopic === topic) {
+    function findInstAndFbCategoryId() {
+        const instAndFbCategoryIds: number[] = []
+        categories.forEach(category => {
+            if (category.name === 'instagram' || category.name === 'facebook') {
+                instAndFbCategoryIds.push(category.id)
+            }
+        })
+        return instAndFbCategoryIds
+    }
+
+    function selectTopic(topicIds: number[]) {
+        if (selectedCategoryIds.some(el => topicIds.indexOf(el) >= 0)) {
             setCurrentPage(0)
-            setSelectedTopic('')
+            setSelectedCategoryIds([])
         } else {
             setCurrentPage(0)
-            setSelectedTopic(topic)
+            setSelectedCategoryIds([...topicIds])
         }
-}
+    }
 
     return (
         <div style={{padding: '50px 0 60px 0'}}>
             <Content>
-                <TopicsContainer>
-                    <Topic isSelected={selectedTopic === 'inst&fb'} onClick={() => selectTopic('inst&fb')}>Facebook & Instagram</Topic>
+                <CategoriesContainer>
+                    <Category isSelected={isSelected(findInstAndFbCategoryId(), selectedCategoryIds)}
+                              onClick={() => selectTopic(findInstAndFbCategoryId())}>Facebook
+                        & Instagram</Category>
                     {topics}
-                </TopicsContainer>
+                </CategoriesContainer>
                 <ArticlesContainer id='articles__main'>
                     {articles()?.slice(startIndex, endIndex)}
                 </ArticlesContainer>
                 <TgButton/>
                 {articlesData.length !== 0 &&
                     <Pagination changePage={setCurrentPage} currentPage={currentPage} limit={articlesPerPageLimit}
-                               totalItems={articles()?.length || 0}
+                                totalItems={articles()?.length || 0}
                     />}
             </Content>
             <div ref={props.articlesPageRef}></div>

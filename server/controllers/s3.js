@@ -1,5 +1,4 @@
 require('dotenv').config();
-const fs = require('fs')
 const { v4: uuidv4 } = require('uuid');
 const S3Connection = require('aws-sdk/clients/s3');
 const bucketParams = { Bucket: process.env.S3_BUCKET_NAME}

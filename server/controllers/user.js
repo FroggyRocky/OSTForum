@@ -8,13 +8,10 @@ class User {
             const accountData = await db.Users.findByPk(accountId, {
                 attributes: {exclude: ['password']},
                 include: [{
-                    model: db.Articles,
+                    model: db.Article,
                     include: [
                         {
                             model: db.Comments
-                        },
-                        {
-                            model: db.Categories
                         }
                     ]
                 }]

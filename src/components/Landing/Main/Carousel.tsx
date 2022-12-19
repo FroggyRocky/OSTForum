@@ -14,18 +14,19 @@ import {useAppSelector} from "../../../redux/hooks/hooks";
 import {isMobile} from 'react-device-detect'
 
 
-const CAROUSEL_ARTICLES_MAX = 8
+const CAROUSEL_ARTICLES_MAX = 5
 
 type Props = {};
 export const Carousel = (props: Props) => {
         const [isFirstArticleVisible, setFirstArticleVisibility] = useState<boolean>()
+    const [isArrowsDisabled, setArrowsDisabledState] = useState(false)
         const [isLastArticleVisible, setLastArticleVisibility] = useState<boolean>()
         const lastArticleRef = useRef() as React.MutableRefObject<HTMLAnchorElement>;
         const firstArticleRef = useRef() as React.MutableRefObject<HTMLAnchorElement>;
         const observerFramesRef = useRef() as React.MutableRefObject<HTMLDivElement>
         const [translation, setTranslation] = useState(0)
         const [touchPosition, setTouchPosition] = useState<null | number>(null)
-        const articlesData = useAppSelector(state => state.articles.articles)
+        const articlesData = useAppSelector(state => state.articles.articles).slice(0, CAROUSEL_ARTICLES_MAX)
         const PAGEWIDTH = 100
 
         useEffect(() => {
@@ -56,16 +57,27 @@ export const Carousel = (props: Props) => {
             }
         }, [firstArticleRef.current, lastArticleRef.current, translation, observerFramesRef.current])
 
-        function handleLeftClick(e: any) {
+function waitForArrowsAnimation() {
+            return new Promise<void>((resolve, reject) => {
+                setArrowsDisabledState(true)
+                setTimeout(() => {
+                    setArrowsDisabledState(false)
+                    resolve()
+                }, 900)
+            })
+}
+        async function handleLeftClick(e: any) {
             if (e.detail === 1) {
+                setArrowsDisabledState(true)
                 setTranslation(prev => prev + PAGEWIDTH)
+                await waitForArrowsAnimation()
             }
         }
 
-        function handleRightClick(e: any) {
-            console.log(e.detail);
+        async function handleRightClick(e: any) {
             if (e.detail === 1) {
                 setTranslation(prev => prev - PAGEWIDTH)
+                await waitForArrowsAnimation()
             }
         }
 
@@ -121,7 +133,7 @@ export const Carousel = (props: Props) => {
             }
         }
 
-        const Articles = articlesData.slice(0, CAROUSEL_ARTICLES_MAX).map((el, index) => {
+        const Articles = articlesData.map((el, index) => {
             const pathData = [{
                 pathName: 'Home',
                 path: '/'
@@ -160,11 +172,11 @@ export const Carousel = (props: Props) => {
                 </CarouselWindow>
             </CarouselContainer>
             {(articlesData.length > 1 && !isMobile) && <Controls>
-                <ArrContainer onClick={!isFirstArticleVisible ? handleLeftClick : undefined}
+                <ArrContainer onClick={!isFirstArticleVisible && !isArrowsDisabled ? handleLeftClick : undefined}
                               unactive={isFirstArticleVisible === true}>
                     <StyledActiveArrLeft/>
                 </ArrContainer>
-                <ArrContainer onClick={!isLastArticleVisible ? handleRightClick : undefined}
+                <ArrContainer onClick={!isLastArticleVisible && !isArrowsDisabled  ? handleRightClick : undefined}
                               unactive={isLastArticleVisible === true}>
                     <StyledActiveArrRight/>
                 </ArrContainer>
