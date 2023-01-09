@@ -11,7 +11,7 @@ export const CategoriesContainer = styled(Flex)`
   gap: 10px;
   @media (max-width: ${mediaSizes.mobile}) {
     display: flex;
-    //gap: 20px;
+    padding: 0;
     justify-content: start;
   }
 `
@@ -65,6 +65,10 @@ export const CategoryContainer = styled.div`
   visibility: hidden;
   transform: translateY(-100%);
   transition: transform 600ms ease-in-out, visibility 600ms ease-in-out;
+  @media (max-width: ${mediaSizes.mobile}) {
+    visibility: visible;
+    transform: translateY(0%);
+  }
 `
 export const CategoryFlag = styled.img`
   width: 38px;
@@ -105,9 +109,7 @@ export const CardImageContainer = styled.div`
     height: 50%;
   }
 `
-export const CardImage = styled.img<CardImage>`
-  alt: ${({alt}) => alt};
-  src: ${({src}) => src && src};
+export const CardImage = styled.div`
   height: 100%;
   border-radius: 15px 15px 0 0;
   width: 100%;

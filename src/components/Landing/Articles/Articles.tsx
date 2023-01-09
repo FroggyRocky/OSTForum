@@ -7,7 +7,7 @@ import {useCallback, useState} from "react";
 import {IArticlesPreview} from "../../../redux/articles/articleTypes";
 import defaultCardCover from '../../../assets/defaultCardCover.png'
 import {ArticlesContainer, CategoriesContainer, Category} from './articles.styles'
-import {ICategory} from "../../../redux/auth/authConfigsTypes";
+import {findCategoryObjById} from "../../../services/categoryFlags";
 
 type Props = {
     articlesPageRef: any
@@ -48,12 +48,11 @@ export const Articles = (props: Props) => {
             });
             return createArticleComponents(filteredArticles)
         } else {
-            const filteredArticles = articlesData
-            return createArticleComponents(filteredArticles)
+            return createArticleComponents(articlesData)
         }
-    }, [currentPage, articlesData, selectedCategoryIds])
+    }, [currentPage, selectedCategoryIds])
 
-    const topics = categories.map(el => {
+    const categoryComponents = categories.map(el => {
         if (el.name !== 'facebook' && el.name !== 'instagram') {
             return <Category key={el.id} isSelected={isSelected(selectedCategoryIds, [el.id])}
                              onClick={() => setSelectedCategoryIds([el.id])}>{el.name}</Category>
@@ -62,9 +61,9 @@ export const Articles = (props: Props) => {
 
     function createArticleComponents(articles: IArticlesPreview[]) {
         return articles.map(el => {
-            let cardCategories = [] as Array<ICategory>
-            if(el.categoryIds && el.categoryIds.length !== 0) {
-                cardCategories = categories.filter(category => el.categoryIds!.indexOf(category.id) >= 0)
+            const cardCategories = () => {
+                if(!el.categoryIds || el.categoryIds.length === 0) return;
+                return findCategoryObjById(el.categoryIds, categories)
             }
             return <Card key={el.id} header={el.header}
                          coverImg_withText={el.coverImg_withText || el.coverImg_withOutText || defaultCardCover}
@@ -72,7 +71,7 @@ export const Articles = (props: Props) => {
                          dislikes={el.usersDisliked?.length || 0} likes={el.usersLiked?.length || 0}
                          views={el.usersViewed?.length || 0} historyPath={historyPath}
                          previewDescription={el.previewDescription}
-                         categories={cardCategories}
+                         categories={cardCategories() || []}
                          comments={el.comments?.length || 0} createdAt={el.createdAt}/>
         })
     }
@@ -96,15 +95,13 @@ export const Articles = (props: Props) => {
             setSelectedCategoryIds([...topicIds])
         }
     }
-
     return (
-        <div style={{padding: '50px 0 60px 0'}}>
+        <div style={{padding: '0px 0 60px 0'}}>
             <Content>
                 <CategoriesContainer>
                     <Category isSelected={isSelected(findInstAndFbCategoryId(), selectedCategoryIds)}
-                              onClick={() => selectTopic(findInstAndFbCategoryId())}>Facebook
-                        & Instagram</Category>
-                    {topics}
+                              onClick={() => selectTopic(findInstAndFbCategoryId())}>Facebook&Instagram</Category>
+                    {categoryComponents}
                 </CategoriesContainer>
                 <ArticlesContainer id='articles__main'>
                     {articles()?.slice(startIndex, endIndex)}
@@ -112,7 +109,7 @@ export const Articles = (props: Props) => {
                 <TgButton/>
                 {articlesData.length !== 0 &&
                     <Pagination changePage={setCurrentPage} currentPage={currentPage} limit={articlesPerPageLimit}
-                                totalItems={articles()?.length || 0}
+                                totalItems={articles().length || 0}
                     />}
             </Content>
             <div ref={props.articlesPageRef}></div>

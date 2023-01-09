@@ -8,9 +8,9 @@ export const fetchArticles = () => async (dispatch: AppDispatch) => {
     dispatch(articleSlice.actions.setArticles(res.data))
 }
 
-export const fetchCurrentArticle = (id:number ) => async (dispatch: AppDispatch) => {
+export const fetchCurrentArticle = (id: number) => async (dispatch: AppDispatch) => {
     const res = await articlesAPI.getArticle(id)
-    dispatch(articleSlice.actions.setCurrentArticle(res.data))
+    await dispatch(articleSlice.actions.setCurrentArticle(res.data))
 }
 
 export const createArticle = (data: ICreatedArticle) => async (dispatch: AppDispatch) => {
@@ -20,7 +20,7 @@ export const createArticle = (data: ICreatedArticle) => async (dispatch: AppDisp
             dispatch(setArticleCreatedState(true))
             dispatch(setArticleCreatingState(false))
         }
-    } catch(e) {
+    } catch (e) {
         dispatch(setArticleCreatingState(false))
         dispatch(setCommonErr('Something went wrong, try again later'))
     }
@@ -33,9 +33,9 @@ export const updateArticle = (data: IUpdateArticle) => async (dispatch: AppDispa
             dispatch(setArticleCreatedState(true))
             dispatch(setArticleCreatingState(false))
         }
-    } catch(e) {
-            dispatch(setArticleCreatingState(false))
-            dispatch(setCommonErr('Something went wrong, try again later'))
-        }
+    } catch (e) {
+        dispatch(setArticleCreatingState(false))
+        dispatch(setCommonErr('Something went wrong, try again later'))
     }
+}
 

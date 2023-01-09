@@ -1,24 +1,23 @@
 import ReactPaginate from "react-paginate";
-import {useState, SetStateAction, Dispatch} from "react";
+import {Dispatch, SetStateAction} from "react";
 import './pagination.css'
-import {AppDispatch} from "../../redux/store";
+
 
 type Props = {
-limit:number,
-    totalItems:number,
-    changePage:Dispatch<SetStateAction<number>>,
-    currentPage:number
+    limit: number,
+    totalItems: number,
+    changePage: Dispatch<SetStateAction<number>>,
+    currentPage: number
 };
 export const Pagination = (props: Props) => {
 
 
-
     function handlePageClick(selectedPage: { selected: number; }) {
-            props.changePage(selectedPage.selected)
+        props.changePage(selectedPage.selected)
     }
 
     return (
-        <div style={{userSelect:'none'}}>
+        <div style={{userSelect: 'none'}}>
             <ReactPaginate
                 className='commonPagination'
                 breakLabel="..."

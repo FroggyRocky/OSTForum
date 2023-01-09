@@ -21,16 +21,8 @@ class Articles {
             const article = await db.Article.findByPk(articleId, {
                 include: [
                     {
-                        model: db.Comments,
-                        attributes: {exclude: ['updatedAt', 'userId', 'articleId']},
-                        include: [
-                            {
-                                model: db.Users
-                            }
-                        ]
-                    },
-                    {
-                        model: db.Users
+                        model: db.Users,
+                        attributes: {exclude: ['password']}
                     },
                 ]
             })

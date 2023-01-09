@@ -1,13 +1,12 @@
 import styled, {css} from "styled-components";
 import {mediaSizes, firstPageMediaSizes} from "../../common/commonStyles/MediaSizes";
 import {Link} from "react-router-dom";
-import defaultCardCover from '../../../assets/defaultCardCover.png'
 export const Wrapper = styled.div`
   z-index: 1;
   position: relative;
-  min-width: 1358px;
   margin: auto auto;
   overflow-x: hidden;
+  width: 100%;
   @media (max-width: ${firstPageMediaSizes.laptop}) {
     z-index: 10;
     margin: 0 0;
@@ -26,60 +25,39 @@ export const CarouselContainer = styled.div`
   justify-content: center;
 `
 export const CarouselWindow = styled.div<{isThereOnlyOneItem:boolean}>`
-  width: 1230px; // (30 + 30 + 30)-->gaps + (570 + 570)--> two card
   display: flex;
-  text-align: start;
-  justify-content: center;
-  gap: 30px;
-  margin: auto auto;
+  text-align: center;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  transition: transform 900ms ease-in-out;
   @media (max-width: ${mediaSizes.mobile}) {
-    width: calc(30px + 280px); // gaps + one element 280 px
-    gap: 0;
     justify-content: ${({isThereOnlyOneItem}) => isThereOnlyOneItem ? 'center' : 'flex-start'};
   }
 `
-export const StyledLink = styled(Link)<{ translation?: string | number }>`
-  transform: translateX(${({translation}) => translation + '%'});
-  transition: transform 900ms ease-in-out;
-`
-export const Card = styled.div<{ imgSrc: string, translation?: string | number,isThereOnlyOneItem:boolean}>`
+export const Card = styled(Link)<{ translation: string | number, maxTranslation:string | number}>`
   width: 570px;
   height: 288px;
-  background-image: url(${({imgSrc}) => imgSrc ? `${imgSrc}` : defaultCardCover});
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
   background-color: rgba(0, 0, 0, 0.9);
   border-radius: 15px;
   flex-shrink: 0;
   display: flex;
   flex-direction: column;
-
-  & > p {
-    font-family: var(--family-text);
-    font-weight: 700;
-    font-size: 25px;
-    line-height: 25px;
-    color: #FFFFFF;
-    padding: 0 0 20px 20px;
-    margin-top: auto;
-    border-bottom-left-radius: 15px;
-    border-bottom-right-radius: 15px;
-    background: linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.88) 100%);
+  overflow-y: hidden;
+  transform: translateX(${({translation}) => translation + '%'});
+  transition: transform 900ms ease-in-out;
+  margin: auto 30px;
+  @media screen and (min-width: 3500px) {
+    margin: auto auto;
   }
-
-  @media (max-width: ${mediaSizes.mobile}) {
+  @media screen and (max-width: ${mediaSizes.mobile}) {
     width: 280px;
     height: 141px;
-    &:nth-child(odd) {
-      margin: ${({isThereOnlyOneItem}) => !isThereOnlyOneItem && '0 15px'};
-    }
-    & > p {
-      font-size: 16px;
-      line-height: 18px;
-    }
+    margin: auto 5px auto 5px;
   }
+
 `
+
 export const Controls = styled.div`
   margin-top: 60px;
   margin-bottom: 20px;

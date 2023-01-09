@@ -3,13 +3,6 @@ import styled from "styled-components";
 import {StatisticsPanel} from "../StatisticsPanel";
 import {IoTimeOutline} from "react-icons/io5";
 import { MdModeEditOutline } from "react-icons/md";
-import instFbFlag from '../../../assets/instFbFlag.png'
-import affiliateFlag from '../../../assets/affiliateFlag.png'
-import casesFlag from '../../../assets/casesFlag.png'
-import cryptoFlag from '../../../assets/cryptoFlag.png';
-import tikTokFlag from '../../../assets/tikTokFlag.png'
-import eCommerceFlag from '../../../assets/eCommerceFlag.png'
-import {ICategory} from "../../../redux/auth/authConfigsTypes";
 
 
 type CardImage = {

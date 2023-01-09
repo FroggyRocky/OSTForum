@@ -6,83 +6,67 @@ import {
     Controls,
     StyledActiveArrLeft,
     StyledActiveArrRight,
-    StyledLink,
     Wrapper
 } from './Carousel.styles'
-import {useEffect, useRef, useState} from "react";
+import {useEffect, useState} from "react";
 import {useAppSelector} from "../../../redux/hooks/hooks";
 import {isMobile} from 'react-device-detect'
+import {ImgWithLoader} from "../../common/ImgWithLoader";
+import defaultImg from '../../../assets/defaultCardCover.png'
 
 
-const CAROUSEL_ARTICLES_MAX = 5
+const CAROUSEL_MAX_ARTICLES = 6
 
 type Props = {};
 export const Carousel = (props: Props) => {
-        const [isFirstArticleVisible, setFirstArticleVisibility] = useState<boolean>()
-    const [isArrowsDisabled, setArrowsDisabledState] = useState(false)
-        const [isLastArticleVisible, setLastArticleVisibility] = useState<boolean>()
-        const lastArticleRef = useRef() as React.MutableRefObject<HTMLAnchorElement>;
-        const firstArticleRef = useRef() as React.MutableRefObject<HTMLAnchorElement>;
-        const observerFramesRef = useRef() as React.MutableRefObject<HTMLDivElement>
-        const [translation, setTranslation] = useState(0)
-        const [touchPosition, setTouchPosition] = useState<null | number>(null)
-        const articlesData = useAppSelector(state => state.articles.articles).slice(0, CAROUSEL_ARTICLES_MAX)
-        const PAGEWIDTH = 100
+        const [translation, setTranslation] = useState(0);
+        const [touchPosition, setTouchPosition] = useState<null | number>(null);
+        const articlesData = useAppSelector(state => state.articles.articles).slice(0, CAROUSEL_MAX_ARTICLES);
+        const PAGEWIDTH = isMobile ? 100 : 88;
+        const maxTranslation = -(PAGEWIDTH * (articlesData.length - 1));
 
         useEffect(() => {
-            if (articlesData.length === 0) return
-            const observerOptions = {
-                root: observerFramesRef.current,
-                threshold: 1.0
+            if(!isMobile) {
+                const intervalId = setInterval(() => {
+                    handleRightAutoScroll();
+                }, 4000)
+                return () => clearInterval(intervalId)
             }
-            const firstArticleObserver = new IntersectionObserver((entries) => {
-                setFirstArticleVisibility(entries[0].isIntersecting)
-            }, observerOptions)
-            const lastArticleObserver = new IntersectionObserver((entries) => {
-                setLastArticleVisibility(entries[0].isIntersecting)
-            }, observerOptions)
-            if (firstArticleRef.current) {
-                firstArticleObserver.observe(firstArticleRef.current);
-            }
-            if (lastArticleRef.current) {
-                lastArticleObserver.observe(lastArticleRef.current)
-            }
-            return () => {
-                if (firstArticleRef.current) {
-                    firstArticleObserver.unobserve(firstArticleRef.current);
-                }
-                if (lastArticleRef.current) {
-                    lastArticleObserver.unobserve(lastArticleRef.current)
-                }
-            }
-        }, [firstArticleRef.current, lastArticleRef.current, translation, observerFramesRef.current])
+        }, [translation])
 
-function waitForArrowsAnimation() {
-            return new Promise<void>((resolve, reject) => {
-                setArrowsDisabledState(true)
-                setTimeout(() => {
-                    setArrowsDisabledState(false)
-                    resolve()
-                }, 900)
+
+        function handleRightAutoScroll() {
+            setTranslation(prev => {
+                if(translation === maxTranslation) {
+                    setTranslation(PAGEWIDTH)
+                }
+                const newTranslation = Math.max(prev - PAGEWIDTH, maxTranslation)
+                return newTranslation
             })
-}
-        async function handleLeftClick(e: any) {
+        }
+
+        function handleLeftClick(e: any) {
             if (e.detail === 1) {
-                setArrowsDisabledState(true)
-                setTranslation(prev => prev + PAGEWIDTH)
-                await waitForArrowsAnimation()
+                setTranslation(prev => {
+                    const newTranslation = Math.min(prev + PAGEWIDTH, PAGEWIDTH)
+                    return newTranslation
+                })
+
             }
         }
 
-        async function handleRightClick(e: any) {
+        function handleRightClick(e: any) {
             if (e.detail === 1) {
-                setTranslation(prev => prev - PAGEWIDTH)
-                await waitForArrowsAnimation()
+                setTranslation(prev => {
+                    const maxTranslation = -(PAGEWIDTH * (articlesData.length - 1))
+                    const newTranslation = Math.max(prev - PAGEWIDTH, maxTranslation)
+                    return newTranslation
+                })
             }
         }
 
         function handleLeftClickMob() {
-            if(isMobile) {
+            if (isMobile) {
                 setTranslation(prev => {
                     const newTranslation = Math.min(prev + PAGEWIDTH, 0)
                     return newTranslation
@@ -128,56 +112,35 @@ function waitForArrowsAnimation() {
         }
 
         function handleTouchEnd() {
-            if(isMobile) {
+            if (isMobile) {
                 document.body.style.overflowY = "auto";
             }
         }
-
         const Articles = articlesData.map((el, index) => {
             const pathData = [{
                 pathName: 'Home',
                 path: '/'
             },
             ]
-            if (index === CAROUSEL_ARTICLES_MAX - 1) {
-                return <StyledLink translation={translation} ref={lastArticleRef} key={el.id}
-                                   to={`/article/${el.id}`}
-                                   state={pathData}>
-                    <Card isThereOnlyOneItem={articlesData.length <= 1} id={`${el.id}`} imgSrc={el.coverImg_withText || el.coverImg_withOutText}>
-                        <p>{el.header}</p>
-                    </Card>
-                </StyledLink>
-            } else if (index === 0) {
-                return <StyledLink translation={translation} ref={firstArticleRef} key={el.id}
-                                   to={`/article/${el.id}`}
-                                   state={pathData}>
-                    <Card isThereOnlyOneItem={articlesData.length <= 1} id={`${el.id}`} imgSrc={el.coverImg_withText || el.coverImg_withOutText}>
-                        <p>{el.header}</p>
-                    </Card>
-                </StyledLink>
-            } else {
-                return <StyledLink translation={translation} key={el.id} to={`/article/${el.id}`}
-                                   state={pathData}>
-                    <Card isThereOnlyOneItem={articlesData.length <= 1} id={`${el.id}`} imgSrc={el.coverImg_withText || el.coverImg_withOutText}>
-                        <p>{el.header}</p>
-                    </Card>
-                </StyledLink>
-            }
+            return <Card translation={translation} maxTranslation={maxTranslation} key={el.id} to={`/article/${el.id}`} state={pathData}>
+                <ImgWithLoader src={el.coverImg_withText || el.coverImg_withOutText} defaultSrc={defaultImg} alt={'article_cover'}
+                               width={'auto'} height={'auto'} />
+            </Card>
         })
 
         return <Wrapper>
             <CarouselContainer onTouchEnd={handleTouchEnd} onTouchStart={handleTouchStart} onTouchMove={handleTouchMove}>
-                <CarouselWindow isThereOnlyOneItem={articlesData.length <= 1} ref={observerFramesRef}>
+                <CarouselWindow isThereOnlyOneItem={articlesData.length <= 1}>
                     {Articles}
                 </CarouselWindow>
             </CarouselContainer>
             {(articlesData.length > 1 && !isMobile) && <Controls>
-                <ArrContainer onClick={!isFirstArticleVisible && !isArrowsDisabled ? handleLeftClick : undefined}
-                              unactive={isFirstArticleVisible === true}>
+                <ArrContainer onClick={handleLeftClick}
+                              unactive={translation === PAGEWIDTH}>
                     <StyledActiveArrLeft/>
                 </ArrContainer>
-                <ArrContainer onClick={!isLastArticleVisible && !isArrowsDisabled  ? handleRightClick : undefined}
-                              unactive={isLastArticleVisible === true}>
+                <ArrContainer onClick={handleRightClick}
+                              unactive={maxTranslation === translation}>
                     <StyledActiveArrRight/>
                 </ArrContainer>
             </Controls>

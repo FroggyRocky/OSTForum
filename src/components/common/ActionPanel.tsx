@@ -58,30 +58,7 @@ const RepostBtnMobile = styled(IoArrowRedo)`
   }
 }
 `
-const ViewsBtn = styled(IoEyeSharp)`
-  width: 19px;
-  height: 19px;
-  @media (max-width: ${mediaSizes.mobile}) {
-    width: 12px;
-    height: 12px;
-  }
-`
-const LikesBtn = styled(IoThumbsUp)`
-  width: 19px;
-  height: 19px;
-  @media (max-width: ${mediaSizes.mobile}) {
-    width: 12px;
-    height: 12px;
-  }
-`
-const DislikesBtn = styled(IoThumbsDown)`
-  width: 19px;
-  height: 19px;
-  @media (max-width: ${mediaSizes.mobile}) {
-    width: 12px;
-    height: 12px;
-  }
-`
+
 
 type Props = {
     likes: number,
@@ -102,19 +79,6 @@ return <Flex>
         <RepostBtn/>
         <RepostBtnMobile/>
     </Action>
-
-    {/*<Action color='#58649C'>*/}
-    {/*    <ViewsBtn />*/}
-    {/*    <span>{props.views}</span>*/}
-    {/*</Action>*/}
-    {/*<Action color='#6FCB57' style={{cursor: 'pointer'}}>*/}
-    {/*    <LikesBtn/>*/}
-    {/*    <span>{props.likes}</span>*/}
-    {/*</Action>*/}
-    {/*<Action color='#F05050' style={{cursor: 'pointer'}}>*/}
-    {/*    <DislikesBtn/>*/}
-    {/*    <span>{props.dislikes}</span>*/}
-    {/*</Action>*/}
 </Flex>
 }
 ;

@@ -32,16 +32,16 @@ type Props = {
     targetPath: string
 };
 
-export function PathWidget(props: Props) {
+export const PathWidget = (props: Props) => {
 
     const historyPath = () => {
         if (props.historyPath && props.historyPath.length) {
             return props.historyPath.map((el, index) => {
                 if (!props.targetPath && props.historyPath.length - 1 === index) {
-                    return <Link key={index + 1} to={el.path}>{el.pathName}</Link>
+                    return <Link key={el.path} to={el.path}>{el.pathName}</Link>
                 } else {
                     return <>
-                        <Link key={index + 1} to={el.path}>{el.pathName}</Link>
+                        <Link key={el.path} to={el.path}>{el.pathName}</Link>
                         <PathArrow>{`>`}</PathArrow>
                     </>
                 }

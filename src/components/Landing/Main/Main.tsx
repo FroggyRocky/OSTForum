@@ -6,16 +6,15 @@ import {useLocation} from "react-router-dom";
 import {useEffect} from "react";
 import {isMobile} from 'react-device-detect'
 
-const Wrapper = styled.div<{ismobile:boolean}>`
+const Wrapper = styled.div<{isMobile:boolean}>`
   padding: 102px 0;
   text-align: center;
-  height: 1112px;
   overflow-x:hidden;
   @media (max-width: ${mediaSizes.laptop}) {
   height: initial;  
     padding: 102px 0;
   }
-  ${({ismobile}) => ismobile && css `
+  ${({isMobile}) => isMobile && css`
   height: 100vh;
     padding: 30px 0 0 0;
   `};
@@ -32,7 +31,6 @@ const H1 = styled.h1`
   background: linear-gradient(180deg, #8492D1 0%, #58649C 100%), #58649C;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  background-clip: text;
   text-fill-color: transparent;
   width: 100%;
   @media (max-width: ${mediaSizes.laptop}) {
@@ -129,7 +127,7 @@ export const Main = (props: Props) => {
     }, [])
 
 
-    return <Wrapper ismobile={isMobile}>
+    return <Wrapper isMobile={isMobile ? true : false}>
         <H1>The Most Popular Articles</H1>
         <Carousel/>
         <ButtonContainer>

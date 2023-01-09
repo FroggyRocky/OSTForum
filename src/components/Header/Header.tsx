@@ -13,26 +13,28 @@ import {Search} from "./Search";
 import { HiOutlineMenuAlt3 } from "react-icons/hi";
 import {mediaSizes} from "../common/commonStyles/MediaSizes";
 import {TransparentHyperLink} from "../common/commonStyles/CommonStyles";
-import {isMobile, isMobileOnly} from "react-device-detect";
+import {isMobile} from "react-device-detect";
 import { AiOutlineClose } from "react-icons/ai";
+
 const Wrapper = styled(Flex)<{ismobile:boolean}>`
   width: 100%;
   background-color: rgba(246, 251, 255, 0.5);
   height: 106px;
   display: flex;
   z-index: 15;
+  position: relative;
   @media (max-width: ${mediaSizes.laptop}) {
     ${({ismobile}) => ismobile && css`
       height: 46px;
     `}
   }
 `
-const HeaderStyledLogo = styled(Logo)<{ismobile:boolean}>`
+const HeaderStyledLogo = styled(Logo)<{isMobile:boolean}>`
   width: 35px;
   height: 35px;
   margin-right: 20px;
   @media (max-width: ${mediaSizes.mobile}) {
-    ${({ismobile}) => ismobile && css`
+    ${({isMobile}) => isMobile && css`
       width: 20px;
       height: 20px;
     `}
@@ -189,6 +191,7 @@ const NavigationMob = styled.div`
 const UsersWidgets = styled.div`
   display: flex;
   z-index: 200;
+  align-items: center;
   @media (max-width: ${mediaSizes.laptop}) {
     display: none;
   }
@@ -224,20 +227,10 @@ export function Header(props: Props) {
         <Main>
                 <Link style={{zIndex: 150}} to='/'>
                     <Flex justifyContent='flex-start' alignItems='center'>
-                        <HeaderStyledLogo ismobile={isMobile}/>
+                        <HeaderStyledLogo isMobile={isMobile ? true : false}/>
                         <HeaderLogoText isSearchOpened={isMobSearchOpen} ismobile={isMobile}>MY CLICK</HeaderLogoText>
                     </Flex>
                 </Link>
-
-            {/*<Navigation justifyContent='space-between' alignItems='center'>*/}
-            {/*    /!*<span>Articles</span>*!/*/}
-            {/*    /!*<span>Affiliate Programs</span>*!/*/}
-            {/*    /!*<span>Network</span>*!/*/}
-            {/*    /!*<span>Services</span>*!/*/}
-            {/*    /!*<span>Cases</span>*!/*/}
-            {/*    /!*<span>Knowledge</span>*!/*/}
-            {/*    /!*<span>Vacancies</span>*!/*/}
-            {/*</Navigation>*/}
                 <ActionPanelMob>
                     {!isMobSearchOpen &&
                         <TransparentHyperLink href='https://t.me/myclickmedia' target={'_blank'}>
@@ -282,13 +275,6 @@ export function Header(props: Props) {
                                     </Flex>
                                 </Link>
                             </UserIdMob>
-                            {/*<span>Articles</span>*/}
-                            {/*<span>Affiliate Programs</span>*/}
-                            {/*<span>Network</span>*/}
-                            {/*<span>Services</span>*/}
-                            {/*<span>Cases</span>*/}
-                            {/*<span>Knowledge</span>*/}
-                            {/*<span>Vacancies</span>*/}
                         </NavigationMob>
                     </>
                     }
@@ -297,7 +283,6 @@ export function Header(props: Props) {
                     {path !== 'dashboard' && <SearchContainer>
                         <Search />
                     </SearchContainer>}
-                    {/*{path === 'dashboard' && <DashboardWidgets/>}*/}
                     <AvatarContainer>
                         {isAuth && <Link to={`/dashboard`}><Avatar avatar={user.avatar}/></Link>}
                     </AvatarContainer>

@@ -13,7 +13,6 @@ import {Image} from "../common/commonStyles/Image.styled";
 import {Articles} from "./Articles/Articles";
 import {Wrapper} from "../common/commonStyles/Wrapper.styled";
 import {Footer} from "../Footer/Footer";
-import {useAppDispatch} from "../../redux/hooks/hooks";
 import {useRef} from "react";
 import {mediaSizes, firstPageMediaSizes} from "../common/commonStyles/MediaSizes";
 import {isMobile} from 'react-device-detect'
@@ -125,7 +124,6 @@ display: none;
 type Props = {};
 export const Landing = (props: Props) => {
 const articlesPageRef = useRef()
-    const dispatch = useAppDispatch()
 
     return <div>
         <FirstPageWrapper>
@@ -134,8 +132,8 @@ const articlesPageRef = useRef()
             <CurtainRight src={curtainRight} alt='curtain2'/>
             <CurtainRightMob src={curtainRightMob} alt='curtainRightMobile' />
             <Flipboard src={flipboardSVG} alt='flipboard'/>
-            {isMobile && <FlipboardMob src={flipboardMob} alt='mobile-flipboard'/> }
-            {isMobile && <LampMob src={lampMob} alt='mobile_lamp' /> }
+            {isMobile ? <FlipboardMob src={flipboardMob} alt='mobile-flipboard'/> : <Flipboard src={flipboardSVG} alt='flipboard'/> }
+            {isMobile ? <LampMob src={lampMob} alt='mobile_lamp' /> : <Lamp src={lampSVG} alt='lamp' /> }
             <Lamp src={lampSVG} alt='lamp' />
             <Header/>
             <Main articlesPageRef={articlesPageRef}/>

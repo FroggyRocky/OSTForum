@@ -3,7 +3,7 @@ import {IUser} from "../../redux/user/userType";
 import styled from "styled-components";
 import {Flex} from "../common/commonStyles/Flex.styled";
 import {useAppSelector} from "../../redux/hooks/hooks";
-import {Header} from "../Header/Header";
+import {Layout} from "../../Layout";
 import {Footer} from "../Footer/Footer";
 import {CreateArticle} from "./AccountArticles/CreateArticle";
 import {AccountArticles} from "./AccountArticles/AccountArticles";
@@ -65,10 +65,8 @@ export const AccountDashboard = (props: Props) => {
         }
     }, [isAuth])
 
-
-    return <Wrapper>
-        {isArticleCreating && <BackgroundLoader/>}
-        <Header/>
+if(isArticleCreating) return <BackgroundLoader/>
+    return <Layout>
         {Object.entries(user).length ? <>
                 <Flex flexDirection='column'>
                     <H1>Welcome back, <b>{user.name}</b></H1>
@@ -89,7 +87,5 @@ export const AccountDashboard = (props: Props) => {
             </> :
             <p>Loading</p>
         }
-
-        <Footer/>
-    </Wrapper>
+        </Layout>
 };

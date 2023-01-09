@@ -18,6 +18,7 @@ display: flex;
   flex-wrap: wrap;
   flex-direction: row;
   border-radius: 15px;
+  height: 288px;
   & > label {
     width: 50%;
     flex-grow: 1;
@@ -26,7 +27,7 @@ display: flex;
 `
 const AddImgBtnBaseStyles = css<{ imgSrc: string, isAttaching: boolean }>`
   flex-grow: 1;
-  height: 253px;
+  height: 100%;
   justify-self: stretch;
   background: rgba(255, 255, 255, 0.3);
   box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.15);

@@ -1,15 +1,15 @@
 import {EditorPanelButton, PanelButton} from "./PanelButton";
 import {RichUtils} from 'draft-js'
-import {Flex} from "../../../common/commonStyles/Flex.styled";
+import {Flex} from "../../common/commonStyles/Flex.styled";
 import {AiOutlineLink} from "react-icons/ai";
 import {BsFillBookmarkFill, BsImageFill} from "react-icons/bs";
 import {MdArrowDropDown} from "react-icons/md";
 import {useContext, useState} from "react";
-import {CreateArticlePageContext} from "../CreateArticle";
+import {CreateArticlePageContext} from "../AccountArticles/CreateArticle";
 import styled from "styled-components";
-import {DropDown} from "../../../common/DropDown";
-import {useAppSelector} from "../../../../redux/hooks/hooks";
-import {useClickOutside} from "../../../../services/useClickOutside";
+import {DropDown} from "../../common/DropDown";
+import {useAppSelector} from "../../../redux/hooks/hooks";
+import {useClickOutside} from "../../../services/useClickOutside";
 
 const Button = styled(EditorPanelButton).attrs(props => ({
     type: 'button',
@@ -74,7 +74,6 @@ export const EditorPanel = (props: Props) => {
     const BLOCK_TYPES_HEADINGS = [
         {label: 'h1', id: 'header-one'},
         {label: 'h2', id: 'header-two'},
-        // {label: 'h3', id: 'header-three'},
     ];
     const headers = BLOCK_TYPES_HEADINGS.map((el, index) => {
         return <PanelButton key={index} active={stateActive(el.id)} editorState={props.editorState} id={el.id}

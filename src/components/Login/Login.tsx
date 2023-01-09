@@ -1,11 +1,11 @@
-import styled, {css} from "styled-components";
+import styled from "styled-components";
 import {Wrapper} from "../common/commonStyles/Wrapper.styled";
 import {Content} from "../common/commonStyles/Content.styled";
 import {useState, useEffect} from "react";
 import {useAppDispatch, useAppSelector} from "../../redux/hooks/hooks";
 import {loginUser} from "../../redux/auth/authConfigsThunks";
 import {useNavigate} from "react-router-dom";
-
+import {Layout} from "../../Layout";
 
 const LoginContainer = styled.div`
   background-image: linear-gradient(90deg, #74EBD5 0%, #9FACE6 100%);
@@ -34,7 +34,6 @@ const Label = styled.p`
   background: linear-gradient(180deg, #8492D1 0%, #58649C 100%), #58649C;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  background-clip: text;
   text-fill-color: transparent;
   margin: 8px 0;
 `
@@ -101,7 +100,8 @@ export const Login = (props: Props) => {
         dispatch(loginUser(data))
     }
 
-    return <Wrapper>
+    return <Layout>
+        <Wrapper>
         <Content style={{padding: '20px 0'}}>
             <LoginContainer>
                 <LoginContent>
@@ -117,5 +117,6 @@ export const Login = (props: Props) => {
                 </LoginContent>
             </LoginContainer>
         </Content>
-    </Wrapper>
+        </Wrapper>
+    </Layout>
 };
