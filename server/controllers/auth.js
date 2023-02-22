@@ -2,7 +2,7 @@ require('dotenv').config()
 const db = require('../dbmodel')
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
-const TOKEN_EXPIRATION_SECONDS = '5m'
+const TOKEN_EXPIRATION_SECONDS = '10m'
 
 
 async function refreshToken(req,res) {
@@ -22,30 +22,30 @@ async function refreshToken(req,res) {
 }
 
 class Auth {
-    // async register(req, res) {
-    //     try {
-    //         const {login, password} = req.body
-    //         bcrypt.genSalt(10, (err, salt) => {
-    //             bcrypt.hash(password, salt, (err, hash) => {
-    //                 if (err) {
-    //                     console.log(err);
-    //                     res.sendStatus(500)
-    //                 } else {
-    //                     db.Users.update({
-    //                         password: hash
-    //                     }, {
-    //                         where: {
-    //                             id: 1
-    //                         }
-    //                     })
-    //                     res.sendStatus(200)
-    //                 }
-    //             })
-    //         });
-    //     } catch (e) {
-    //         console.log(e)
-    //     }
-    // }
+    async register(req, res) {
+        try {
+            const {login, password} = req.body
+            bcrypt.genSalt(10, (err, salt) => {
+                bcrypt.hash(password, salt, (err, hash) => {
+                    if (err) {
+                        console.log(err);
+                        res.sendStatus(500)
+                    } else {
+                        db.Users.update({
+                            password: hash
+                        }, {
+                            where: {
+                                id: 1
+                            }
+                        })
+                        res.sendStatus(200)
+                    }
+                })
+            });
+        } catch (e) {
+            console.log(e)
+        }
+    }
 
     async login(req, res) {
         try {

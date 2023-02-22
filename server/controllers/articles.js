@@ -3,15 +3,29 @@ const Sequelize = require('sequelize')
 
 class Articles {
     async getArticles(req, res) {
-        const articles = await db.Article.findAll({
-            attributes: {exclude: ['updatedAt', 'userId', 'text', 'categoryId']},
-            include: [
-                {
-                    model: db.Comments
-                },
-            ],
-            order: [['usersLiked', 'desc']],
-        })
+        let articles;
+        if(req.query.limit) {
+            articles = await db.Article.findAll({
+                attributes: {exclude: ['updatedAt', 'userId', 'text', 'categoryId']},
+                include: [
+                    {
+                        model: db.Comments
+                    },
+                ],
+                order: [['createdAt', 'desc']],
+                limit:req.query.limit
+            })
+        } else {
+            articles = await db.Article.findAll({
+                attributes: {exclude: ['updatedAt', 'userId', 'text', 'categoryId']},
+                include: [
+                    {
+                        model: db.Comments
+                    },
+                ],
+                order: [['createdAt', 'desc']],
+            })
+        }
         res.send(articles)
     }
 

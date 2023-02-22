@@ -1,0 +1,10 @@
+.synchronize__bubble {
+    background: linear-gradient(180deg, #8492D1 0%, #58649C 100%), #58649C;
+    width: 60px;
+    height: 60px;
+    border-radius: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}

@@ -23,6 +23,7 @@ class User {
             res.send(500)
         }
     }
+
 }
 
 

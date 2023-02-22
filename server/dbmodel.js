@@ -54,6 +54,11 @@ const Categories = db.define('categories', {
 const RefreshTokens = db.define('refresh_tokens', {
     token:DataTypes.STRING
 })
+const TapLinks = db.define('taplinks', {
+    position:DataTypes.INTEGER,
+},{
+    timestamps:false
+})
 
 Users.hasMany(Article);
 Article.belongsTo(Users)
@@ -61,6 +66,8 @@ Users.hasMany(Comments);
 Comments.belongsTo(Users)
 Article.hasMany(Comments);
 Comments.belongsTo(Article);
+Article.hasOne(TapLinks)
+TapLinks.belongsTo(Article)
 
 
 
@@ -69,5 +76,6 @@ module.exports = {
     Comments,
     Users,
     Categories,
-    RefreshTokens
+    RefreshTokens,
+    TapLinks
 }
