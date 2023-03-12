@@ -1,5 +1,5 @@
 import './layout.css'
-import {User} from "../User";
+import {User} from "../User/User";
 import {ReactNode} from "react";
 type Props = {
     children:ReactNode

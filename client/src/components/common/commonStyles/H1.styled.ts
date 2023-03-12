@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 export const H1 = styled.h1`
-  font-family: var(--family-header);
+  font-family: var(--roadRadio);
   font-weight: 700;
   font-size: 72px;
   line-height: 73px;

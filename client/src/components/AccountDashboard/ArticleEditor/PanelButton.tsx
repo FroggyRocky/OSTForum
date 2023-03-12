@@ -10,7 +10,7 @@ export const EditorPanelButton = styled.button<{ active?: boolean }>`
   background: rgba(255, 255, 255, 0.3);
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.15);
   border-radius: 10px;
-  font-family: var(--family-text);
+  font-family: var(--gotham);
   font-weight: 400;
   font-size: 25px;
   line-height: 24px;

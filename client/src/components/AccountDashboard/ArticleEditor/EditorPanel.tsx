@@ -1,6 +1,6 @@
 import {EditorPanelButton, PanelButton} from "./PanelButton";
 import {RichUtils} from 'draft-js'
-import {Flex} from "../../common/commonStyles/Flex.styled";
+import {Flex} from "../../../UIKit/StyledComponents/styledComponents";
 import {AiOutlineLink} from "react-icons/ai";
 import {BsFillBookmarkFill, BsImageFill} from "react-icons/bs";
 import {MdArrowDropDown} from "react-icons/md";
@@ -26,7 +26,7 @@ const Input = styled.input`
   border: none;
   border-radius: 8px;
   background-color: rgba(255, 255, 255, 0.62);
-  font-family: var(--family-text);
+  font-family: var(--gotham);
   color: #58649C;
   font-weight: 400;
   font-size: 18px;
@@ -36,7 +36,7 @@ const Input = styled.input`
 const LinkBtn = styled.button.attrs(props => ({
     type: 'button',
 }))`
-  font-family: var(--family-text);
+  font-family: var(--gotham);
   border: none;
   border-radius: 8px;
   margin-left: 10px;

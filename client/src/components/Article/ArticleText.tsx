@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import {mediaSizes} from "../common/commonStyles/MediaSizes";
+import {mediaSizes} from "../../mediaSizes.styled";
 import {useEffect, useRef, MutableRefObject} from "react";
 
 const Container = styled.div`
@@ -9,7 +9,7 @@ const Container = styled.div`
 `
 const Content = styled.div`
   padding: 30px;
-  font-family: var(--family-text);
+  font-family: var(--gotham);
 
   & > h1, h2, h3 {
     margin: 20px 0;
@@ -35,7 +35,7 @@ const Content = styled.div`
   }
 
   & > ul > li {
-    font-family: var(--family-text);
+    font-family: var(--gotham);
     font-weight: 700;
     margin-left: 2%;
     font-size: 18px;
@@ -52,7 +52,7 @@ const Content = styled.div`
     font-size: 18px;
     line-height: 32px;
     color: #000000;
-    font-family: var(--family-text);
+    font-family: var(--gotham);
     @media (max-width: ${mediaSizes.mobile}) {
       font-size: 12px;
       line-height: 18px;

@@ -1,7 +1,7 @@
 import {H1} from '../../common/commonStyles/H1.styled'
 import styled from 'styled-components'
 import {IoDocumentText} from "react-icons/io5";
-import {Flex} from "../../common/commonStyles/Flex.styled";
+import {Flex} from "../../../UIKit/StyledComponents/styledComponents";
 import {IArticlesPreview} from "../../../redux/articles/articleTypes";
 import {AccountArticleCard} from "../../common/Cards/AccountArticleCard";
 import {Link} from "react-router-dom";
@@ -20,7 +20,7 @@ const Button = styled.button`
   cursor: pointer;
 
   & > p {
-    font-family: var(--family-text);
+    font-family: var(--gotham);
     font-weight: 400;
     font-size: 25px;
     line-height: 24px;

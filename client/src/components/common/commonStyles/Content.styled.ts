@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import {mediaSizes} from "./MediaSizes";
+import {mediaSizes} from "../../../mediaSizes.styled";
 export const Content = styled.div`
   width: 65%;
   margin: auto auto;

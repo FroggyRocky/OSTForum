@@ -1,8 +1,8 @@
 import styled, {css} from "styled-components";
-import {mediaSizes} from "./MediaSizes";
+import {mediaSizes} from "../../../mediaSizes.styled";
 
 export const LogoText = styled.span<{ismobile:boolean}>`
-  font-family: var(--family-header);
+  font-family: var(--roadRadio);
   font-weight: 700;
   font-size: 30px;
   color: #58649C;

@@ -26,7 +26,7 @@ const LoginContent = styled.div`
   flex-direction: column;
 `
 const Label = styled.p`
-  font-family: var(--family-text);
+  font-family: var(--gotham);
   font-style: normal;
   font-weight: 700;
   font-size: 18px;
@@ -45,13 +45,13 @@ const Input = styled.input`
   color: black;
   padding-left: 8px;
   border-radius: 8px;
-  font-family: var(--family-text);
+  font-family: var(--gotham);
   &:focus {
     outline: none;
   }
 `
 const Button = styled.button`
-  font-family: var(--family-text);
+  font-family: var(--gotham);
   font-style: normal;
   font-weight: 700;
   font-size: 18px;

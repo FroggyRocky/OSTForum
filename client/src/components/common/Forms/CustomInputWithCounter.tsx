@@ -11,7 +11,7 @@ const Input = styled.input`
   box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.15);
   border-radius: 10px;
   border: none;
-  font-family: var(--family-text);
+  font-family: var(--gotham);
   height: 84px;
   color: #525252;
   font-size: 30px;

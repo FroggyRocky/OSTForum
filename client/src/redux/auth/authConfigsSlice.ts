@@ -21,7 +21,8 @@ export const authConfigsSlice = createSlice({
             state.loginErr = action.payload
         },
         setConfigs(state,action:PayloadAction<IConfigs>) {
-            state.configs = action.payload
+            state.configs.categories = action.payload.categories
+            state.configs.keys = action.payload.keys
         },
         setInitializerState(state,action:PayloadAction<boolean>) {
             state.isInitialized = action.payload

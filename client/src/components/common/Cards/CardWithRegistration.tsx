@@ -1,4 +1,4 @@
-import {Flex} from "../commonStyles/Flex.styled";
+import {Flex} from "../../../UIKit/StyledComponents/styledComponents";
 import styled from "styled-components";
 
 const StyledCard = styled.div`
@@ -6,7 +6,7 @@ const StyledCard = styled.div`
   background: #FFFFFF;
   box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.15);
   border-radius: 15px;
-  font-family: var(--family-text)
+  font-family: var(--gotham)
 `
 const Image = styled.img`
     border-radius: 15px;
@@ -28,7 +28,7 @@ const Info = styled.div`
   }
 `
 const Keys = styled(Flex)`
-  font-family: var(--family-text);
+  font-family: var(--gotham);
   font-weight: 400;
   font-size: 14px;
   line-height: 23px;
@@ -48,7 +48,7 @@ const Key = styled.div`
 const Button = styled.button`
   width: 243px;
   height: 50px;
-  font-family: var(--family-text);
+  font-family: var(--gotham);
   font-style: normal;
   font-weight: 400;
   font-size: 16px;

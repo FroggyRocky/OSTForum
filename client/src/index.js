@@ -21,7 +21,7 @@ const Global = createGlobalStyle`
 
   a {
     text-decoration: none;
-    font-family: var(--family-text);
+    font-family: var(--gotham);
 
   }
 

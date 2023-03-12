@@ -1,12 +1,12 @@
 import styled, {css} from "styled-components";
 import {Carousel} from "./Carousel";
 import {IoChevronForwardOutline} from "react-icons/io5"
-import {mediaSizes} from "../../common/commonStyles/MediaSizes";
+import {mediaSizes} from "../../../mediaSizes.styled";
 import {useLocation} from "react-router-dom";
 import {useEffect} from "react";
 import {isMobile} from 'react-device-detect'
 
-const Wrapper = styled.div<{isMobile:boolean}>`
+const Wrapper = styled.div<{ismobile:boolean}>`
   padding: 102px 0;
   text-align: center;
   overflow-x:hidden;
@@ -14,7 +14,7 @@ const Wrapper = styled.div<{isMobile:boolean}>`
   height: initial;  
     padding: 102px 0;
   }
-  ${({isMobile}) => isMobile && css`
+  ${({ismobile}) => ismobile && css`
   height: 100vh;
     padding: 30px 0 0 0;
   `};
@@ -22,7 +22,7 @@ const Wrapper = styled.div<{isMobile:boolean}>`
 const H1 = styled.h1`
   position: relative;
   z-index: 5;
-  font-family: var(--family-header);
+  font-family: var(--roadRadio);
   font-weight: 700;
   font-size: 60px;
   line-height: 61px;
@@ -127,7 +127,7 @@ export const Main = (props: Props) => {
     }, [])
 
 
-    return <Wrapper isMobile={isMobile ? true : false}>
+    return <Wrapper ismobile={isMobile ? true : false}>
         <H1>The Most Popular Articles</H1>
         <Carousel/>
         <ButtonContainer>

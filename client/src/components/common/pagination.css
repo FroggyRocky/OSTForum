@@ -1,7 +1,7 @@
 
 .commonPagination {
     list-style: none;
-    font-family: var(--family-text);
+    font-family: var(--gotham);
     font-weight: 400;
     font-size: 20px;
     line-height: 19px;

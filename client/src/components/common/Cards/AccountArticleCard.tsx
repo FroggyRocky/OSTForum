@@ -1,4 +1,4 @@
-import {Flex} from "../commonStyles/Flex.styled";
+import {Flex} from "../../../UIKit/StyledComponents/styledComponents";
 import styled from "styled-components";
 import {StatisticsPanel} from "../StatisticsPanel";
 import {IoTimeOutline} from "react-icons/io5";
@@ -30,7 +30,7 @@ const Text = styled.div`
   max-width: 486px;
 
   & h1 {
-    font-family: var(--family-text);
+    font-family: var(--gotham);
     font-weight: 700;
     font-size: 25px;
     line-height: 25px;
@@ -38,7 +38,7 @@ const Text = styled.div`
   }
 
   & p {
-    font-family: var(--family-text);
+    font-family: var(--gotham);
     font-weight: 400;
     font-size: 18px;
     line-height: 23px;
@@ -56,7 +56,7 @@ const Flag = styled.img`
   flex-shrink: 0;
 `
 const Date = styled(Flex)`
-  font-family: var(--family-text);
+  font-family: var(--gotham);
   font-weight: 400;
   font-size: 16px;
   line-height: 15px;

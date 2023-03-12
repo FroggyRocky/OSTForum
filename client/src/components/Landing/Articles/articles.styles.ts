@@ -1,6 +1,6 @@
 import styled, {css} from "styled-components";
-import {Flex} from "../../common/commonStyles/Flex.styled";
-import {mediaSizes} from "../../common/commonStyles/MediaSizes";
+import {Flex} from "../../../UIKit/StyledComponents/styledComponents";
+import {mediaSizes} from "../../../mediaSizes.styled";
 import {NavLink} from "react-router-dom";
 
 export const CategoriesContainer = styled(Flex)`
@@ -16,7 +16,7 @@ export const CategoriesContainer = styled(Flex)`
   }
 `
 export const Category = styled.span<{ isSelected: boolean }>`
-  font-family: var(--family-text);
+  font-family: var(--gotham);
   font-weight: 400;
   font-size: 20px;
   line-height: 19px;
@@ -133,7 +133,7 @@ export const Text = styled.div`
   word-wrap: break-word;
 
   & h1 {
-    font-family: var(--family-text);
+    font-family: var(--gotham);
     font-weight: 700;
     font-size: 25px;
     line-height: 25px;
@@ -141,7 +141,7 @@ export const Text = styled.div`
   }
 
   & p {
-    font-family: var(--family-text);
+    font-family: var(--gotham);
     font-weight: 400;
     font-size: 18px;
     line-height: 23px;
@@ -171,7 +171,7 @@ export const Text = styled.div`
   }
 `
 export const Date = styled(Flex)`
-  font-family: var(--family-text);
+  font-family: var(--gotham);
   font-weight: 400;
   font-size: 16px;
   line-height: 15px;

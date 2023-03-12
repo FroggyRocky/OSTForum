@@ -1,4 +1,4 @@
-import {Flex} from "../commonStyles/Flex.styled";
+import {Flex} from "../../../UIKit/StyledComponents/styledComponents";
 import styled from "styled-components";
 import {StatisticsPanel} from "../StatisticsPanel";
 import {IoTimeOutline} from "react-icons/io5";
@@ -8,7 +8,7 @@ const StyledCard = styled.div`
   background: #FFFFFF;
   box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.15);
   border-radius: 15px;
-  font-family: var(--family-text)
+  font-family: var(--gotham)
 `
 const Image = styled.img`
   border-radius: 15px;
@@ -38,7 +38,7 @@ const Date = styled.div`
   margin-right: 20px;
 `
 const Keys = styled(Flex)`
-  font-family: var(--family-text);
+  font-family: var(--gotham);
   font-weight: 400;
   font-size: 14px;
   line-height: 23px;

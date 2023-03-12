@@ -1,5 +1,5 @@
 import styled, {css} from "styled-components";
-import {Flex} from "../../common/commonStyles/Flex.styled";
+import {Flex} from "../../../UIKit/StyledComponents/styledComponents";
 
 export const BreakingLine = styled.hr`
   width: 100%;
@@ -49,7 +49,7 @@ const AddImgBtnBaseStyles = css<{ imgSrc: string, isAttaching: boolean }>`
   & > p {
     opacity: 0.5;
     font-weight: 400;
-    font-family: var(--family-text);
+    font-family: var(--gotham);
     transition: opacity ease-in-out 300ms;
   }
 
@@ -102,7 +102,7 @@ export const AddArticleButton = styled.button`
   border: none;
 
   & > p {
-    font-family: var(--family-text);
+    font-family: var(--gotham);
     font-weight: 400;
     font-size: 25px;
     line-height: 24px;
@@ -128,7 +128,7 @@ export const AddArticleButton = styled.button`
 `
 export const ErrorMessage = styled.p`
 color: #F05050;
-  font-family: var(--family-text);
+  font-family: var(--gotham);
   font-weight: 400;
   font-size: 22px;
   line-height: 13px;

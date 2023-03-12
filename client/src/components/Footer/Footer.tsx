@@ -1,16 +1,16 @@
 import styled from 'styled-components'
 import {Content} from "../common/commonStyles/Content.styled";
-import {Flex} from "../common/commonStyles/Flex.styled";
+import {Flex} from "../../UIKit/StyledComponents/styledComponents";
 import tg from '../../assets/tg.svg'
 import inst from '../../assets/inst.svg'
 import {ReactComponent as Logo} from '../../assets/logo.svg'
 import {LogoText} from "../common/commonStyles/Logo.styled";
-import {mediaSizes} from "../common/commonStyles/MediaSizes";
+import {mediaSizes} from "../../mediaSizes.styled";
 import { FaRedditSquare } from "react-icons/fa";
 import {isMobile} from "react-device-detect";
 
 const Wrapper = styled.div`
-  font-family: var(--family-text);
+  font-family: var(--gotham);
   font-weight: 400;
   font-size: 16px;
   line-height: 15px;

@@ -1,8 +1,8 @@
 import styled, {css, keyframes} from "styled-components";
 import {IoChevronDown, IoLogoFacebook} from 'react-icons/io5'
-import {Flex} from "../common/commonStyles/Flex.styled";
+import {Flex} from "../../UIKit/StyledComponents/styledComponents";
 import {IComments} from "../../redux/articles/articleTypes";
-import {mediaSizes} from "../common/commonStyles/MediaSizes";
+import {mediaSizes} from "../../mediaSizes.styled";
 import {ActionPanel} from "../common/ActionPanel";
 import {useState} from "react";
 import {AiFillTwitterCircle, AiOutlineClose} from "react-icons/ai";
@@ -29,7 +29,7 @@ const Actions = styled(Flex)`
   align-items: center;
 
   & > h1 {
-    font-family: var(--family-text);
+    font-family: var(--gotham);
     font-weight: 700;
     font-size: 30px;
     line-height: 29px;
@@ -40,7 +40,7 @@ const Actions = styled(Flex)`
   }
 
   @media (max-width: ${mediaSizes.mobile}) {
-    justify-content: initial;
+    justify-content: right;
     & > h1 {
       font-weight: 700;
       font-size: 12px;
@@ -50,19 +50,15 @@ const Actions = styled(Flex)`
     }
   }
 }
-
-@media (max-width: ${mediaSizes.mobile}) {
-  flex-direction: column-reverse;
-}
 `
 
 
-const ShareDropDown = styled.div`
+export const ShareDropDown = styled.div<{top?:string,left?:string, right?:string}>`
   background: #FFFFFF;
   box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.15);
   border-radius: 15px;
   padding: 15px;
-  font-family: var(--family-text);
+  font-family: var(--gotham);
   font-style: normal;
   font-weight: 400;
   font-size: 24px;
@@ -73,6 +69,9 @@ const ShareDropDown = styled.div`
   z-index: 20;
   margin-top: 10px;
   user-select: none;
+  top:${props => props.top ?? ''};
+    left:${props => props.left ?? ''};
+    right:${props => props.right ?? ''};
   & > a {
     display: flex;
     align-items: center;
@@ -90,7 +89,7 @@ const ShareDropDown = styled.div`
     display:none
   }
 `
-const ShareModal = styled.div`
+export const ShareModal = styled.div`
   display: none;
   @media(max-width: ${mediaSizes.mobile}) {
     display: flex;
@@ -107,9 +106,9 @@ const ShareModal = styled.div`
     
   }
 `
-const ShareModalContent = styled.div`
+export const ShareModalContent = styled.div`
 background-color: white;
-  font-family: var(--family-text);
+  font-family: var(--gotham);
   font-weight: 400;
   font-size: 14px;
   line-height: 13px;
@@ -152,6 +151,7 @@ export const ArticleComments = (props: Props) => {
     const [isShareDropDownOpen, setShareDropDownState] = useState(false)
     const [isShareMobileModalOpen, setShareMobileModalState] = useState(false)
     const [isLinkCopied, setLinkCopyState] = useState(false)
+
     const clickOutsideRef = useClickOutside(closeShareDropDown)
 
     async function copyLink(e:any) {

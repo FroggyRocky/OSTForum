@@ -14,7 +14,7 @@ import {Articles} from "./Articles/Articles";
 import {Wrapper} from "../common/commonStyles/Wrapper.styled";
 import {Footer} from "../Footer/Footer";
 import {useRef} from "react";
-import {mediaSizes, firstPageMediaSizes} from "../common/commonStyles/MediaSizes";
+import {mediaSizes, firstPageMediaSizes} from "../../mediaSizes.styled";
 import {isMobile} from 'react-device-detect'
 
 const FirstPageWrapper = styled.div`

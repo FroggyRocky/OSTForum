@@ -1,6 +1,6 @@
 @font-face {
   font-family: 'Gotham Pro';
-  src: url('/fonts/gothampro.ttf') format('truetype');
+  src: url('./fonts/gothampro.ttf') format('truetype');
 }
 :root {
 --gotham:'Gotham Pro', sans-serif;

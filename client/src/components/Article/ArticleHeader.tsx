@@ -1,6 +1,6 @@
 import styled, {css} from "styled-components";
 import {useEffect, useState} from 'react'
-import {mediaSizes} from "../common/commonStyles/MediaSizes";
+import {mediaSizes} from "../../mediaSizes.styled";
 import {AiOutlineEdit} from "react-icons/ai";
 import {filterCategoriesForFlags, findCategoryObjById, setPathToFlagImg} from "../../services/categoryFlags";
 import defaultArticleCover from '../../assets/defaultArticleCover.png'
@@ -9,7 +9,7 @@ import {ICategory} from "../../redux/auth/authConfigsTypes";
 import loader from '../../assets/loader.gif'
 const HeaderContainer = styled.div`
   width: 100%;
-  font-family: var(--family-text);
+  font-family: var(--gotham);
   font-size: 25px;
   line-height: 35px;
   color: #272727;
@@ -51,7 +51,7 @@ const ImageBackDrop = styled.div`
 `
 const Header = styled.div`
   color: white;
-  font-family: var(--family-header);
+  font-family: var(--roadRadio);
   font-weight: 700;
   font-size: 92px;
   line-height: 90px;
@@ -70,7 +70,7 @@ const Header = styled.div`
 
 `
 const Description = styled.p`
-  font-family: var(--family-text);
+  font-family: var(--gotham);
   background-color: white;
   padding: 20px;
   border-radius: 0 0 15px 15px;

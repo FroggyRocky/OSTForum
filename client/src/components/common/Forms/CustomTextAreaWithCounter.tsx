@@ -12,7 +12,7 @@ const TextArea = styled.textarea`
   box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.15);
   border-radius: 10px;
   border: none;
-  font-family: var(--family-text);
+  font-family: var(--gotham);
   height: 240px;
   color: #272727;
   font-size: 25px;

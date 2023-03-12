@@ -6,4 +6,5 @@ const authController = require('../controllers/auth')
 router.get('/get-taplinks', taplinkController.getLinks);
 router.get('/synchronize-taplinks', authController.authenticateToken, taplinkController.synchronizeLinks)
 router.post('/update-taplinks', authController.authenticateToken,taplinkController.updateLinks)
+router.post('/update-taplink-article', authController.authenticateToken, taplinkController.updateTapLinkArticle)
 module.exports = router

@@ -10,7 +10,7 @@ import {
     Text
 } from './articles.styles'
 import {filterCategoriesForFlags, setPathToFlagImg} from "../../../services/categoryFlags";
-import {Flex} from '../../common/commonStyles/Flex.styled'
+import {Flex} from '../../../UIKit/StyledComponents/styledComponents'
 import {IoTimeOutline} from 'react-icons/io5'
 import {calcDate} from "../../../services/calcDate";
 import {ICategory} from "../../../redux/auth/authConfigsTypes";

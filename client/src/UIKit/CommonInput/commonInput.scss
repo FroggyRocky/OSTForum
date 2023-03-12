@@ -1,0 +1,61 @@
+.commonInput {
+  border: none;
+  border-radius: 8px;
+
+  &__content {
+    padding: 14px 25px;
+    position: relative;
+  }
+
+  &__label {
+    font-family: var(--gotham);
+    font-style: normal;
+    font-weight: 400;
+    font-size: 25px;
+    line-height: 24px;
+    color: #525252;
+  }
+
+  &__phoneContainer {
+    display: flex;
+    align-items: center;
+    font-family: var(--gotham);
+    font-style: normal;
+    font-weight: 400;
+    font-size: 25px;
+    line-height: 24px;
+    color: #525252;
+  }
+
+  &__phoneCode {
+    flex-shrink: 0;
+    margin-right: 5px;
+  }
+
+  &__input {
+    border: none;
+    font-family: var(--gotham);
+    font-style: normal;
+    font-weight: 400;
+    font-size: 25px;
+    line-height: 24px;
+    color: #525252;
+    background-color: transparent;
+    width: 100%;
+
+    &::placeholder {
+      color: #525252;
+    }
+
+    &:focus {
+      outline: none;
+    }
+
+    &_error {
+      position: absolute;
+      color: red;
+      font-family: var(--gotham);
+      font-size: 12px;
+    }
+  }
+}

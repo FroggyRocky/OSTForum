@@ -4,7 +4,7 @@ div.DraftEditor-root {
     background-color: white;
     width: 100%;
     padding: 15px;
-    font-family: var(--family-text);
+    font-family: var(--gotham);
     font-size: 18px;
     overflow-x: clip;
     overflow-y: auto;
@@ -45,7 +45,7 @@ div.DraftEditor-editorContainer, div.public-DraftEditor-content p {
     font-size: 18px;
     line-height: 32px;
     color: #000000;
-    font-family: var(--family-text);
+    font-family: var(--gotham);
 }
 .public-DraftStyleDefault-unorderedListItem {
     font-weight: 700;

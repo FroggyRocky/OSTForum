@@ -1,9 +1,8 @@
 import {FaTelegramPlane} from "react-icons/fa";
 import styled from "styled-components";
-import {Flex} from "./commonStyles/Flex.styled";
-import {firstPageMediaSizes, mediaSizes} from "./commonStyles/MediaSizes";
-import {TransparentHyperLink} from "./commonStyles/CommonStyles";
-
+import {Flex} from "../../UIKit/StyledComponents/styledComponents";
+import {firstPageMediaSizes, mediaSizes} from "../../mediaSizes.styled";
+import {Link} from 'react-router-dom'
 const TelegramLinkContainer = styled(Flex)`
 position: absolute;
   bottom: 1.5%;
@@ -11,7 +10,7 @@ position: absolute;
   user-select: none;
   & > p {
     margin-top: 15px;
-    font-family: var(--family-text);
+    font-family: var(--gotham);
     font-weight: 400;
     font-size: 16px;
     line-height: 15px;
@@ -40,12 +39,12 @@ type Props = {
 
 };
 export const TgButton = (props: Props) => {
-    return  <TransparentHyperLink href='https://t.me/myclickmedia' target={'_blank'} >
+    return  <Link to='https://t.me/myclickmedia' target={'_blank'} >
         <TelegramLinkContainer flexDirection='column'>
         <TelegramButton>
             <FaTelegramPlane style={{marginLeft:'10px'}} size={35} color='white' />
         </TelegramButton>
         <p>myclickmedia</p>
     </TelegramLinkContainer>
-    </TransparentHyperLink>
+    </Link>
 };

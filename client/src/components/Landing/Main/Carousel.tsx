@@ -23,7 +23,7 @@ export const Carousel = (props: Props) => {
         const [touchPosition, setTouchPosition] = useState<null | number>(null);
         const articlesData = useAppSelector(state => state.articles.articles).slice(0, CAROUSEL_MAX_ARTICLES);
         const PAGEWIDTH = isMobile ? 100 : 88;
-        const maxTranslation = -(PAGEWIDTH * (articlesData.length - 1));
+        const maxtranslation = -(PAGEWIDTH * (articlesData.length - 1));
 
         useEffect(() => {
             if(!isMobile) {
@@ -37,10 +37,10 @@ export const Carousel = (props: Props) => {
 
         function handleRightAutoScroll() {
             setTranslation(prev => {
-                if(translation === maxTranslation) {
+                if(translation === maxtranslation) {
                     setTranslation(PAGEWIDTH)
                 }
-                const newTranslation = Math.max(prev - PAGEWIDTH, maxTranslation)
+                const newTranslation = Math.max(prev - PAGEWIDTH, maxtranslation)
                 return newTranslation
             })
         }
@@ -58,8 +58,8 @@ export const Carousel = (props: Props) => {
         function handleRightClick(e: any) {
             if (e.detail === 1) {
                 setTranslation(prev => {
-                    const maxTranslation = -(PAGEWIDTH * (articlesData.length - 1))
-                    const newTranslation = Math.max(prev - PAGEWIDTH, maxTranslation)
+                    const maxtranslation = -(PAGEWIDTH * (articlesData.length - 1))
+                    const newTranslation = Math.max(prev - PAGEWIDTH, maxtranslation)
                     return newTranslation
                 })
             }
@@ -76,8 +76,8 @@ export const Carousel = (props: Props) => {
 
         function handleRightClickMob() {
             setTranslation(prev => {
-                const maxTranslation = -(PAGEWIDTH * (articlesData.length - 1))
-                const newTranslation = Math.max(prev - PAGEWIDTH, maxTranslation)
+                const maxtranslation = -(PAGEWIDTH * (articlesData.length - 1))
+                const newTranslation = Math.max(prev - PAGEWIDTH, maxtranslation)
                 return newTranslation
             })
 
@@ -122,7 +122,7 @@ export const Carousel = (props: Props) => {
                 path: '/'
             },
             ]
-            return <Card translation={translation} maxTranslation={maxTranslation} key={el.id} to={`/article/${el.id}`} state={pathData}>
+            return <Card translation={translation} maxtranslation={maxtranslation} key={el.id} to={`/article/${el.id}`} state={pathData}>
                 <ImgWithLoader src={el.coverImg_withText || el.coverImg_withOutText} defaultSrc={defaultImg} alt={'article_cover'}
                                width={'100%'} height={'100%'} />
             </Card>
@@ -140,7 +140,7 @@ export const Carousel = (props: Props) => {
                     <StyledActiveArrLeft/>
                 </ArrContainer>
                 <ArrContainer onClick={handleRightClick}
-                              unactive={maxTranslation === translation}>
+                              unactive={maxtranslation === translation}>
                     <StyledActiveArrRight/>
                 </ArrContainer>
             </Controls>

@@ -1,7 +1,7 @@
-import {Flex} from "./commonStyles/Flex.styled";
+import {Flex} from "../../UIKit/StyledComponents/styledComponents";
 import {IoArrowRedo, IoEyeSharp, IoThumbsDown, IoThumbsUp} from "react-icons/io5";
 import styled from "styled-components";
-import {mediaSizes} from "./commonStyles/MediaSizes";
+import {mediaSizes} from "../../mediaSizes.styled";
 import {Dispatch, SetStateAction} from "react";
 
 const Action = styled(Flex)<{ color: string }>`
@@ -20,7 +20,7 @@ const Action = styled(Flex)<{ color: string }>`
   }
 
   & span {
-    font-family: var(--family-text);
+    font-family: var(--gotham);
     font-style: normal;
     font-weight: 400;
     font-size: 16px;
@@ -44,10 +44,6 @@ const Action = styled(Flex)<{ color: string }>`
 const RepostBtn = styled(IoArrowRedo)`
   width: 30px;
   height: 30px;
-  @media (max-width: ${mediaSizes.mobile}) {
-    display: none;
-  }
-}
 `
 const RepostBtnMobile = styled(IoArrowRedo)`
   display: none;
@@ -77,8 +73,6 @@ export const ActionPanel = (props: Props) => {
 return <Flex>
     <Action color='#91A0E7' onClick={setShareBtnState} style={{cursor: 'pointer'}}>
         <RepostBtn/>
-        <RepostBtnMobile/>
     </Action>
 </Flex>
-}
-;
+};

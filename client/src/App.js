@@ -8,23 +8,16 @@ import {useAppDispatch, useAppSelector} from "./redux/hooks/hooks";
 import {auth} from "./redux/auth/authConfigsThunks";
 import {Loader} from "./components/common/Loader";
 import {Login} from "./components/Login/Login";
-import {taplinkURL} from "./api/URL";
+import {Affiliates} from "./components/Landing/SubPages/Affiliates/Affiliates";
+import {Networking} from "./components/Landing/SubPages/Networking/Networking";
+import {Cases} from "./components/Landing/SubPages/Cases/Cases";
+import {Vacancies} from "./components/Landing/SubPages/Vacancies/Vacancies";
+import {Services} from "./components/Landing/SubPages/Services/Services";
 
 function App() {
 
     const dispatch = useAppDispatch()
     const isInitialized = useAppSelector(state => state.authConfigs.isInitialized)
-    const iframeRef = useRef()
-        function sentMsgToIframe() {
-            if(!iframeRef.current) return;
-            const wind = iframeRef.current.contentWindow
-            const data = {
-                token: window.localStorage.getItem('MyClickToken'),
-                refreshtoken:document.cookie
-            }
-            console.log(data)
-            wind.postMessage(JSON.stringify(data), '*')
-        }
 
 
     useEffect( () => {
@@ -35,9 +28,13 @@ function App() {
     if (!isInitialized) return <Loader/>
     return (
         <div className="App">
-            <iframe ref={iframeRef} onLoad={sentMsgToIframe} src={`${taplinkURL}`}></iframe>
             <Routes>
                 <Route path='/' element={<Landing/>}/>
+                <Route path='/affiliates' element={<Affiliates/>}/>
+                <Route path='/networking' element={<Networking/>}/>
+                <Route path='/cases' element={<Cases/>}/>
+                <Route path='/vacancies' element={<Vacancies/>}/>
+                <Route path='/services' element={<Services/>}/>
                 <Route path='/article/:id' element={<Article/>}/>
                 <Route path={`/login/${process.env.REACT_APP_SECRET_LOGIN_LINK}`} element={<Login/>}/>
                 <Route path={`/dashboard/*`} element={<AccountDashboard/>}/>

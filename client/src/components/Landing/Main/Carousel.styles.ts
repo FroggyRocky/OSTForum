@@ -1,5 +1,6 @@
 import styled, {css} from "styled-components";
-import {mediaSizes, firstPageMediaSizes} from "../../common/commonStyles/MediaSizes";
+import {firstPageMediaSizes} from "../../../mediaSizes.styled";
+import {mediaSizes} from "../../../mediaSizes.styled";
 import {Link} from "react-router-dom";
 export const Wrapper = styled.div`
   z-index: 1;
@@ -35,7 +36,7 @@ export const CarouselWindow = styled.div<{isThereOnlyOneItem:boolean}>`
     justify-content: ${({isThereOnlyOneItem}) => isThereOnlyOneItem ? 'center' : 'flex-start'};
   }
 `
-export const Card = styled(Link)<{ translation: string | number, maxTranslation:string | number}>`
+export const Card = styled(Link)<{ translation: string | number, maxtranslation:string | number}>`
   width: 570px;
   height: 288px;
   background-color: rgba(0, 0, 0, 0.9);

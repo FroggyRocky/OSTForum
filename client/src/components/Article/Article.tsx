@@ -4,7 +4,7 @@ import styled from "styled-components";
 import {useLocation, useNavigate, useParams} from 'react-router-dom'
 import {ArticleHeader} from "./ArticleHeader";
 import {IoTimeOutline} from 'react-icons/io5'
-import {Flex} from "../common/commonStyles/Flex.styled";
+import {Flex} from "../../UIKit/StyledComponents/styledComponents";
 import {ArticleText} from "./ArticleText";
 import {ArticleComments} from "./ArticleComments";
 import {TgButton} from "../common/TgButton";
@@ -14,7 +14,8 @@ import {fetchCurrentArticle} from "../../redux/articles/articlesThunks";
 import {IArticle, IEditingArticle} from "../../redux/articles/articleTypes";
 import {Loader} from "../common/Loader";
 import {calcDate} from "../../services/calcDate";
-import {firstPageMediaSizes, mediaSizes} from "../common/commonStyles/MediaSizes";
+import {firstPageMediaSizes} from "../../mediaSizes.styled";
+import {mediaSizes} from "../../mediaSizes.styled";
 import {PathWidget} from "../common/PathWidget";
 import {convertFromHTML} from "draft-js";
 import {setCurrentArticle, setEditingArticle} from "../../redux/articles/articlesSlice";
@@ -27,7 +28,7 @@ const ArticleContainer = styled(Wrapper)`
   word-break: break-word;
 `
 const StyledPath = styled.div`
-  font-family: var(--family-text);
+  font-family: var(--gotham);
   font-weight: 400;
   font-size: 16px;
   line-height: 15px;
@@ -55,18 +56,18 @@ const StyledPath = styled.div`
   }
 `
 const ContentWidget = styled(Flex)`
-  font-family: var(--family-text);
+  font-family: var(--gotham);
   font-weight: 400;
   font-size: 18px;
   line-height: 16px;
   color: #58649C;
   margin: 30px 0 10px 0;
   align-items: center;
-  justify-content: end;
+  justify-content: flex-end;
   @media (max-width: ${mediaSizes.mobile}) {
     justify-content: space-between;
     margin: 10px 0 18px 0;
-    font-family: var(--family-text);
+    font-family: var(--gotham);
     font-size: 9px;
     line-height: 9px;
     color: #58649C;

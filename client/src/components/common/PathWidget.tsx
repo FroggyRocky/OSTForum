@@ -1,11 +1,11 @@
 import {NavLink} from "react-router-dom";
 import styled from "styled-components";
 
-const Path = styled.p`
+const Path = styled.div`
   display: flex;
   align-items: center;
   color: #525252;
-  font-family: var(--family-text);
+  font-family: var(--gotham);
   font-style: normal;
   font-weight: 400;
   font-size: 16px;
@@ -40,10 +40,10 @@ export const PathWidget = (props: Props) => {
                 if (!props.targetPath && props.historyPath.length - 1 === index) {
                     return <Link key={el.path} to={el.path}>{el.pathName}</Link>
                 } else {
-                    return <>
+                    return <div key={el.path}>
                         <Link key={el.path} to={el.path}>{el.pathName}</Link>
                         <PathArrow>{`>`}</PathArrow>
-                    </>
+                    </div>
                 }
             })
         } else {
