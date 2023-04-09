@@ -1,0 +1,27 @@
+.affiliates {
+  min-height: 100vh;
+  &__chosenFilter {
+    text-align: start;
+    font-family: var(--gotham);
+    font-style: normal;
+    font-weight: bold;
+    font-size: 35px;
+    line-height: 33px;
+    color: #525252;
+    text-transform: capitalize;
+    margin-bottom: 30px;
+  }
+
+  &__filter {
+    margin-right: 30px;
+    position: fixed;
+  }
+
+  &__cards {
+    margin-left: 300px;
+  }
+
+  &__card {
+    margin-bottom: 50px;
+  }
+}

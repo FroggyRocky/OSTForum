@@ -1,0 +1,37 @@
+.createCardButton {
+  width: 240px;
+  min-height: 240px;
+  background: #FFFFFF;
+  box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.15);
+  border-radius: 15px;
+  margin-left:30px;
+  &__addBtn {
+    display: flex;
+    justify-content: center;
+    align-self: center;
+    margin-top: 54px;
+    cursor: pointer;
+  }
+  &__checkIcon {
+    width: 82px;
+    height:82px;
+    color:#525252;
+  }
+  &__editorPanel {
+height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 54px;
+    border-top: 1px solid #58649C;
+  }
+  &__editBtn {
+    margin-right: 30px;
+    cursor: pointer;
+    color:#525252;
+  }
+  &__deleteBtn {
+    cursor: pointer;
+    color:#525252;
+  }
+}

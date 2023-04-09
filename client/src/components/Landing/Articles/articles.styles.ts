@@ -1,9 +1,9 @@
 import styled, {css} from "styled-components";
-import {Flex} from "../../../UIKit/StyledComponents/styledComponents";
-import {mediaSizes} from "../../../mediaSizes.styled";
+import {StyledFlex} from "../../../UIKit/BasicStyledComponents/basicStyledComponents";
+import {mediaSizes} from "../../../UIKit/mediaSizes.styled";
 import {NavLink} from "react-router-dom";
 
-export const CategoriesContainer = styled(Flex)`
+export const CategoriesContainer = styled(StyledFlex)`
   padding: 0 0 41px 0;
   display: flex;
   justify-content: space-between;
@@ -42,7 +42,7 @@ export const Category = styled.span<{ isSelected: boolean }>`
 
 `
 
-export const ArticlesContainer = styled(Flex)`
+export const ArticlesContainer = styled(StyledFlex)`
   margin-bottom: 50px;
   position: relative;
   gap: 30px;
@@ -170,7 +170,7 @@ export const Text = styled.div`
     }
   }
 `
-export const Date = styled(Flex)`
+export const Date = styled(StyledFlex)`
   font-family: var(--gotham);
   font-weight: 400;
   font-size: 16px;

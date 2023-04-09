@@ -10,11 +10,11 @@ import {
     Text
 } from './articles.styles'
 import {filterCategoriesForFlags, setPathToFlagImg} from "../../../services/categoryFlags";
-import {Flex} from '../../../UIKit/StyledComponents/styledComponents'
+import {StyledFlex} from '../../../UIKit/BasicStyledComponents/basicStyledComponents'
 import {IoTimeOutline} from 'react-icons/io5'
 import {calcDate} from "../../../services/calcDate";
 import {ICategory} from "../../../redux/auth/authConfigsTypes";
-import {ImgWithLoader} from "../../common/ImgWithLoader";
+import {ImgWithLoader} from "../../../UIKit/ImgWithLoader/ImgWithLoader";
 import defaultImg from '../../../assets/defaultCardCover.png'
 type Props = {
     id: number,
@@ -59,11 +59,11 @@ export const Card = (props: Props) => {
                 <Text>
                     <p>{props.previewDescription}</p>
                 </Text>
-                <Flex justifyContent='space-between'>
+                <StyledFlex justifyContent='space-between'>
                     <Date>
                         <IoTimeOutline style={{marginRight: '4px'}} color='#58649C'/>{`${calcDate(props.createdAt)}`}
                     </Date>
-                </Flex>
+                </StyledFlex>
             </Info>
         </Container>
     </ArticleCardLink>

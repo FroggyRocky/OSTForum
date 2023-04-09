@@ -1,0 +1,28 @@
+.createCardInput {
+  width: 100%;
+  position: relative;
+  &__counter {
+    font-family: var(--gotham);
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 11px;
+    color: #525252;
+    margin-bottom: 5px;
+    position: absolute;
+    top: -50%;
+  }
+  &__input {
+    border: 1px solid #58649C;
+    font-family: var(--gotham);
+    height: 29px;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 30px;
+    line-height: 29px;
+    color: #58649C;
+    width: 100%;
+    &:focus {
+      outline: none;
+    }
+  }
+}

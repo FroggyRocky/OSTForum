@@ -1,8 +1,8 @@
 import defaultCover from '../../../assets/defaultCardCover.png'
-import {ImgWithLoader} from "../../../components/common/ImgWithLoader";
+import {ImgWithLoader} from "../../ImgWithLoader/ImgWithLoader";
 import {IKey} from "../../../redux/auth/authConfigsTypes";
 import './cardWithStatistics.scss'
-import {ActionPanel} from "../../../components/common/ActionPanel";
+import {ArticleActionPanel} from "../../ArticleActionPanel/ArticleActionPanel";
 import {ShareDropDown, ShareModalContent, ShareModal} from "../../../components/Article/ArticleComments";
 import {useState} from "react";
 import {AiFillTwitterCircle} from "react-icons/ai";
@@ -10,7 +10,7 @@ import {FaReddit} from "react-icons/fa";
 import {IoLogoFacebook} from "react-icons/io5";
 import {BiLinkAlt} from "react-icons/bi";
 import {calcDate} from "../../../services/calcDate";
-import {Flex} from "../../StyledComponents/styledComponents";
+import {StyledFlex} from "../../BasicStyledComponents/basicStyledComponents";
 import { AiOutlineClockCircle } from "react-icons/ai";
 
 type Props = {
@@ -84,17 +84,17 @@ export function CardWithStatistics(props: Props) {
                     <p className={'cardWithStatistics__description__description'}>{props.description}</p>
             </section>
             <section className={'cardWithStatistics__meta'}>
-                <Flex>
+                <StyledFlex>
                     <p className={'cardWithStatistics__meta__publicationDate'}>
                         <AiOutlineClockCircle color={'#58649C'} style={{marginRight:'6px'}} />
                         {calcDate(props.createdAt)}</p>
                     <div className={'cardWithStatistics__meta__keys'}>
                         {keys}
                     </div>
-                </Flex>
+                </StyledFlex>
                 <div className={'cardWithStatistics__meta__statistics'}>
-                    <ActionPanel setShareDropDownState={setShareDropDownState} likes={10}
-                                 dislikes={10} views={10} setShareMobileModalState={setShareMobileModalState} />
+                    <ArticleActionPanel setShareDropDownState={setShareDropDownState} likes={10}
+                                        dislikes={10} views={10} setShareMobileModalState={setShareMobileModalState} />
                     {isShareDropDownOpen && <ShareDropDown right={'0'}>
                         <a target="_blank" rel="noopener noreferrer"
                            href={`https://twitter.com/intent/tweet?text=${props.header}&url=${props.link}`}>

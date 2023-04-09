@@ -28,7 +28,7 @@ class TapLinksController {
             })
             const newTapLinks = articles.map((el, index) => ({id: index + 1, articleId: el.id, position: index}))
             await db.TapLinks.bulkCreate(newTapLinks, {
-                updateOnDuplicate: true
+                updateOnDuplicate: ['id','articleId', 'position']
             })
             const synchronizedTapLinks = await db.TapLinks.findAll({
                 include: [{

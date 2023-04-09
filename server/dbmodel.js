@@ -32,27 +32,42 @@ const Comments = db.define('comments', {
     }, // ID OF USERS WHO LIKED THE COMMENT
 })
 const Affiliates = db.define('affiliates', {
-    header:DataTypes.STRING(55),
-    description:DataTypes.STRING(240),
+    header:DataTypes.STRING(25),
+    description:DataTypes.STRING(210),
     cover:DataTypes.STRING,
     link:DataTypes.STRING,
     price:DataTypes.INTEGER,
+    score:DataTypes.INTEGER,
     keyIds:{
         type:DataTypes.ARRAY(DataTypes.INTEGER),
     }
 })
+const AffiliateKeys = db.define('affiliateKeys', {
+    name:DataTypes.STRING,
+},
+    {
+        timestamps: false
+    }
+)
 const Networks = db.define('networks', {
-    header:DataTypes.STRING(55),
-    description:DataTypes.STRING(240),
+    header:DataTypes.STRING(25),
+    description:DataTypes.STRING(210),
     cover:DataTypes.STRING,
     link:DataTypes.STRING,
     keyIds:{
         type:DataTypes.ARRAY(DataTypes.INTEGER),
     }
 })
+const NetworkKeys = db.define('networksKeys', {
+        name:DataTypes.STRING,
+    },
+    {
+        timestamps: false
+    }
+)
 const Vacancies = db.define('vacancies', {
-    header:DataTypes.STRING(55),
-    description:DataTypes.STRING(240),
+    header:DataTypes.STRING(25),
+    description:DataTypes.STRING(210),
     cover:DataTypes.STRING,
     link:DataTypes.STRING,
     price:DataTypes.INTEGER,
@@ -60,10 +75,17 @@ const Vacancies = db.define('vacancies', {
         type:DataTypes.ARRAY(DataTypes.INTEGER),
     }
 })
+const VacancyKeys = db.define('vacanciesKeys', {
+        name:DataTypes.STRING,
+    },
+    {
+        timestamps: false
+    }
+)
 const Cases = db.define('cases', {
-    header:DataTypes.STRING(55),
+    header:DataTypes.STRING(25),
     text:DataTypes.TEXT,
-    description:DataTypes.STRING(240),
+    description:DataTypes.STRING(210),
     cover:DataTypes.STRING,
     link:DataTypes.STRING,
     keyIds:{
@@ -79,15 +101,30 @@ const Cases = db.define('cases', {
         type:DataTypes.ARRAY(DataTypes.INTEGER),
     }, // ID OF USERS WHO LIKED VIEWED THE ARTICLE,
 })
+const CaseKeys = db.define('casesKeys', {
+        name:DataTypes.STRING,
+    },
+    {
+        timestamps: false
+    }
+)
 const Services = db.define('services', {
     header:DataTypes.STRING(55),
     description:DataTypes.STRING(240),
     cover:DataTypes.STRING,
     link:DataTypes.STRING,
+    score:DataTypes.INTEGER,
     keyIds:{
         type:DataTypes.ARRAY(DataTypes.INTEGER),
     }
 })
+const ServiceKeys = db.define('servicesKeys', {
+        name:DataTypes.STRING,
+    },
+    {
+        timestamps: false
+    }
+)
 const Users = db.define('users', {
     name:DataTypes.STRING(50),
     login:DataTypes.STRING(50),
@@ -111,26 +148,11 @@ const RefreshTokens = db.define('refresh_tokens', {
 })
 
 //article's CATEGORIES &
-// vacancy, affiliate, network, service KEYS and TrustLevels
 const Categories = db.define('categories', {
     name:DataTypes.STRING
 }, {
     timestamps:false
 })
-const Keys = db.define('keys', {
-    name:DataTypes.STRING
-}, {
-    timestamps:false
-})
-const ScoreLevel = db.define('score_levels', {
-    label:DataTypes.STRING,
-    score:DataTypes.INTEGER
-},
-    {
-        timestamps:false
-    })
-
-
 
 Users.hasMany(Article);
 Article.belongsTo(Users)
@@ -140,9 +162,6 @@ Article.hasMany(Comments);
 Comments.belongsTo(Article);
 Article.hasOne(TapLinks)
 TapLinks.belongsTo(Article)
-ScoreLevel.hasMany(Affiliates)
-Affiliates.belongsTo(ScoreLevel)
-
 
 module.exports = {
     Article,
@@ -151,10 +170,14 @@ module.exports = {
     Categories,
     RefreshTokens,
     TapLinks,
-    Keys,
     Affiliates,
     Vacancies,
     Cases,
     Networks,
-    Services
+    Services,
+    AffiliateKeys,
+    NetworkKeys,
+    CaseKeys,
+    VacancyKeys,
+    ServiceKeys
 }

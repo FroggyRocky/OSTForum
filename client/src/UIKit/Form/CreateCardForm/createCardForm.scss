@@ -1,0 +1,58 @@
+.createCardContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.createCardForm {
+  width: 100%;
+  background: #FFFFFF;
+  box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.15);
+  border-radius: 15px;
+  display: flex;
+
+  &__content {
+    padding: 30px;
+    height: 100%;
+    width: 100%;
+  }
+  &__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    &__input {
+      width: 100%;
+    }
+  }
+  &__cover {
+    cursor: pointer;
+  }
+  &__score {
+    margin-left: 30px;
+  }
+  &__meta {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 20px;
+  }
+  &__addKeys {
+    display: flex;
+    margin-right: 20px;
+    align-items: center;
+    &__key {
+      width: 190px;
+    }
+    &__btn {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 29px;
+      height: 23px;
+      background: #FFFFFF;
+      box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
+      border-radius: 5px;
+      cursor: pointer;
+    }
+  }
+
+}

@@ -1,28 +1,26 @@
-import {Wrapper} from "../common/commonStyles/Wrapper.styled";
-import {Content} from "../common/commonStyles/Content.styled";
+import {StyledContent, StyledWrapper, StyledFlex} from "../../UIKit/BasicStyledComponents/basicStyledComponents";
 import styled from "styled-components";
 import {useLocation, useNavigate, useParams} from 'react-router-dom'
 import {ArticleHeader} from "./ArticleHeader";
 import {IoTimeOutline} from 'react-icons/io5'
-import {Flex} from "../../UIKit/StyledComponents/styledComponents";
 import {ArticleText} from "./ArticleText";
 import {ArticleComments} from "./ArticleComments";
-import {TgButton} from "../common/TgButton";
+import {TelegramBtn} from "../../UIKit/TelegramBtn/TelegramBtn";
 import {useEffect} from "react";
 import {useAppDispatch, useAppSelector} from "../../redux/hooks/hooks";
 import {fetchCurrentArticle} from "../../redux/articles/articlesThunks";
 import {IArticle, IEditingArticle} from "../../redux/articles/articleTypes";
-import {Loader} from "../common/Loader";
+import {Loader} from "../../UIKit/Loader/Loader";
 import {calcDate} from "../../services/calcDate";
-import {firstPageMediaSizes} from "../../mediaSizes.styled";
-import {mediaSizes} from "../../mediaSizes.styled";
-import {PathWidget} from "../common/PathWidget";
+import {firstPageMediaSizes} from "../../UIKit/mediaSizes.styled";
+import {mediaSizes} from "../../UIKit/mediaSizes.styled";
+import {PathWidget} from "../../UIKit/PathWidget/PathWidget";
 import {convertFromHTML} from "draft-js";
 import {setCurrentArticle, setEditingArticle} from "../../redux/articles/articlesSlice";
 import {ICategory} from "../../redux/auth/authConfigsTypes";
-import {Layout} from "../../Layout";
+import {Layout} from "../../UIKit/GeneralLayout/Layout";
 
-const ArticleContainer = styled(Wrapper)`
+const ArticleContainer = styled(StyledWrapper)`
   padding-bottom: 40px;
   overflow-wrap: break-word;
   word-break: break-word;
@@ -55,7 +53,7 @@ const StyledPath = styled.div`
     display: none;
   }
 `
-const ContentWidget = styled(Flex)`
+const ContentWidget = styled(StyledFlex)`
   font-family: var(--gotham);
   font-weight: 400;
   font-size: 18px;
@@ -73,12 +71,12 @@ const ContentWidget = styled(Flex)`
     color: #58649C;
   }
 `
-const Date = styled(Flex)`
+const Date = styled(StyledFlex)`
   @media (max-width: ${mediaSizes.mobile}) {
     display: none;
   }
 `
-const DateMob = styled(Flex)`
+const DateMob = styled(StyledFlex)`
   display: none;
   @media (max-width: ${mediaSizes.mobile}) {
     display: flex;
@@ -130,7 +128,7 @@ export const Article = () => {
     if (!currentArticle) return <Loader/>
     return <Layout>
         <ArticleContainer>
-            <Content>
+            <StyledContent>
                 <StyledPath>
                     <div>
                         <PathWidget historyPath={historyState} targetPath={currentArticle.header}/>
@@ -155,9 +153,9 @@ export const Article = () => {
                                  dislikes={currentArticle.usersDisliked?.length || 0}
                                  commentsData={currentArticle.comments}/>
                 <TgButtonContainer>
-                    <TgButton/>
+                    <TelegramBtn/>
                 </TgButtonContainer>
-            </Content>
+            </StyledContent>
         </ArticleContainer>
     </Layout>
 }

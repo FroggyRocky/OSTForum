@@ -1,0 +1,84 @@
+.create {
+  padding: 40px 0 120px 0;
+  &__container {
+    text-align: center;
+  }
+  &__content {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: max-content 1fr;
+    gap: 30px;
+    margin-top: 40px;
+  }
+  &__cardHeader {
+    font-family: var(--gotham);
+    font-style: normal;
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 19px;
+    display: flex;
+    align-items: center;
+margin-bottom: 15px;
+    color: #000000;
+  }
+  &__addBtn {
+    background: rgba(255, 255, 255, 0.3);
+    box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.15);
+    border-radius: 15px;
+    width: 163px;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    &__icon {
+      width: 44.1px;
+      height: 43.56px;
+      color: #58649C;
+    }
+  }
+  &__vector {
+    text-align: start;
+    padding: 20px;
+  }
+  &__article{
+    width: 100%;
+    min-height: 163px;
+    background: rgba(255, 255, 255, 0.3);
+    box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.15);
+    border-radius: 15px;
+    grid-column: 1 / span 3;
+    display: flex;
+    justify-content: space-between;
+
+  }
+  &__service{
+      width: 100%;
+    min-height: 163px;
+    background: rgba(255, 255, 255, 0.3);
+    box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.15);
+    border-radius: 15px;
+    display: flex;
+    justify-content: space-between;
+
+  }
+  &__vacancy{
+      width: 100%;
+    min-height: 163px;
+    background: rgba(255, 255, 255, 0.3);
+    box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.15);
+    border-radius: 15px;
+    display: flex;
+    justify-content: space-between;
+
+  }
+  &__affiliate{
+      width: 100%;
+    min-height: 163px;
+    background: rgba(255, 255, 255, 0.3);
+    box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.15);
+    border-radius: 15px;
+    display: flex;
+    justify-content: space-between;
+
+  }
+}

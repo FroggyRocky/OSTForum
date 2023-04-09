@@ -6,13 +6,15 @@ import {Article} from "./components/Article/Article";
 import {AccountDashboard} from "./components/AccountDashboard/AccountDashboard";
 import {useAppDispatch, useAppSelector} from "./redux/hooks/hooks";
 import {auth} from "./redux/auth/authConfigsThunks";
-import {Loader} from "./components/common/Loader";
+import {Loader} from "./UIKit/Loader/Loader";
 import {Login} from "./components/Login/Login";
-import {Affiliates} from "./components/Landing/SubPages/Affiliates/Affiliates";
-import {Networking} from "./components/Landing/SubPages/Networking/Networking";
-import {Cases} from "./components/Landing/SubPages/Cases/Cases";
-import {Vacancies} from "./components/Landing/SubPages/Vacancies/Vacancies";
-import {Services} from "./components/Landing/SubPages/Services/Services";
+import {Affiliates} from "./components/Landing/Affiliates/Affiliates";
+import {Networking} from "./components/Landing/Networking/Networking";
+import {Cases} from "./components/Landing/Cases/Cases";
+import {Vacancies} from "./components/Landing/Vacancies/Vacancies";
+import {Services} from "./components/Landing/Services/Services";
+import {CreateAffiliate} from "./components/AccountDashboard/Create/CreateContent/CreateAffiliate/CreateAffiliate";
+import {CreateArticle} from "./components/AccountDashboard/Create/CreateArticle/CreateArticle";
 
 function App() {
 
@@ -38,6 +40,8 @@ function App() {
                 <Route path='/article/:id' element={<Article/>}/>
                 <Route path={`/login/${process.env.REACT_APP_SECRET_LOGIN_LINK}`} element={<Login/>}/>
                 <Route path={`/dashboard/*`} element={<AccountDashboard/>}/>
+                <Route path={`/create/affiliate`} element={<CreateAffiliate/>}/>
+                <Route path={`/create/article`} element={<CreateArticle/>}/>
             </Routes>
         </div>
     );

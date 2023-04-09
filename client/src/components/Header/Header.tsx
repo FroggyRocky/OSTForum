@@ -1,18 +1,15 @@
 import {useState} from "react";
-import {Flex} from '../../UIKit/StyledComponents/styledComponents'
 import {Avatar} from "../../UIKit/ProfileWidget/Avatar";
 import {Link, useLocation} from "react-router-dom";
 import {useAppSelector} from "../../redux/hooks/hooks";
 import {IUser} from "../../redux/user/userType";
 import {FaTelegramPlane} from "react-icons/fa";
-import {Search} from "../../UIKit/SearchWidget/Search";
 import {HiOutlineMenuAlt3} from "react-icons/hi";
-import {RoundBtn} from "../../UIKit/StyledComponents/styledComponents";
+import {StyledRoundBtn, StyledFlex} from "../../UIKit/BasicStyledComponents/basicStyledComponents";
 import {ReactComponent as Logo} from '../../assets/logo.svg'
 import {MdOutlineClose} from "react-icons/md";
-
-
 import './header.scss'
+import {SearchWidget} from "../../UIKit/SearchWidget/SearchWidget";
 
 type Props = {}
 
@@ -33,10 +30,10 @@ export function Header(props: Props) {
     return <div className={'header'}>
         <main className={'header__content'}>
             <Link style={{zIndex: 150}} to='/'>
-                <Flex justifyContent='flex-start' alignItems='center'>
+                <StyledFlex justifyContent='flex-start' alignItems='center'>
                     <Logo className={'header__logo'}/>
                     <p className={'header__logo__text'}>MY CLICK</p>
-                </Flex>
+                </StyledFlex>
             </Link>
             {isAuth &&
             <section className={'header__navigationLinks'}>
@@ -59,15 +56,15 @@ export function Header(props: Props) {
             }
             <section className={'header__actionPanel'}>
                 <Link className={'header__tgBtn'} to='https://t.me/myclickmedia' target={'_blank'}>
-                    <RoundBtn>
+                    <StyledRoundBtn>
                         <FaTelegramPlane style={{margin: '0 1.5px 0 0'}} color={'white'}/>
-                    </RoundBtn>
+                    </StyledRoundBtn>
                 </Link>
                 <div className={'header__search'}>
-                    <Search/>
+                    <SearchWidget/>
                 </div>
                 <div className={'header__search_mob'}>
-                    <Search mob={true}/>
+                    <SearchWidget mob={true}/>
                 </div>
                 <div className={'header__menuBurger'}>
                     <svg width="0" height="0">

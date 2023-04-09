@@ -1,9 +1,9 @@
 import styled, {css, keyframes} from "styled-components";
 import {IoChevronDown, IoLogoFacebook} from 'react-icons/io5'
-import {Flex} from "../../UIKit/StyledComponents/styledComponents";
+import {StyledFlex} from "../../UIKit/BasicStyledComponents/basicStyledComponents";
 import {IComments} from "../../redux/articles/articleTypes";
-import {mediaSizes} from "../../mediaSizes.styled";
-import {ActionPanel} from "../common/ActionPanel";
+import {mediaSizes} from "../../UIKit/mediaSizes.styled";
+import {ArticleActionPanel} from "../../UIKit/ArticleActionPanel/ArticleActionPanel";
 import {useState} from "react";
 import {AiFillTwitterCircle, AiOutlineClose} from "react-icons/ai";
 import {FaReddit} from "react-icons/fa";
@@ -24,7 +24,7 @@ const Content = styled.div`
     padding: 30px;
   }
 `
-const Actions = styled(Flex)`
+const Actions = styled(StyledFlex)`
   justify-content: space-between;
   align-items: center;
 
@@ -208,8 +208,8 @@ export const ArticleComments = (props: Props) => {
                 <h1>
                 </h1>
                 <div style={{position: 'relative'}} ref={clickOutsideRef}>
-                    <ActionPanel setShareDropDownState={setShareDropDownState} likes={props.likes}
-                                 dislikes={props.dislikes} views={props.views} setShareMobileModalState={setShareMobileModalState} />
+                    <ArticleActionPanel setShareDropDownState={setShareDropDownState} likes={props.likes}
+                                        dislikes={props.dislikes} views={props.views} setShareMobileModalState={setShareMobileModalState} />
                     {isShareDropDownOpen && <ShareDropDown>
                         <a target="_blank" rel="noopener noreferrer"
                            href={`https://twitter.com/intent/tweet?text=${props.articleHeader}&url=${window.location.href}&article=${encodeURIComponent(props.articleHeader)}`}>

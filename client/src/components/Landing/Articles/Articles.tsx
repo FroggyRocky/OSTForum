@@ -1,14 +1,14 @@
-import {Content} from "../../common/commonStyles/Content.styled";
+import {StyledContent} from "../../../UIKit/BasicStyledComponents/basicStyledComponents";
 import {Card} from './Card'
-import {Pagination} from "../../common/Pagination";
-import {TgButton} from "../../common/TgButton";
+import {Pagination} from "../../../UIKit/Pagination/Pagination";
+import {TelegramBtn} from "../../../UIKit/TelegramBtn/TelegramBtn";
 import {useAppSelector} from "../../../redux/hooks/hooks";
-import {useCallback, useState, useEffect} from "react";
+import {useCallback, useState} from "react";
 import {IArticlesPreview} from "../../../redux/articles/articleTypes";
 import defaultCardCover from '../../../assets/defaultCardCover.png'
 import {ArticlesContainer, CategoriesContainer, Category} from './articles.styles'
 import {findCategoryObjById} from "../../../services/categoryFlags";
-import {useNavigate} from "react-router-dom";
+
 
 type Props = {
     articlesPageRef: any
@@ -101,7 +101,7 @@ export const Articles = (props: Props) => {
     }
     return (
         <div style={{padding: '0px 0 60px 0'}}>
-            <Content>
+            <StyledContent>
                 <div ref={props.articlesPageRef}></div>
                 <CategoriesContainer>
                     <Category isSelected={isSelected(findInstAndFbCategoryId(), selectedCategoryIds)}
@@ -112,12 +112,12 @@ export const Articles = (props: Props) => {
                 <ArticlesContainer id='articles__main'>
                     {articles()?.slice(startIndex, endIndex)}
                 </ArticlesContainer>
-                <TgButton/>
+                <TelegramBtn/>
                 {articlesData.length !== 0 &&
                     <Pagination changePage={changePage} currentPage={currentPage} limit={articlesPerPageLimit}
                                 totalItems={articles().length || 0}
                     />}
-            </Content>
+            </StyledContent>
         </div>
     );
 };

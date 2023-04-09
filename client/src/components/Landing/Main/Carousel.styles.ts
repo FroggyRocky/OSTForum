@@ -1,6 +1,6 @@
 import styled, {css} from "styled-components";
-import {firstPageMediaSizes} from "../../../mediaSizes.styled";
-import {mediaSizes} from "../../../mediaSizes.styled";
+import {firstPageMediaSizes} from "../../../UIKit/mediaSizes.styled";
+import {mediaSizes} from "../../../UIKit/mediaSizes.styled";
 import {Link} from "react-router-dom";
 export const Wrapper = styled.div`
   z-index: 1;

@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import {mediaSizes} from "../../mediaSizes.styled";
+import {mediaSizes} from "../../UIKit/mediaSizes.styled";
 import {useEffect, useRef, MutableRefObject} from "react";
 
 const Container = styled.div`

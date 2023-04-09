@@ -13,5 +13,11 @@ export interface IKey {
 }
 export interface IConfigs {
     categories:Array<ICategory>,
-    keys:Array<IKey>
+    keys:{
+        affiliate:Array<IKey>,
+        case: Array<IKey>,
+        network: Array<IKey>,
+        service: Array<IKey>,
+        vacancy:Array<IKey>
+    }
 }

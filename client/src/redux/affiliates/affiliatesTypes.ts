@@ -1,3 +1,4 @@
+import {IKey} from "../auth/authConfigsTypes";
 
 export interface IAffiliate {
     id:number,
@@ -7,7 +8,8 @@ header:string
     link:string
     price:number
     keyIds:number[]
-    createdAt:string
+    createdAt:string,
+    score:number | null
 }
 
 export interface ICreatedAffiliate {
@@ -15,6 +17,6 @@ export interface ICreatedAffiliate {
     description:string
     cover:string
     link:string
-    price:number
     keyIds:number[] | []
+    score:number | null
 }

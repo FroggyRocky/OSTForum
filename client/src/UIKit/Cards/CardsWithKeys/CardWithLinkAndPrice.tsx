@@ -1,5 +1,5 @@
 import defaultCover from '../../../assets/defaultCardCover.png'
-import {ImgWithLoader} from "../../../components/common/ImgWithLoader";
+import {ImgWithLoader} from "../../ImgWithLoader/ImgWithLoader";
 import {IKey} from "../../../redux/auth/authConfigsTypes";
 import './cardWithLinkAndPrice.scss'
 type Props = {

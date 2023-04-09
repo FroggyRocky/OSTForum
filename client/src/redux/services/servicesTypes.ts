@@ -5,7 +5,8 @@ export interface IService {
     cover:string
     link:string
     keyIds:number[]
-    createdAt:string
+    createdAt:string,
+    score?:number | null
 }
 export interface ICreatedService {
     header:string

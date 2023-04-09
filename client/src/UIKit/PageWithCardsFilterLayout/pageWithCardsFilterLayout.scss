@@ -1,0 +1,46 @@
+@import '../mediaSizes';
+.pageWithCardsFilterLayout {
+  padding: 40px 0 60px 0;
+  &__header {
+    font-family: var(--roadRadio);
+    font-style: normal;
+    font-weight: 700;
+    font-size: 60px;
+    line-height: 61px;
+    background: linear-gradient(180deg, #8492D1 0%, #58649C 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    text-fill-color: transparent;
+    margin: 40px 0;
+  }
+&__content {
+  display: flex;
+}
+  &__filter {
+    margin-right: 30px;
+  }
+}
+
+@media screen and (max-width:1300px) {
+
+  .pageWithCardsFilterLayout {
+    &__content {
+      display: block;
+    }
+    &__filter {
+      margin-right: 0px;
+      margin-bottom: 30px;
+    }
+  }
+}
+
+@media screen and (max-width:$mobile) {
+  .pageWithCardsFilterLayout {
+    &__header {
+      margin: 20px 0;
+      font-size: 25px;
+      line-height: 26px;
+    }
+  }
+}

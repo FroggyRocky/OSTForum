@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {Flex} from "../StyledComponents/styledComponents";
+import {StyledFlex} from "../BasicStyledComponents/basicStyledComponents";
 import styled from "styled-components";
 import {IoPersonOutline} from 'react-icons/io5';
 
@@ -14,9 +14,9 @@ type Props = {
 };
 export const Avatar = (props: Props) => {
     return (
-        <Flex>
+        <StyledFlex>
             {props.avatar ? <Img src={props.avatar} alt='avatar' />  : <IoPersonOutline/> }
             {/*<IoChevronDownOutline/>*/}
-        </Flex>
+        </StyledFlex>
     );
 };

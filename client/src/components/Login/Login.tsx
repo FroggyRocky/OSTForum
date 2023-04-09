@@ -1,11 +1,10 @@
 import styled from "styled-components";
-import {Wrapper} from "../common/commonStyles/Wrapper.styled";
-import {Content} from "../common/commonStyles/Content.styled";
+import {StyledWrapper, StyledContent} from "../../UIKit/BasicStyledComponents/basicStyledComponents";
 import {useState, useEffect} from "react";
 import {useAppDispatch, useAppSelector} from "../../redux/hooks/hooks";
 import {loginUser} from "../../redux/auth/authConfigsThunks";
 import {useNavigate} from "react-router-dom";
-import {Layout} from "../../Layout";
+import {Layout} from "../../UIKit/GeneralLayout/Layout";
 
 const LoginContainer = styled.div`
   background-image: linear-gradient(90deg, #74EBD5 0%, #9FACE6 100%);
@@ -101,8 +100,8 @@ export const Login = (props: Props) => {
     }
 
     return <Layout>
-        <Wrapper>
-        <Content style={{padding: '20px 0'}}>
+        <StyledWrapper>
+        <StyledContent style={{padding: '20px 0'}}>
             <LoginContainer>
                 <LoginContent>
                     <div>
@@ -116,7 +115,7 @@ export const Login = (props: Props) => {
                     <Button onClick={onLogin}>Login</Button>
                 </LoginContent>
             </LoginContainer>
-        </Content>
-        </Wrapper>
+        </StyledContent>
+        </StyledWrapper>
     </Layout>
 };

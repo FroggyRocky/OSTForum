@@ -1,13 +1,10 @@
 import styled from 'styled-components'
-import {Content} from "../common/commonStyles/Content.styled";
-import {Flex} from "../../UIKit/StyledComponents/styledComponents";
+import {StyledContent, StyledFlex} from "../../UIKit/BasicStyledComponents/basicStyledComponents";
 import tg from '../../assets/tg.svg'
 import inst from '../../assets/inst.svg'
 import {ReactComponent as Logo} from '../../assets/logo.svg'
-import {LogoText} from "../common/commonStyles/Logo.styled";
-import {mediaSizes} from "../../mediaSizes.styled";
+import {mediaSizes} from "../../UIKit/mediaSizes.styled";
 import { FaRedditSquare } from "react-icons/fa";
-import {isMobile} from "react-device-detect";
 
 const Wrapper = styled.div`
   font-family: var(--gotham);
@@ -18,7 +15,7 @@ const Wrapper = styled.div`
   border-top: 2.5px solid #58649C;;
 `
 
-const StyledLogo = styled(Flex)`
+const StyledLogo = styled(StyledFlex)`
   user-select: none;
     & > p {
       margin: 25px 0;
@@ -53,12 +50,12 @@ list-style: none;
     }
   }
 `
-const LinksContainer = styled(Flex)`
+const LinksContainer = styled(StyledFlex)`
 @media (max-width: ${mediaSizes.laptop}) {
   display: none;
 }
 `
-const StyledLinks = styled(Flex)`
+const StyledLinks = styled(StyledFlex)`
   align-items: center;
 & img:nth-child(2) {
   margin: 0 30px;
@@ -70,7 +67,7 @@ const StyledLinks = styled(Flex)`
  
   }
 `
-const FooterContainer = styled(Flex)`
+const FooterContainer = styled(StyledFlex)`
   @media (max-width: 1357px) {
     flex-direction: column;
     justify-content: center;
@@ -84,13 +81,13 @@ type Props = {};
 export const Footer = (props: Props) => {
     return (
         <Wrapper>
-            <Content style={{padding:'60px 0'}}>
+            <StyledContent style={{padding:'60px 0'}}>
         <FooterContainer justifyContent='space-between' alignItems='start'>
             <StyledLogo flexDirection='column'>
-                <Flex>
+                <StyledFlex>
                     <StyledIcon/>
-                    <LogoText ismobile={isMobile}>MY CLICK</LogoText>
-                </Flex>
+                    {/*<p>MY CLICK</p>*/}
+                </StyledFlex>
                     <p>Every click has a story, be part of MyClick!</p>
         </StyledLogo>
             {/*<LinksContainer gap='70px' alignItems='start' >*/}
@@ -123,7 +120,7 @@ export const Footer = (props: Props) => {
             </StyledLinks>
         </FooterContainer>
                 <P>© 2022 All rights reserved. Any copy of information without an active link to the source is prohibited </P>
-            </Content>
+            </StyledContent>
         </Wrapper>
     );
 };

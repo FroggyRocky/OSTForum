@@ -9,19 +9,18 @@ import curtainLeft from '../../assets/curtainLeft.png'
 import curtainRight from '../../assets/curtainRight.png'
 import curtainLeftMob from '../../assets/curtainLeftMob.png'
 import curtainRightMob from '../../assets/curtainRightMob.png'
-import {Image} from "../common/commonStyles/Image.styled";
+import {StyledImage, StyledWrapper} from "../../UIKit/BasicStyledComponents/basicStyledComponents";
 import {Articles} from "./Articles/Articles";
-import {Wrapper} from "../common/commonStyles/Wrapper.styled";
 import {Footer} from "../Footer/Footer";
 import {useRef} from "react";
-import {mediaSizes, firstPageMediaSizes} from "../../mediaSizes.styled";
+import {mediaSizes, firstPageMediaSizes} from "../../UIKit/mediaSizes.styled";
 import {isMobile} from 'react-device-detect'
 
 const FirstPageWrapper = styled.div`
   position: relative;
   overflow-x: clip;
 `
-const CurtainLeft = styled(Image)`
+const CurtainLeft = styled(StyledImage)`
   pointer-events:none;
   position:absolute;
   z-index:5;
@@ -38,7 +37,7 @@ const CurtainLeft = styled(Image)`
     display: none;
   }
 `
-const CurtainRight = styled(Image)`
+const CurtainRight = styled(StyledImage)`
   top:0;
   bottom: 0;
   pointer-events:none;
@@ -55,7 +54,7 @@ const CurtainRight = styled(Image)`
    display: none;
   }
 `
-const CurtainLeftMob = styled(Image)`
+const CurtainLeftMob = styled(StyledImage)`
   pointer-events:none;
   position:absolute;
   z-index:5;
@@ -67,7 +66,7 @@ const CurtainLeftMob = styled(Image)`
     display: block;
   }
 `
-const CurtainRightMob = styled(Image)`
+const CurtainRightMob = styled(StyledImage)`
   top:0;
   pointer-events:none;
   position:absolute;
@@ -81,7 +80,7 @@ const CurtainRightMob = styled(Image)`
   }
 `
 
-const Lamp = styled(Image)`
+const Lamp = styled(StyledImage)`
   pointer-events:none;
   position:absolute;
   z-index:10;
@@ -91,7 +90,7 @@ const Lamp = styled(Image)`
     display: none;
   }
 `
-const LampMob = styled(Image)`
+const LampMob = styled(StyledImage)`
 display: none;
   @media (max-width: ${mediaSizes.mobile}) {
     display: block;
@@ -102,7 +101,7 @@ display: none;
     bottom: 2%;
   }
 `
-const Flipboard = styled(Image)`
+const Flipboard = styled(StyledImage)`
   pointer-events:none;
   position:absolute;
   z-index:10;
@@ -111,7 +110,7 @@ const Flipboard = styled(Image)`
     display: none;
   }
 `
-const FlipboardMob = styled(Image)`
+const FlipboardMob = styled(StyledImage)`
 display: none;
   @media (max-width: ${mediaSizes.mobile}) {
     display: block;
@@ -138,9 +137,9 @@ const articlesPageRef = useRef()
             <Header/>
             <Main articlesPageRef={articlesPageRef}/>
         </FirstPageWrapper>
-        <Wrapper>
+        <StyledWrapper>
             <Articles articlesPageRef={articlesPageRef}/>
             <Footer/>
-        </Wrapper>
+        </StyledWrapper>
     </div>
 };

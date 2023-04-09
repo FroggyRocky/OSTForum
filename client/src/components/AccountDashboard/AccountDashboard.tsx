@@ -1,16 +1,16 @@
 import {NavLink, Route, Routes, useNavigate} from "react-router-dom";
 import {IUser} from "../../redux/user/userType";
 import styled from "styled-components";
-import {Flex} from "../../UIKit/StyledComponents/styledComponents";
+import {StyledFlex} from "../../UIKit/BasicStyledComponents/basicStyledComponents";
 import {useAppSelector} from "../../redux/hooks/hooks";
-import {Layout} from "../../Layout";
-import {CreateArticle} from "./AccountArticles/CreateArticle";
+import {Layout} from "../../UIKit/GeneralLayout/Layout";
+import {CreateArticle} from "./Create/CreateArticle/CreateArticle";
 import {AccountArticles} from "./AccountArticles/AccountArticles";
 import {useEffect} from "react";
-import {BackgroundLoader} from "../common/BackgroundLoader";
-import {mediaSizes} from "../../mediaSizes.styled";
+import {BackgroundLoader} from "../../UIKit/BackgroundLoader/BackgroundLoader";
+import {mediaSizes} from "../../UIKit/mediaSizes.styled";
 import {TapLinkEditor} from "./TapLinkEditor/TapLinkEditor";
-import {CreateContent} from "./CreateContent/CreateContent";
+import {CreateNav} from "./Create/CreateNav";
 
 const H1 = styled.h1`
   padding: 60px 0;
@@ -43,6 +43,7 @@ const Navigation = styled.div`
     line-height: 15px;
     color: #525252;
     margin-right: 50px;
+
     &:last-child {
       margin-right: 0;
     }
@@ -68,21 +69,16 @@ export const AccountDashboard = (props: Props) => {
     if (isArticleCreating) return <BackgroundLoader/>
     return <Layout>
         {Object.entries(user).length ? <>
-                <Flex flexDirection='column'>
+                <StyledFlex flexDirection='column'>
                     <H1>Welcome back, <b>{user.name}</b></H1>
                     <Navigation>
-                        <span>Statistics</span>
-                        <span><NavLink to={'/dashboard/articles/create'}>Add article</NavLink></span>
-                        <span><NavLink to={'/dashboard/content/create'}>Add additional content</NavLink></span>
-                            <span><NavLink to={'/dashboard/taplinks'}>Edit TapLinks</NavLink></span>
-                        <span>Settings</span>
+                        <span><NavLink to={'/dashboard/create'}>Add Content</NavLink></span>
+                        <span><NavLink to={'/dashboard/taplinks'}>Edit TapLinks</NavLink></span>
                     </Navigation>
-                </Flex>
-
+                </StyledFlex>
                 <Routes>
                     <Route path='/articles' element={<AccountArticles articlesData={user.articles}/>}/>
-                    <Route path='/articles/create' element={<CreateArticle/>}/>
-                    <Route path='/content/create' element={<CreateContent />} />
+                    <Route path='/create' element={<CreateNav/>}/>
                     <Route path='/taplinks' element={<TapLinkEditor/>}/>
                 </Routes>
 

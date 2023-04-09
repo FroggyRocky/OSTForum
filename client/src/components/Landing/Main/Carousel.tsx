@@ -11,7 +11,7 @@ import {
 import {useEffect, useState} from "react";
 import {useAppSelector} from "../../../redux/hooks/hooks";
 import {isMobile} from 'react-device-detect'
-import {ImgWithLoader} from "../../common/ImgWithLoader";
+import {ImgWithLoader} from "../../../UIKit/ImgWithLoader/ImgWithLoader";
 import defaultImg from '../../../assets/defaultCardCover.png'
 
 

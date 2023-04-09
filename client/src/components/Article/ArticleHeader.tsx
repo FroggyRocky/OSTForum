@@ -1,6 +1,6 @@
 import styled, {css} from "styled-components";
 import {useEffect, useState} from 'react'
-import {mediaSizes} from "../../mediaSizes.styled";
+import {mediaSizes} from "../../UIKit/mediaSizes.styled";
 import {AiOutlineEdit} from "react-icons/ai";
 import {filterCategoriesForFlags, findCategoryObjById, setPathToFlagImg} from "../../services/categoryFlags";
 import defaultArticleCover from '../../assets/defaultArticleCover.png'
