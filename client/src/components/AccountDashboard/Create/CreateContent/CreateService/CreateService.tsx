@@ -1,31 +1,29 @@
-import {Layout} from "../../../../../UIKit/GeneralLayout/Layout";
-import {StyledH1, StyledWrapper, StyledContent} from "../../../../../UIKit/BasicStyledComponents/basicStyledComponents";
-import {AddButton} from "../../../../../UIKit/Form/AddButton/AddButton";
-import {CardWithRegistration} from "../../../../../UIKit/Cards/CardsWithKeys/CardWithRegistration";
+import {useAppDispatch, useAppSelector} from "../../../../../redux/hooks/hooks";
 import {useEffect, useState} from "react";
-import {useAppSelector, useAppDispatch} from "../../../../../redux/hooks/hooks";
-import {
-    getAffiliates,
-    createAffiliate,
-    deleteAffiliate,
-    updateAffiliate
-} from "../../../../../redux/affiliates/affiliatesThunks";
-import {CreateCardForm} from "../../../../../UIKit/Form/CreateCardForm/CreateCardForm";
-import './createAffiliate.scss'
+import {CardWithRegistration} from "../../../../../UIKit/Cards/CardsWithKeys/CardWithRegistration";
+import {CreateCardButton} from "../../../../../UIKit/Form/CreateCardForm/CreateCardButton/CreateCardButton";
 import {FormikValues} from "formik";
 import articlesAPI from "../../../../../api/articlesAPI";
-import {CreateCardButton} from "../../../../../UIKit/Form/CreateCardForm/CreateCardButton/CreateCardButton";
+import {CreateCardForm} from "../../../../../UIKit/Form/CreateCardForm/CreateCardForm";
+import {Layout} from "../../../../../UIKit/GeneralLayout/Layout";
+import {StyledContent, StyledH1, StyledWrapper} from "../../../../../UIKit/BasicStyledComponents/basicStyledComponents";
+import {AddButton} from "../../../../../UIKit/Form/AddButton/AddButton";
+import {getServices, deleteService, createService, updateService} from "../../../../../redux/services/servicesThunks";
+import './createService.scss'
+type Props = {
 
-export function CreateAffiliate() {
-    const affiliates = useAppSelector(state => state.affiliates.affiliates)
-    const keys = useAppSelector(state => state.authConfigs.configs.keys.affiliate)
+};
+
+export function CreateService(props: Props) {
+    const services = useAppSelector(state => state.services.services)
+    const keys = useAppSelector(state => state.authConfigs.configs.keys.service)
     const [toBePublished, setComponentsToBePublished] = useState<Array<number | {id:number}>>([])
     const dispatch = useAppDispatch()
     useEffect(() => {
-        dispatch(getAffiliates())
+        dispatch(getServices())
     }, [])
     function deletePublishedCard(id:number) {
-        dispatch(deleteAffiliate(id))
+        dispatch(deleteService(id))
     }
     function toEditPublishedCard(id:number) {
         const found = toBePublished.find(el => {
@@ -36,14 +34,14 @@ export function CreateAffiliate() {
         if(found) return;
         setComponentsToBePublished(prev => [...prev, {id:id}])
     }
-    const affiliatesComponents = affiliates.map(el => {
+    const affiliatesComponents = services.map(el => {
         return <div key={el.id} className={'createAffiliate__published__item'}>
             <CardWithRegistration keys={keys.filter(key => el.keyIds.includes(key.id))} link={el.link}
                                   description={el.description} header={el.header} cover={el.cover} score={el.score}/>
             <div className={'createAffiliate__published__itemBtn'}>
-            <CreateCardButton handleEdit={() => toEditPublishedCard(el.id)} handleDelete={() => deletePublishedCard(el.id)} isPublished={true} handleSubmit={() => {}} />
+                <CreateCardButton handleEdit={() => toEditPublishedCard(el.id)} handleDelete={() => deletePublishedCard(el.id)} isPublished={true} handleSubmit={() => {}} />
             </div>
-            </div>
+        </div>
     }).reverse()
 
     function handleAddClick() {
@@ -75,14 +73,15 @@ export function CreateAffiliate() {
             data.cover = coverImg.src
         }
         if(publishedCardId) {
-            await dispatch(updateAffiliate({id:publishedCardId, data:data}))
+            await dispatch(updateService({id:publishedCardId, data:data}))
             handleDeleteEditingCard(index)
         } else {
-            await dispatch(createAffiliate(data))
+            await dispatch(createService(data))
             handleDeleteEditingCard(index)
         }
     }
     function handleDeleteEditingCard(index: number | {id:number}) {
+        console.log(index)
         let updated;
         if(typeof index !== 'number') {
             updated = [...toBePublished].filter(el => {
@@ -99,14 +98,14 @@ export function CreateAffiliate() {
     }
     const createCardComponents = toBePublished.map((el, index) => {
         if (typeof el !== 'number') {
-            const found = affiliates.find(element => element.id === el.id)
-            return <div key={el.id + 'published'} className={'createAffiliate__createCardForm__item'}>
+            const found = services.find(element => element.id === el.id)
+            return <div key={el.id + 'published'} className={'createService__createCardForm__item'}>
                 <CreateCardForm handleDelete={handleDeleteEditingCard} publishCard={publishAffiliate} publishedCardData={found}
                                 publishedCardId={el?.id && el?.id} cardIndex={el}
                                 isPublished={false} keys={keys}/>
             </div>
         } else {
-            return <div key={el} className={'createAffiliate__createCardForm__item'}>
+            return <div key={el} className={'createService__createCardForm__item'}>
                 <CreateCardForm handleDelete={handleDeleteEditingCard} cardIndex={el}
                                 isPublished={false} keys={keys} publishCard={publishAffiliate}/>
             </div>
@@ -115,18 +114,18 @@ export function CreateAffiliate() {
 
     return <Layout>
         <StyledWrapper>
-            <div className={'createAffiliate'}>
-                <div className={'createAffiliate__container'}>
+            <div className={'createService'}>
+                <div className={'createService__container'}>
                     <StyledContent>
-                        <StyledH1>Add Affiliate Networks</StyledH1>
-                        <div className={'createAffiliate__content'}>
-                            <div className={'createAffiliate__toBeCreated__container'}>
+                        <StyledH1>Add Service</StyledH1>
+                        <div className={'createService__content'}>
+                            <div className={'createService__toBeCreated__container'}>
                                 {createCardComponents}
                             </div>
-                            <div className={'createAffiliate__addBtn'} onClick={handleAddClick}>
-                                <AddButton targetedContent={'Affiliate Network'} formikIsValid={true}/>
+                            <div className={'createService__addBtn'} onClick={handleAddClick}>
+                                <AddButton targetedContent={'Service Network'} formikIsValid={true}/>
                             </div>
-                            <div className={'createAffiliate__published__container'}>
+                            <div className={'createService__published__container'}>
                                 {affiliatesComponents}
                             </div>
                         </div>

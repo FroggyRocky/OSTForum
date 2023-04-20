@@ -3,30 +3,24 @@ const Sequelize = require('sequelize')
 
 class Articles {
     async getArticles(req, res) {
-        let articles;
-        if(req.query.limit) {
-            articles = await db.Article.findAll({
+        try {
+        const count = await db.Article.count()
+        const pageSize = 8;
+        const pageNumber = req.query.page || 1;
+        const offset = (pageNumber - 1) * pageSize;
+        const limit = pageSize;
+        console.log(limit)
+          const articles = await db.Article.findAll({
                 attributes: {exclude: ['updatedAt', 'userId', 'text', 'categoryId']},
-                include: [
-                    {
-                        model: db.Comments
-                    },
-                ],
                 order: [['createdAt', 'desc']],
-                limit:req.query.limit
+                limit:limit,
+                offset:offset,
+              where:{}
             })
-        } else {
-            articles = await db.Article.findAll({
-                attributes: {exclude: ['updatedAt', 'userId', 'text', 'categoryId']},
-                include: [
-                    {
-                        model: db.Comments
-                    },
-                ],
-                order: [['createdAt', 'desc']],
-            })
+        res.send({articles:articles, total:count}).status(200)
+            } catch(e) {
+            res.sendStatus(500)
         }
-        res.send(articles)
     }
 
     async getArticle(req, res) {

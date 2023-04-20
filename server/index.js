@@ -44,7 +44,8 @@ app.use('/api', vacanciesRouter)
 app.use('/api', casesRouter)
 app.use('/api', networkingRouter)
 app.use('/api', servicesRouter)
-   // db.sync({alter:true});
+
+  // db.sync({alter:true});
 // db.sync({force:true})
 
 const PORT = 3001

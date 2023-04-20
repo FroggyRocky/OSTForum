@@ -69,13 +69,13 @@ const Vacancies = db.define('vacancies', {
     header:DataTypes.STRING(25),
     description:DataTypes.STRING(210),
     cover:DataTypes.STRING,
-    link:DataTypes.STRING,
-    price:DataTypes.INTEGER,
+    company:DataTypes.STRING,
     keyIds:{
         type:DataTypes.ARRAY(DataTypes.INTEGER),
-    }
+    },
+    data:DataTypes.JSON
 })
-const VacancyKeys = db.define('vacanciesKeys', {
+const VacancyKeys = db.define('vacancyKeys', {
         name:DataTypes.STRING,
     },
     {

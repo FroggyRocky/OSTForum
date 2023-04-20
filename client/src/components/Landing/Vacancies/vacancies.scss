@@ -1,16 +1,12 @@
 .vacancies {
-  &__chosenFilter {
-    margin: 90px 0 60px 0;
-    text-align: center;
-    font-family: var(--gotham);
-    font-style: normal;
-    font-weight: 400;
-    font-size: 35px;
-    line-height: 33px;
-    text-align: center;
-    color: #525252;
+  padding: 40px 0;
+  &__cards {
+    margin-top: 30px;
   }
   &__card {
-    margin-bottom: 50px;
+    margin-bottom: 30px;
+    &:last-child {
+      margin-bottom: 0;
+    }
   }
 }

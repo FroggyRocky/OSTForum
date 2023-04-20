@@ -15,6 +15,8 @@ import {Vacancies} from "./components/Landing/Vacancies/Vacancies";
 import {Services} from "./components/Landing/Services/Services";
 import {CreateAffiliate} from "./components/AccountDashboard/Create/CreateContent/CreateAffiliate/CreateAffiliate";
 import {CreateArticle} from "./components/AccountDashboard/Create/CreateArticle/CreateArticle";
+import {CreateVacancy} from "./components/AccountDashboard/Create/CreateContent/CreateVacancy/CreateVacancy";
+import {CreateService} from "./components/AccountDashboard/Create/CreateContent/CreateService/CreateService";
 
 function App() {
 
@@ -42,6 +44,8 @@ function App() {
                 <Route path={`/dashboard/*`} element={<AccountDashboard/>}/>
                 <Route path={`/create/affiliate`} element={<CreateAffiliate/>}/>
                 <Route path={`/create/article`} element={<CreateArticle/>}/>
+                <Route path={`/create/vacancy`} element={<CreateVacancy/>}/>
+                <Route path={`/create/service`} element={<CreateService/>}/>
             </Routes>
         </div>
     );

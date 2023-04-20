@@ -24,6 +24,14 @@ const servicesAPI = {
         const res = await withAuthInstance.post('/create-service', service)
         console.log(res)
         return res
-    }
+    },
+    async updateService(data:{id:number, data:ICreatedService}) {
+        const res = await withAuthInstance.post('/update-service', data)
+        return res
+    },
+     async deleteService(id:number) {
+        const res = await withAuthInstance.post('/delete-service', {id:id})
+         return res
+     }
 }
 export {servicesAPI}

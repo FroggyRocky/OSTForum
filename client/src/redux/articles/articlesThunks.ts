@@ -3,9 +3,10 @@ import {articleSlice, setArticleCreatedState, setArticleCreatingState, setCommon
 import articlesAPI from "../../api/articlesAPI";
 import {ICreatedArticle, IUpdateArticle} from "./articleTypes";
 
-export const fetchArticles = () => async (dispatch: AppDispatch) => {
-    const res = await articlesAPI.getArticles()
-    dispatch(articleSlice.actions.setArticles(res.data))
+export const fetchArticles = (page = 1) => async (dispatch: AppDispatch) => {
+    const res = await articlesAPI.getArticles(page)
+    dispatch(articleSlice.actions.setArticles(res.data.articles))
+    dispatch(articleSlice.actions.setTotalCountOfArticles(res.data.total))
 }
 
 export const fetchCurrentArticle = (id: number) => async (dispatch: AppDispatch) => {

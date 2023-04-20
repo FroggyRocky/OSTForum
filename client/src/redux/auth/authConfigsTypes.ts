@@ -2,7 +2,16 @@ export interface IUserLogin {
     login:string,
     password:string
 }
+export enum CategoryEnum {
+    instagram = 1,
+    facebook,
+    crypto,
+    affiliate,
+    cases,
+    ecommerce,
+    tikTok
 
+}
 export interface ICategory {
     id:number,
     name:string

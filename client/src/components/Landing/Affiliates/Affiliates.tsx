@@ -6,6 +6,7 @@ import {getAffiliates} from "../../../redux/affiliates/affiliatesThunks";
 import {useAppDispatch} from "../../../redux/hooks/hooks";
 import {PageWithCardsFilterLayout} from "../../../UIKit/PageWithCardsFilterLayout/PageWithCardsFilterLayout";
 
+const CARD_PER_PAGE = 5
 
 type Props = {};
 

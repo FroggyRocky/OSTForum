@@ -6,7 +6,6 @@ header:string
     description:string
     cover:string
     link:string
-    price:number
     keyIds:number[]
     createdAt:string,
     score:number | null
@@ -18,5 +17,5 @@ export interface ICreatedAffiliate {
     cover:string
     link:string
     keyIds:number[] | []
-    score:number | null
+    score:number | 0
 }

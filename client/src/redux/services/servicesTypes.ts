@@ -14,4 +14,5 @@ export interface ICreatedService {
     cover:string
     link:string
     keyIds:number[]
+    score:number
 }

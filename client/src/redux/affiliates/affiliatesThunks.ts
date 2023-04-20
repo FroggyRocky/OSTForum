@@ -11,8 +11,18 @@ export const getAffiliates = () => async (dispatch: AppDispatch) => {
 export const createAffiliate = (createdAffiliate:ICreatedAffiliate) =>  async (dispatch: AppDispatch) => {
     const res = await affiliatesAPI.createAffiliates(createdAffiliate)
     if(res.status === 200) {
-        dispatch(setArticleCreatedState(true))
-        dispatch(setArticleCreatingState(false))
+        dispatch(getAffiliates())
     }
-    dispatch(getAffiliates())
+}
+export const deleteAffiliate = (id:number) =>  async (dispatch: AppDispatch) => {
+    const res = await affiliatesAPI.deleteAffiliate(id)
+    if(res.status === 200) {
+        dispatch(getAffiliates())
+    }
+}
+export const updateAffiliate = (data:{id:number, data:ICreatedAffiliate}) =>  async (dispatch: AppDispatch) => {
+    const res = await affiliatesAPI.updatePublishedAffiliate(data)
+    if(res.status === 200) {
+        dispatch(getAffiliates())
+    }
 }

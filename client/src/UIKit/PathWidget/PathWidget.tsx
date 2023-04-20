@@ -6,6 +6,7 @@ const Path = styled.div`
   align-items: center;
   color: #525252;
   font-family: var(--gotham);
+  text-transform: capitalize;
   font-style: normal;
   font-weight: 400;
   font-size: 16px;
@@ -47,10 +48,10 @@ export const PathWidget = (props: Props) => {
                 }
             })
         } else {
-            return <>
+            return <div className={'pathWidget'}>
                 <Link to='/'>Home</Link>
                 <PathArrow>{`>`}</PathArrow>
-            </>
+            </div>
         }
     }
 

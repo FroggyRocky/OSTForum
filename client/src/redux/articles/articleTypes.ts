@@ -1,6 +1,8 @@
 import {IUser} from "../user/userType";
 import {ContentBlock} from "draft-js";
 
+
+
 export interface IComments {
     id: number,
     text: string,

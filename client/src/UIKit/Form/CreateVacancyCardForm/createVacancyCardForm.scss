@@ -1,0 +1,62 @@
+.createVacancyCard {
+  &__block {
+    display: flex;
+  }
+  &__form {
+    background: #FFFFFF;
+    box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.15);
+    border-radius: 15px;
+    width: 100%;
+  }
+  &__cover {
+    width: 274px;
+    height: 274px;
+  }
+  &__mainData {
+    display: flex;
+    &__form {
+      padding: 30px;
+      height: 100%;
+      width: 100%;
+    }
+  }
+  &__input {
+    margin-bottom: 15px;
+  }
+  &__additionalData {
+    padding: 30px;
+  }
+  &__meta {
+
+  }
+
+  &__addKeys {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px 20px;
+    align-items: center;
+    flex-grow: 0;
+    width: 100%;
+    &__key {
+
+    }
+
+    &__btn {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 29px;
+      height: 23px;
+      background: #FFFFFF;
+      box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
+      border-radius: 5px;
+      cursor: pointer;
+    }
+  }
+  &__addBtn {
+height: 240px;
+    width: 240px;
+    margin-left: 30px;
+    flex-shrink: 0;
+  }
+}

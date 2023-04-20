@@ -23,6 +23,14 @@ const affiliatesAPI = {
     async createAffiliates(affiliate:ICreatedAffiliate) {
         const res = await withAuthInstance.post('/create-affiliate', affiliate)
         return res
+    },
+    async deleteAffiliate(id:number) {
+        const res = await withAuthInstance.post('/delete-affiliate', {id:id})
+        return res
+    },
+    async updatePublishedAffiliate(data:{id:number, data:ICreatedAffiliate}) {
+        const res = await  withAuthInstance.post('/update-affiliate', {...data})
+        return res
     }
 }
 export {affiliatesAPI}

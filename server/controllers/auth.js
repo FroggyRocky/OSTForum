@@ -115,7 +115,7 @@ class Auth {
                 affiliate:affiliateKeys,
                 service:serviceKeys
             }
-                res.status(200).send({categories: categories, keys: keys})
+            res.status(200).send({categories: categories, keys: keys})
         } catch (e) {
             res.sendStatus(500)
             console.log(e)

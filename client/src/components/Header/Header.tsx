@@ -40,14 +40,8 @@ export function Header(props: Props) {
                 <Link state={pathData} to={'/affiliates'} className={'header__navigationLinks__link'}>
                     Affiliates
                 </Link>
-                <Link state={pathData} to={'/Networking'} className={'header__navigationLinks__link'}>
-                    Networking
-                </Link>
                 <Link state={pathData} to={'/services'} className={'header__navigationLinks__link'}>
                     Services
-                </Link>
-                <Link state={pathData} to={'/cases'} className={'header__navigationLinks__link'}>
-                    Cases
                 </Link>
                 <Link state={pathData} to={'/vacancies'} className={'header__navigationLinks__link'}>
                     Vacancies

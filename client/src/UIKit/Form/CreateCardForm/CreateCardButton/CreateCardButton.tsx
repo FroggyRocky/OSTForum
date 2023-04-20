@@ -5,16 +5,18 @@ import './createCardButton.scss'
 type Props = {
 isPublished:boolean;
 handleSubmit:() => void
+    handleDelete:() => void
+    handleEdit?:() => void
 };
 
 export function CreateCardButton(props: Props) {
-    return <div className={'createCardButton'} onClick={props.handleSubmit}>
-        <div className={'createCardButton__addBtn'}>
-            <BsFillCheckCircleFill className={'createCardButton__checkIcon'} />
+    return <div className={'createCardButton'}>
+        <div className={'createCardButton__addBtn'} onClick={props.handleSubmit}>
+            <BsFillCheckCircleFill className={`createCardButton__checkIcon ${props.isPublished && 'createCardButton__checkIcon_published'}`} />
         </div>
         <div className={'createCardButton__editorPanel'}>
-            <MdModeEditOutline className={'createCardButton__editBtn'} />
-            <MdDelete className={'createCardButton__deleteBtn'}/>
+            {props.isPublished &&  <MdModeEditOutline className={'createCardButton__editBtn'} onClick={props.handleEdit} />}
+            <MdDelete className={'createCardButton__deleteBtn'} onClick={props.handleDelete}/>
         </div>
     </div>
 };

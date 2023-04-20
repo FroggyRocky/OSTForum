@@ -6,7 +6,9 @@ import {getVacancies} from "../../../redux/vacancies/vacanciesThunks";
 import {useAppDispatch} from "../../../redux/hooks/hooks";
 import {KeysFilter} from "../../../UIKit/KeysFilter/KeysFilter";
 import {PageWithCardsFilterLayout} from "../../../UIKit/PageWithCardsFilterLayout/PageWithCardsFilterLayout";
-import {CardWithRegistration} from "../../../UIKit/Cards/CardsWithKeys/CardWithRegistration";
+import {VacancyCard} from "../../../UIKit/Cards/CardsWithKeys/VacancyCard";
+import {Layout} from "../../../UIKit/GeneralLayout/Layout";
+import {StyledContent, StyledWrapper, StyledH1} from "../../../UIKit/BasicStyledComponents/basicStyledComponents";
 
 type Props = {};
 
@@ -14,7 +16,7 @@ export function Vacancies(props: Props) {
     const dispatch = useAppDispatch()
     const vacancies = useAppSelector(state => state.vacancies.vacancies)
     const keys = useAppSelector(state => state.authConfigs.configs.keys.vacancy)
-    const [currentFilter, setCurrentFilter] = useState<{id:number, name:string} | undefined>(undefined)
+    const [currentFilter, setCurrentFilter] = useState<{ id: number, name: string } | undefined>(undefined)
     const [currentFilterName, setCurrentFilterName] = useState('')
 
     const vacanciesComponents = vacancies.filter(el => {
@@ -23,18 +25,26 @@ export function Vacancies(props: Props) {
             return el.keyIds.includes(currentFilter.id)
         }
     }).map(el => {
-        return <div className={'services__card'}>
-            <CardWithRegistration key={el.id}
-                                  keys={keys.filter(key => el.keyIds.includes(key.id))} cover={el.cover}
-                                  header={el.header} link={el.link} description={el.description}/>
+        return <div className={'vacancies__card'}>
+            <VacancyCard key={el.id} createdAt={el.createdAt} data={el.data} company={el.company}
+                         keys={keys.filter(key => el.keyIds.includes(key.id))} cover={el.cover}
+                         header={el.header} description={el.description}/>
         </div>
     })
 
     useEffect(() => {
         dispatch(getVacancies())
     }, [])
-    return <div className={'vacancies'}>
-            <p className={'vacancies__chosenFilter'}>{currentFilterName}</p>
-            {vacanciesComponents}
-        </div>
+    return <Layout>
+        <StyledWrapper>
+            <StyledContent>
+                <div className={'vacancies'}>
+                    <StyledH1>Job Opportunity</StyledH1>
+                    <div className={'vacancies__cards'}>
+                    {vacanciesComponents}
+                    </div>
+                </div>
+            </StyledContent>
+        </StyledWrapper>
+    </Layout>
 };

@@ -1,8 +1,8 @@
 .createCardContainer {
   display: flex;
-  align-items: center;
   justify-content: center;
 }
+
 .createCardForm {
   width: 100%;
   background: #FFFFFF;
@@ -15,34 +15,45 @@
     height: 100%;
     width: 100%;
   }
+
   &__header {
     display: flex;
     justify-content: space-between;
     align-items: center;
+
     &__input {
       width: 100%;
     }
   }
+
   &__cover {
     cursor: pointer;
   }
+
   &__score {
     margin-left: 30px;
   }
+
   &__meta {
     display: flex;
-    align-items: center;
-    justify-content: space-between;
+    align-items: start;
     margin-top: 20px;
+    &__link {
+      margin-left: auto;
+    }
   }
+
   &__addKeys {
     display: flex;
-    margin-right: 20px;
-    align-items: center;
+    flex-wrap: wrap;
+    width: 390px;
+    gap: 10px;
     &__key {
-      width: 190px;
+      flex-shrink: 0;
     }
+
     &__btn {
+      align-self: start;
       display: flex;
       justify-content: center;
       align-items: center;
@@ -52,7 +63,14 @@
       box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
       border-radius: 5px;
       cursor: pointer;
+      flex-shrink: 0;
+      margin: 5px 0 0 0px;
     }
   }
 
+  &__addBtn {
+    width: 240px;
+    margin-left: 30px;
+    flex-shrink: 0;
+  }
 }

@@ -5,6 +5,8 @@ import {IArticle, IArticlesPreview, IComments, ICreatedArticle, IEditingArticle}
 
 const initialState = {
     articles: [] as Array<IArticlesPreview>,
+    totalCountOfArticles:null as number | null,
+    currentArticleFilter:'' as string,
     editingArticle:{} as IEditingArticle,
     currentArticle: null as IArticle | null,
     createdArticle: {},
@@ -20,6 +22,9 @@ export const articleSlice = createSlice({
     reducers: {
         setArticles(state, action: PayloadAction<IArticle[]>) {
             state.articles = action.payload
+        },
+        setTotalCountOfArticles(state, action: PayloadAction<number>) {
+            state.totalCountOfArticles = action.payload
         },
         setCurrentArticle(state, action: PayloadAction<IArticle | null>) {
             state.currentArticle = action.payload

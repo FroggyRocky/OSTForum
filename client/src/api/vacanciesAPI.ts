@@ -17,14 +17,21 @@ const withAuthInstance = axios.create({
     }
 })
 const vacanciesAPI = {
-    async getAffiliates() {
+    async getVacancies() {
         const vacancies = await instance.get<IVacancy[]>('/get-vacancies').then(res => res.data)
         return vacancies
     },
-    async createVacancy(vacancy:ICreatedService) {
+    async createVacancy(vacancy:ICreatedVacancy) {
         const res = await withAuthInstance.post('/create-vacancy', vacancy)
-        console.log(res)
         return res
-    }
+    },
+    async deleteVacancy(id:number) {
+        const res = await withAuthInstance.post('/delete-vacancy', {id:id})
+        return res
+    },
+    async updateVacancy(data:{id:number, data:ICreatedVacancy}) {
+        const res = await withAuthInstance.post('/update-vacancy', data)
+        return res
+    },
 }
 export {vacanciesAPI}

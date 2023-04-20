@@ -16,8 +16,8 @@ const withAuthInstance = axios.create({
 })
 
 const articlesAPI = {
-    async getArticles() {
-        return await instance.get(`/get-articles`)
+    async getArticles(page:number) {
+        return await instance.get(`/get-articles?page=${page}`)
     },
     async getArticle(id:number) {
         return await instance.get(`/get-article/${id}`)

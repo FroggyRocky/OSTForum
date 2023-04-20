@@ -4,6 +4,7 @@ type Props = {
     inputValue:string
     MAX_CHARACTERS:number
     name:string
+    placeholder?:string
 };
 
 export function CreateCardInput(props: Props) {
@@ -15,6 +16,7 @@ export function CreateCardInput(props: Props) {
             className="createCardInput__input"
             value={props.inputValue}
             name={props.name}
-            onChange={props.handleInputChange} />
+            onChange={props.handleInputChange}  placeholder={props.placeholder} />
+
     </div>
 };

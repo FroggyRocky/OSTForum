@@ -2,21 +2,24 @@ import {StyledContent} from "../../../UIKit/BasicStyledComponents/basicStyledCom
 import {Card} from './Card'
 import {Pagination} from "../../../UIKit/Pagination/Pagination";
 import {TelegramBtn} from "../../../UIKit/TelegramBtn/TelegramBtn";
-import {useAppSelector} from "../../../redux/hooks/hooks";
-import {useCallback, useState} from "react";
+import {useAppDispatch, useAppSelector} from "../../../redux/hooks/hooks";
+import {useState} from "react";
 import {IArticlesPreview} from "../../../redux/articles/articleTypes";
 import defaultCardCover from '../../../assets/defaultCardCover.png'
 import {ArticlesContainer, CategoriesContainer, Category} from './articles.styles'
 import {findCategoryObjById} from "../../../services/categoryFlags";
-
+import {fetchArticles} from "../../../redux/articles/articlesThunks";
 
 type Props = {
     articlesPageRef: any
 }
-const articlesPerPageLimit = 8
+
 
 export const Articles = (props: Props) => {
+    const dispatch = useAppDispatch()
     const articlesData = useAppSelector(state => state.articles.articles)
+    const totalNumOfArticles = useAppSelector(state => state.articles.totalCountOfArticles)
+    const articlesPerPageLimit = articlesData.length
     const categories = useAppSelector(state => state.authConfigs.configs.categories)
     const [currentPage, setCurrentPage] = useState(0)
     const [selectedCategoryIds, setSelectedCategoryIds] = useState<Array<number>>([])
@@ -36,21 +39,6 @@ export const Articles = (props: Props) => {
     function isSelected(properIds: number[], selectedIds: number[]) {
         return selectedIds.some(id => properIds.indexOf(id) >= 0)
     }
-    const articles = useCallback(() => {
-        if (selectedCategoryIds.length !== 0) {
-            const filteredArticles = articlesData.filter(article => {
-                if (!article.categoryIds || article.categoryIds.length === 0) return
-                if (selectedCategoryIds.some(id => article.categoryIds!.indexOf(id) >= 0)) {
-                    return article
-                } else {
-                    return;
-                }
-            });
-            return createArticleComponents(filteredArticles)
-        } else {
-            return createArticleComponents(articlesData)
-        }
-    }, [currentPage, selectedCategoryIds])
 
     const categoryComponents = categories.map(el => {
         if (el.name !== 'facebook' && el.name !== 'instagram') {
@@ -97,6 +85,7 @@ export const Articles = (props: Props) => {
     }
     function changePage(page:number) {
         setCurrentPage(page);
+        dispatch()
         props.articlesPageRef.current.scrollIntoView({ behavior: "smooth", block: "start" })
     }
     return (
@@ -115,7 +104,7 @@ export const Articles = (props: Props) => {
                 <TelegramBtn/>
                 {articlesData.length !== 0 &&
                     <Pagination changePage={changePage} currentPage={currentPage} limit={articlesPerPageLimit}
-                                totalItems={articles().length || 0}
+                                totalItems={totalNumOfArticles || 0}
                     />}
             </StyledContent>
         </div>
