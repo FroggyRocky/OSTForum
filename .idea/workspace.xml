@@ -5,63 +5,68 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="c555e0dc-7b04-4b59-a972-97e78175a9d1" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/client/src/UIKit/Form/CreateVacancyCardForm/CreateVacancyCardForm.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/src/UIKit/Form/CreateVacancyCardForm/createVacancyCardForm.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/src/components/AccountDashboard/Create/CreateContent/CreateService/CreateService.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/src/components/AccountDashboard/Create/CreateContent/CreateService/createService.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/src/components/AccountDashboard/Create/CreateContent/CreateVacancy/CreateVacancy.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/src/components/AccountDashboard/Create/CreateContent/CreateVacancy/createVacancy.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/App.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/UIKit/Form/SearchInput/searchInput.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/UIKit/Loader/loader.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/UIKit/PageLoader/PageLoader.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/UIKit/PageLoader/pageLoader.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/UIKit/assets/defaultCardCover.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/api/searchAPI.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/components/Header/SearchWidget/SearchWidget.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/components/Landing/SearchPage/SearchPage.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/components/Landing/SearchPage/searchPage.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/hocs/WithError.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/controllers/search.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/routers/search.router.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TapLink/dist/assets/index-f3da814a.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/TapLink/dist/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/TapLink/dist/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TapLink/src/Components/User/User.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/TapLink/src/Components/User/User.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/App.css" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/UIKit/Form/SearchInput/SearchInput.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/App.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/UIKit/BackgroundLoader/BackgroundLoader.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/UIKit/BackgroundLoader/BackgroundLoader.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/UIKit/BasicStyledComponents/basicStyledComponents.ts" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/UIKit/BasicStyledComponents/basicStyledComponents.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/UIKit/Cards/CardsWithKeys/CardWithLinkAndPrice.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/UIKit/Cards/CardsWithKeys/CardWithLinkAndPrice.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/UIKit/Cards/CardsWithKeys/CardWithRegistration.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/UIKit/Cards/CardsWithKeys/CardWithRegistration.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/UIKit/Cards/CardsWithKeys/CardWithStatistics.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/UIKit/Cards/CardsWithKeys/CardWithStatistics.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/src/UIKit/Cards/CardsWithKeys/VacancyCard.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/UIKit/Cards/CardsWithKeys/VacancyCard.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/UIKit/Cards/CardsWithKeys/cardWithRegistration.scss" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/UIKit/Cards/CardsWithKeys/cardWithRegistration.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/UIKit/Cards/CardsWithKeys/vacancyCard.scss" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/UIKit/Cards/CardsWithKeys/vacancyCard.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/UIKit/Form/CreateCardForm/CreateCardButton/CreateCardButton.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/UIKit/Form/CreateCardForm/CreateCardButton/CreateCardButton.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/UIKit/Form/CreateCardForm/CreateCardButton/createCardButton.scss" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/UIKit/Form/CreateCardForm/CreateCardButton/createCardButton.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/UIKit/Form/CreateCardForm/CreateCardForm.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/UIKit/Form/CreateCardForm/CreateCardForm.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/UIKit/Form/CreateCardForm/CreateCardInput/CreateCardInput.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/UIKit/Form/CreateCardForm/CreateCardInput/CreateCardInput.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/UIKit/Form/CreateCardForm/CreateCardInput/createCardInput.scss" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/UIKit/Form/CreateCardForm/CreateCardInput/createCardInput.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/UIKit/Form/CreateCardForm/CreateCardTextArea/CreateCardTextArea.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/UIKit/Form/CreateCardForm/CreateCardTextArea/CreateCardTextArea.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/UIKit/Form/CreateCardForm/KeysDropDown/keysDropDown.scss" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/UIKit/Form/CreateCardForm/KeysDropDown/keysDropDown.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/UIKit/Form/CreateCardForm/createCardForm.scss" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/UIKit/Form/CreateCardForm/createCardForm.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/UIKit/PathWidget/PathWidget.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/UIKit/PathWidget/PathWidget.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/api/affiliatesAPI.ts" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/api/affiliatesAPI.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/UIKit/ImgWithLoader/ImgWithLoader.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/UIKit/ImgWithLoader/ImgWithLoader.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/UIKit/KeysFilter/KeysFilter.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/UIKit/KeysFilter/KeysFilter.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/UIKit/Loader/Loader.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/UIKit/Loader/Loader.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/UIKit/Loader/loader.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/UIKit/Pagination/Pagination.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/UIKit/Pagination/Pagination.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/UIKit/SearchWidget/SearchWidget.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/UIKit/SearchWidget/searchWidget.scss" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/Header/SearchWidget/searchWidget.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/UIKit/TelegramBtn/TelegramBtn.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/UIKit/TelegramBtn/TelegramBtn.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/src/api/articlesAPI.ts" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/api/articlesAPI.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/api/servicesAPI.ts" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/api/servicesAPI.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/api/vacanciesAPI.ts" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/api/vacanciesAPI.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/components/AccountDashboard/AccountDashboard.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/AccountDashboard/AccountDashboard.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/components/AccountDashboard/Create/CreateArticle/ArticleEditor/EditorPanel.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/AccountDashboard/Create/CreateArticle/ArticleEditor/EditorPanel.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/components/AccountDashboard/Create/CreateArticle/CreateArticle.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/AccountDashboard/Create/CreateArticle/CreateArticle.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/src/components/AccountDashboard/Create/CreateContent/CreateAffiliate/CreateAffiliate.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/AccountDashboard/Create/CreateContent/CreateAffiliate/CreateAffiliate.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/components/AccountDashboard/Create/CreateContent/CreateAffiliate/createAffiliate.scss" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/AccountDashboard/Create/CreateContent/CreateAffiliate/createAffiliate.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/components/AccountDashboard/Create/CreateContent/CreateService/CreateService.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/AccountDashboard/Create/CreateContent/CreateService/CreateService.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/components/AccountDashboard/Create/CreateContent/CreateVacancy/CreateVacancy.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/AccountDashboard/Create/CreateContent/CreateVacancy/CreateVacancy.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/components/AccountDashboard/TapLinkEditor/ArticleLinkCard/ArticleLinkCard.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/AccountDashboard/TapLinkEditor/ArticleLinkCard/ArticleLinkCard.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/components/AccountDashboard/TapLinkEditor/TapLinkEditor.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/AccountDashboard/TapLinkEditor/TapLinkEditor.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/components/Article/Article.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/Article/Article.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/src/components/Header/Header.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/Header/Header.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/components/Header/header.scss" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/Header/header.scss" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/src/components/Landing/Affiliates/Affiliates.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/Landing/Affiliates/Affiliates.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/src/components/Landing/Articles/Articles.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/Landing/Articles/Articles.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/components/Landing/Articles/Card.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/Landing/Articles/Card.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/components/Landing/Articles/articles.styles.ts" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/Landing/Articles/articles.styles.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/components/Landing/Cases/Cases.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/Landing/Cases/Cases.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/components/Landing/Main/Carousel.styles.ts" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/Landing/Main/Carousel.styles.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/components/Landing/Main/Carousel.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/Landing/Main/Carousel.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/components/Landing/Networking/Networking.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/Landing/Networking/Networking.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/src/components/Landing/Services/Services.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/Landing/Services/Services.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/components/Landing/Services/services.scss" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/Landing/Services/services.scss" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/src/components/Landing/Vacancies/Vacancies.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/Landing/Vacancies/Vacancies.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/components/Landing/Vacancies/vacancies.scss" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/Landing/Vacancies/vacancies.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/redux/affiliates/affiliatesThunks.ts" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/redux/affiliates/affiliatesThunks.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/redux/affiliates/affiliatesTypes.ts" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/redux/affiliates/affiliatesTypes.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/redux/articles/articleTypes.ts" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/redux/articles/articleTypes.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/components/Login/Login.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/Login/Login.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/src/redux/articles/articlesSlice.ts" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/redux/articles/articlesSlice.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/src/redux/articles/articlesThunks.ts" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/redux/articles/articlesThunks.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/redux/auth/authConfigsTypes.ts" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/redux/auth/authConfigsTypes.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/redux/services/servicesThunks.ts" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/redux/services/servicesThunks.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/redux/services/servicesTypes.ts" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/redux/services/servicesTypes.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/redux/vacancies/vacanciesThunks.ts" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/redux/vacancies/vacanciesThunks.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/redux/vacancies/vacanciesTypes.ts" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/redux/vacancies/vacanciesTypes.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/controllers/affiliates.js" beforeDir="false" afterPath="$PROJECT_DIR$/server/controllers/affiliates.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/redux/auth/authConfigsSlice.ts" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/redux/auth/authConfigsSlice.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/redux/auth/authConfigsThunks.ts" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/redux/auth/authConfigsThunks.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/redux/hooks/hooks.ts" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/redux/storeHooks/storeHooks.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/services/useDebounce.ts" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/services/useDebounce.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/services/useTimeout.ts" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/services/useTimeout.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/server/controllers/articles.js" beforeDir="false" afterPath="$PROJECT_DIR$/server/controllers/articles.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/controllers/auth.js" beforeDir="false" afterPath="$PROJECT_DIR$/server/controllers/auth.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/controllers/services.js" beforeDir="false" afterPath="$PROJECT_DIR$/server/controllers/services.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/controllers/vacancies.js" beforeDir="false" afterPath="$PROJECT_DIR$/server/controllers/vacancies.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/dbmodel.js" beforeDir="false" afterPath="$PROJECT_DIR$/server/dbmodel.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/server/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/server/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/routers/affiliates.router.js" beforeDir="false" afterPath="$PROJECT_DIR$/server/routers/affiliates.router.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/routers/services.router.js" beforeDir="false" afterPath="$PROJECT_DIR$/server/routers/services.router.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/routers/vacancies.router.js" beforeDir="false" afterPath="$PROJECT_DIR$/server/routers/vacancies.router.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/routers/articles.router.js" beforeDir="false" afterPath="$PROJECT_DIR$/server/routers/articles.router.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -95,7 +100,7 @@
     &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/Danila/Desktop/work/pp/OSTForum/client/src/UIKit&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/Danila/Desktop/work/pp/OSTForum/client/src/UIKit/assets&quot;,
     &quot;list.type.of.created.stylesheet&quot;: &quot;SCSS&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
@@ -109,19 +114,29 @@
 }</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\Danila\Desktop\work\pp\OSTForum\client\src\UIKit\assets" />
       <recent name="C:\Users\Danila\Desktop\work\pp\OSTForum\client\src\UIKit" />
       <recent name="C:\Users\Danila\Desktop\work\pp\OSTForum\client\src\components\AccountDashboard\TapLinkEditor" />
       <recent name="C:\Users\Danila\Desktop\work\pp\OSTForum\client" />
       <recent name="C:\Users\Danila\Desktop\work\pp\OSTForum\server" />
-      <recent name="C:\Users\Danila\Desktop\work\pp\OSTForum\TapLink" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\Danila\Desktop\work\pp\OSTForum\client\src\components\Header" />
       <recent name="C:\Users\Danila\Desktop\work\pp\OSTForum\client\src\components\AccountDashboard\Create\CreateContent" />
       <recent name="C:\Users\Danila\Desktop\work\pp\OSTForum\client\src\components\AccountDashboard\Create\CreateArticle" />
       <recent name="C:\Users\Danila\Desktop\work\pp\OSTForum\client\src\components\AccountDashboard\Create" />
       <recent name="C:\Users\Danila\Desktop\work\pp\OSTForum\client\src\components\AccountDashboard\CreateArticle" />
-      <recent name="C:\Users\Danila\Desktop\work\pp\OSTForum\client\src\UIKit\GeneralLayout" />
     </key>
+  </component>
+  <component name="RunManager">
+    <configuration name="elasticSearchClient.js" type="NodeJSConfigurationType" temporary="true" nameIsGenerated="true" path-to-js-file="$PROJECT_DIR$/server/elasticSearchClient.js" working-dir="$PROJECT_DIR$/server">
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Node.js.elasticSearchClient.js" />
+      </list>
+    </recent_temporary>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
@@ -175,6 +190,13 @@
       <workItem from="1681754438111" duration="2508000" />
       <workItem from="1681805194565" duration="1210000" />
       <workItem from="1681834520169" duration="12916000" />
+      <workItem from="1681980173145" duration="8478000" />
+      <workItem from="1681999899332" duration="10555000" />
+      <workItem from="1682174675270" duration="12627000" />
+      <workItem from="1682247921082" duration="3014000" />
+      <workItem from="1682332005397" duration="14701000" />
+      <workItem from="1682372450399" duration="2489000" />
+      <workItem from="1682406920397" duration="6081000" />
     </task>
     <servers />
   </component>

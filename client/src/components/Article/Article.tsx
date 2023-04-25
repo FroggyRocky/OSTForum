@@ -7,10 +7,10 @@ import {ArticleText} from "./ArticleText";
 import {ArticleComments} from "./ArticleComments";
 import {TelegramBtn} from "../../UIKit/TelegramBtn/TelegramBtn";
 import {useEffect} from "react";
-import {useAppDispatch, useAppSelector} from "../../redux/hooks/hooks";
+import {useAppDispatch, useAppSelector} from "../../redux/storeHooks/storeHooks";
 import {fetchCurrentArticle} from "../../redux/articles/articlesThunks";
 import {IArticle, IEditingArticle} from "../../redux/articles/articleTypes";
-import {Loader} from "../../UIKit/Loader/Loader";
+import {PageLoader} from "../../UIKit/PageLoader/PageLoader";
 import {calcDate} from "../../services/calcDate";
 import {firstPageMediaSizes} from "../../UIKit/mediaSizes.styled";
 import {mediaSizes} from "../../UIKit/mediaSizes.styled";
@@ -125,7 +125,7 @@ export const Article = () => {
         navigate(`/dashboard/articles/create?id=${currentArticle.id}`)
     }
 
-    if (!currentArticle) return <Loader/>
+    if (!currentArticle) return <PageLoader/>
     return <Layout>
         <ArticleContainer>
             <StyledContent>

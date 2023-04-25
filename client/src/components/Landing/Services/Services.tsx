@@ -1,8 +1,8 @@
 import './services.scss'
 import {CardWithRegistration} from "../../../UIKit/Cards/CardsWithKeys/CardWithRegistration";
-import {useAppSelector} from "../../../redux/hooks/hooks";
+import {useAppSelector} from "../../../redux/storeHooks/storeHooks";
 import {useEffect, useState} from "react";
-import {useAppDispatch} from "../../../redux/hooks/hooks";
+import {useAppDispatch} from "../../../redux/storeHooks/storeHooks";
 import {PageWithCardsFilterLayout} from "../../../UIKit/PageWithCardsFilterLayout/PageWithCardsFilterLayout";
 import {getAffiliates} from "../../../redux/affiliates/affiliatesThunks";
 import {getServices} from "../../../redux/services/servicesThunks";

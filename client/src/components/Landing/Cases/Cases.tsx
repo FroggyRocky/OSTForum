@@ -1,9 +1,9 @@
 import './cases.scss'
 import {CardWithStatistics} from "../../../UIKit/Cards/CardsWithKeys/CardWithStatistics";
-import {useAppSelector} from "../../../redux/hooks/hooks";
+import {useAppSelector} from "../../../redux/storeHooks/storeHooks";
 import {useEffect, useState} from "react";
 import {getCases} from "../../../redux/cases/casesThunks";
-import {useAppDispatch} from "../../../redux/hooks/hooks";
+import {useAppDispatch} from "../../../redux/storeHooks/storeHooks";
 import {KeysFilter} from "../../../UIKit/KeysFilter/KeysFilter";
 import {PageWithCardsFilterLayout} from "../../../UIKit/PageWithCardsFilterLayout/PageWithCardsFilterLayout";
 import {CardWithLinkAndPrice} from "../../../UIKit/Cards/CardsWithKeys/CardWithLinkAndPrice";

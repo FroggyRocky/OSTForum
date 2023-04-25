@@ -7,7 +7,7 @@ import {Link} from 'react-router-dom'
 const TelegramLinkContainer = styled(StyledFlex)`
 position: absolute;
   bottom: 1.5%;
-  right: -15%;
+  right: -20%;
   user-select: none;
   & > p {
     margin-top: 15px;

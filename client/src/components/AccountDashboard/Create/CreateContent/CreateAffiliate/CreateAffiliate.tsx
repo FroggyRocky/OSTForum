@@ -3,7 +3,7 @@ import {StyledH1, StyledWrapper, StyledContent} from "../../../../../UIKit/Basic
 import {AddButton} from "../../../../../UIKit/Form/AddButton/AddButton";
 import {CardWithRegistration} from "../../../../../UIKit/Cards/CardsWithKeys/CardWithRegistration";
 import {useEffect, useState} from "react";
-import {useAppSelector, useAppDispatch} from "../../../../../redux/hooks/hooks";
+import {useAppSelector, useAppDispatch} from "../../../../../redux/storeHooks/storeHooks";
 import {
     getAffiliates,
     createAffiliate,

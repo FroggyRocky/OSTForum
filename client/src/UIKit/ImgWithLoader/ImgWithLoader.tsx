@@ -1,61 +1,40 @@
-import styled, {css} from "styled-components";
-import {useState} from 'react'
-
+import {useState, memo, useEffect} from 'react'
+import {Loader} from "../Loader/Loader";
+import defaultCover from '../../assets/defaultCardCover.png'
 type Props = {
 width:string
     height:string
     src:string
-    defaultSrc:string
     alt:string
 }
-const ImgLoader = styled.div`
-  width: 60px;
-  height: 60px;
-  border: 5px solid #FFF;
-  border-bottom-color: #58649C;
-  border-radius: 50%;
-  display: inline-block;
-  box-sizing: border-box;
-  animation: rotation 1s linear infinite;
-  position: absolute;
-  top: 40%;
-  right: 50%;
-  
-@keyframes rotation {
-  0% {
-    transform: rotate(0deg);
-  }
-  100% {
-    transform: rotate(360deg);
-  }
-}
-`
-const Image = styled.img<{imgLoaderState?:boolean}>`
-${({imgLoaderState}) => !imgLoaderState && css`
-background-color: black;
-  src:url('#');
-`}
-`
 
-export function ImgWithLoader(props:Props) {
+ function ImgWithLoaderComponent(props:Props) {
 
-    const [imgLoaderState, setImgLoaderState] = useState<boolean>(false)
+    const [imgLoaderState, setImgLoaderState] = useState<boolean>(true)
 
-    function onload(e:any) {
-        if(props.src) {
+    function onload(src:string) {
+        if(src) {
             const img = new window.Image()
-            const src = e.target.src
             img.src = src;
             img.onload = () => {
-                setImgLoaderState(true)
-            };
-            img.onerror = () => {
                 setImgLoaderState(false)
             };
+            img.onerror = () => {
+
+                setImgLoaderState(true)
+            };
+        } else {
+            setImgLoaderState(false)
         }
     }
+    useEffect(() => {
+        onload(props.src)
+    }, [])
+
      return <>
-         {!imgLoaderState && props.src && <ImgLoader /> }
-         <Image src={props.src || props.defaultSrc} imgLoaderState={imgLoaderState} alt={props.alt} width={props.width} height={props.height} onLoad={onload}   />
-</>
+         {imgLoaderState ? <Loader />
+         : <img src={props.src || defaultCover} alt={props.alt} width={props.width} height={props.height}  />}
+             </>
 }
+
+export const ImgWithLoader = memo(ImgWithLoaderComponent)

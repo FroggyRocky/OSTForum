@@ -1,9 +1,9 @@
 import './affiliates.scss'
 import {CardWithRegistration} from "../../../UIKit/Cards/CardsWithKeys/CardWithRegistration";
-import {useAppSelector} from "../../../redux/hooks/hooks";
+import {useAppSelector} from "../../../redux/storeHooks/storeHooks";
 import {useEffect, useState} from "react";
 import {getAffiliates} from "../../../redux/affiliates/affiliatesThunks";
-import {useAppDispatch} from "../../../redux/hooks/hooks";
+import {useAppDispatch} from "../../../redux/storeHooks/storeHooks";
 import {PageWithCardsFilterLayout} from "../../../UIKit/PageWithCardsFilterLayout/PageWithCardsFilterLayout";
 
 const CARD_PER_PAGE = 5

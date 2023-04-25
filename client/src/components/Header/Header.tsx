@@ -1,7 +1,7 @@
 import {useState} from "react";
 import {Avatar} from "../../UIKit/ProfileWidget/Avatar";
 import {Link, useLocation} from "react-router-dom";
-import {useAppSelector} from "../../redux/hooks/hooks";
+import {useAppSelector} from "../../redux/storeHooks/storeHooks";
 import {IUser} from "../../redux/user/userType";
 import {FaTelegramPlane} from "react-icons/fa";
 import {HiOutlineMenuAlt3} from "react-icons/hi";
@@ -9,7 +9,7 @@ import {StyledRoundBtn, StyledFlex} from "../../UIKit/BasicStyledComponents/basi
 import {ReactComponent as Logo} from '../../assets/logo.svg'
 import {MdOutlineClose} from "react-icons/md";
 import './header.scss'
-import {SearchWidget} from "../../UIKit/SearchWidget/SearchWidget";
+import {SearchWidget} from "./SearchWidget/SearchWidget";
 
 type Props = {}
 
@@ -88,7 +88,6 @@ export function Header(props: Props) {
                 }
             </section>
         </main>
-
         {isMobNavigationPanelOpen &&
             <div className={'header__menu_mob'}>
                 {isAuth &&

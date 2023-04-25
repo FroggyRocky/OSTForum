@@ -4,25 +4,43 @@ const Sequelize = require('sequelize')
 class Articles {
     async getArticles(req, res) {
         try {
-        const count = await db.Article.count()
-        const pageSize = 8;
-        const pageNumber = req.query.page || 1;
-        const offset = (pageNumber - 1) * pageSize;
-        const limit = pageSize;
-        console.log(limit)
-          const articles = await db.Article.findAll({
+            const pageSize = 8;
+            const pageNumber = req.query.page ? req.query.page : 1;
+            const categoryIds = req.query.categoryIds ? req.query.categoryIds.split(',') : []
+            const where = {}
+            if(categoryIds.length > 0) {
+                where.categoryIds = {
+                    [Sequelize.Op.overlap]: categoryIds
+                }
+            }
+            const offset = (pageNumber - 1) * pageSize
+            const limit = pageSize;
+            const count = await db.Article.count({where: where})
+            const articles = await db.Article.findAll({
                 attributes: {exclude: ['updatedAt', 'userId', 'text', 'categoryId']},
                 order: [['createdAt', 'desc']],
-                limit:limit,
-                offset:offset,
-              where:{}
+                limit: limit,
+                offset: offset,
+                where: where
             })
-        res.send({articles:articles, total:count}).status(200)
-            } catch(e) {
+            res.send({articles: articles, total: count}).status(200)
+        } catch (e) {
+            console.log(e)
             res.sendStatus(500)
         }
     }
+async getPopularArticles(req,res) {
+    try {
+        const articles = await db.Article.findAll({
+            attributes: {exclude: ['updatedAt', 'userId', 'text', 'categoryId']},
+            order: [['createdAt', 'desc']],
+            limit:6
+        })
+        res.send(articles).status(200)
+    } catch(e) {
 
+    }
+}
     async getArticle(req, res) {
         try {
             const articleId = req.params.id
@@ -34,7 +52,7 @@ class Articles {
                     },
                 ]
             })
-            res.send(article)
+            res.send(article).status(200)
         } catch (e) {
             console.log(e)
             res.sendStatus(500)
@@ -49,7 +67,7 @@ class Articles {
                 userId: accountId
             }
             const response = await db.Article.create(data)
-            res.status(200).send(response)
+            res.send(response).status(200)
         } catch (e) {
             console.log(e)
             res.sendStatus(500)
@@ -69,7 +87,7 @@ class Articles {
                     }
                 ]
             })
-            res.status(200).send(comments)
+            res.send(comments).status(200)
         } catch (e) {
             console.log(e)
             res.sendStatus(500)

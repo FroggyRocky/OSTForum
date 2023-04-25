@@ -1,9 +1,9 @@
 import './vacancies.scss'
 import {CardWithLinkAndPrice} from "../../../UIKit/Cards/CardsWithKeys/CardWithLinkAndPrice";
-import {useAppSelector} from "../../../redux/hooks/hooks";
+import {useAppSelector} from "../../../redux/storeHooks/storeHooks";
 import {useEffect, useState} from "react";
 import {getVacancies} from "../../../redux/vacancies/vacanciesThunks";
-import {useAppDispatch} from "../../../redux/hooks/hooks";
+import {useAppDispatch} from "../../../redux/storeHooks/storeHooks";
 import {KeysFilter} from "../../../UIKit/KeysFilter/KeysFilter";
 import {PageWithCardsFilterLayout} from "../../../UIKit/PageWithCardsFilterLayout/PageWithCardsFilterLayout";
 import {VacancyCard} from "../../../UIKit/Cards/CardsWithKeys/VacancyCard";

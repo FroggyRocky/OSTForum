@@ -4,22 +4,25 @@ import {ICreatedArticle, IEditingArticle, IUpdateArticle} from "../redux/article
 
 const instance = axios.create({
     baseURL: serverURL,
-    withCredentials:true
+    withCredentials: true
 
 })
 const withAuthInstance = axios.create({
     baseURL: serverURL,
-    withCredentials:true,
+    withCredentials: true,
     headers: {
         'Authorization': `Bearer ${window.localStorage.getItem('MyClickToken')}`,
     }
 })
 
 const articlesAPI = {
-    async getArticles(page:number) {
-        return await instance.get(`/get-articles?page=${page}`)
+    async getArticles(page: number, categoryIds: number[] | []) {
+        return await instance.get(`/get-articles?page=${page}${categoryIds?.length > 0 ? `&categoryIds=${categoryIds.join(',')}` : ''}`)
     },
-    async getArticle(id:number) {
+    async getPopularArticles() {
+        return await instance.get('/get-popular-articles')
+    },
+    async getArticle(id: number) {
         return await instance.get(`/get-article/${id}`)
     },
     async uploadImage(image: FormData) {
@@ -32,7 +35,7 @@ const articlesAPI = {
     async createArticle(data: ICreatedArticle) {
         return withAuthInstance.post(`/create-article`, data)
     },
-    async updateArticle(data:IUpdateArticle) {
+    async updateArticle(data: IUpdateArticle) {
         return withAuthInstance.put(`/update-article`, data)
     }
 }

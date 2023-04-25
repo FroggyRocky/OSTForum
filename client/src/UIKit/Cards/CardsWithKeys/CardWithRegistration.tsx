@@ -1,4 +1,4 @@
-import defaultCover from '../../../assets/defaultCardCover.png'
+
 import {ImgWithLoader} from "../../ImgWithLoader/ImgWithLoader";
 import {IKey} from "../../../redux/auth/authConfigsTypes";
 import {StyledFlex} from "../../BasicStyledComponents/basicStyledComponents";
@@ -19,7 +19,7 @@ export function CardWithRegistration(props: Props) {
 
     return <div className={'cardWithRegistration'}>
         <div className={'cardWithRegistration__cover'}>
-            <ImgWithLoader alt={`cover_${props.header}`} defaultSrc={defaultCover} src={props.cover} width={'240px'}
+            <ImgWithLoader alt={`cover_${props.header}`}  src={props.cover} width={'240px'}
                            height={'240px'}/>
         </div>
         <main className={'cardWithRegistration__content'}>
@@ -31,7 +31,7 @@ export function CardWithRegistration(props: Props) {
                     }
                 </div>
                 <div className={'cardWithRegistration__cover_mob'}>
-                    <ImgWithLoader alt={`cover_${props.header}`} defaultSrc={defaultCover} src={props.cover} width={'240px'}
+                    <ImgWithLoader alt={`cover_${props.header}`} src={props.cover} width={'240px'}
                                    height={'240px'}/>
                     <div className={'cardWithRegistration__description__score_mob'}>Score: {props.score || '0'}/10</div>
                 </div>

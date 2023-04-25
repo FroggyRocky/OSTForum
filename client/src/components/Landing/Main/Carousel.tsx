@@ -9,24 +9,22 @@ import {
     Wrapper
 } from './Carousel.styles'
 import {useEffect, useState} from "react";
-import {useAppSelector} from "../../../redux/hooks/hooks";
+import {useAppSelector} from "../../../redux/storeHooks/storeHooks";
 import {isMobile} from 'react-device-detect'
 import {ImgWithLoader} from "../../../UIKit/ImgWithLoader/ImgWithLoader";
 import defaultImg from '../../../assets/defaultCardCover.png'
 
 
-const CAROUSEL_MAX_ARTICLES = 6
-
 type Props = {};
 export const Carousel = (props: Props) => {
         const [translation, setTranslation] = useState(0);
         const [touchPosition, setTouchPosition] = useState<null | number>(null);
-        const articlesData = useAppSelector(state => state.articles.articles).slice(0, CAROUSEL_MAX_ARTICLES);
-        const PAGEWIDTH = isMobile ? 100 : 88;
-        const maxtranslation = -(PAGEWIDTH * (articlesData.length - 1));
+        const articlesData = useAppSelector(state => state.articles.popularArticles);
+        const PAGE_WIDTH = isMobile ? 100 : 88;
+        const maxTranslation = -(PAGE_WIDTH * (articlesData.length - 1));
 
         useEffect(() => {
-            if(!isMobile) {
+            if (!isMobile) {
                 const intervalId = setInterval(() => {
                     handleRightAutoScroll();
                 }, 4000)
@@ -37,10 +35,10 @@ export const Carousel = (props: Props) => {
 
         function handleRightAutoScroll() {
             setTranslation(prev => {
-                if(translation === maxtranslation) {
-                    setTranslation(PAGEWIDTH)
+                if (translation === maxTranslation) {
+                    setTranslation(PAGE_WIDTH)
                 }
-                const newTranslation = Math.max(prev - PAGEWIDTH, maxtranslation)
+                const newTranslation = Math.max(prev - PAGE_WIDTH, maxTranslation)
                 return newTranslation
             })
         }
@@ -48,7 +46,7 @@ export const Carousel = (props: Props) => {
         function handleLeftClick(e: any) {
             if (e.detail === 1) {
                 setTranslation(prev => {
-                    const newTranslation = Math.min(prev + PAGEWIDTH, PAGEWIDTH)
+                    const newTranslation = Math.min(prev + PAGE_WIDTH, PAGE_WIDTH)
                     return newTranslation
                 })
 
@@ -58,8 +56,7 @@ export const Carousel = (props: Props) => {
         function handleRightClick(e: any) {
             if (e.detail === 1) {
                 setTranslation(prev => {
-                    const maxtranslation = -(PAGEWIDTH * (articlesData.length - 1))
-                    const newTranslation = Math.max(prev - PAGEWIDTH, maxtranslation)
+                    const newTranslation = Math.max(prev - PAGE_WIDTH, maxTranslation)
                     return newTranslation
                 })
             }
@@ -68,7 +65,7 @@ export const Carousel = (props: Props) => {
         function handleLeftClickMob() {
             if (isMobile) {
                 setTranslation(prev => {
-                    const newTranslation = Math.min(prev + PAGEWIDTH, 0)
+                    const newTranslation = Math.min(prev + PAGE_WIDTH, 0)
                     return newTranslation
                 })
             }
@@ -76,8 +73,7 @@ export const Carousel = (props: Props) => {
 
         function handleRightClickMob() {
             setTranslation(prev => {
-                const maxtranslation = -(PAGEWIDTH * (articlesData.length - 1))
-                const newTranslation = Math.max(prev - PAGEWIDTH, maxtranslation)
+                const newTranslation = Math.max(prev - PAGE_WIDTH, maxTranslation)
                 return newTranslation
             })
 
@@ -92,7 +88,6 @@ export const Carousel = (props: Props) => {
         function handleTouchMove(e: any) {
             document.body.style.overflowY = "hidden";
             const touchDown = touchPosition
-
             if (touchDown === null) {
                 return
             }
@@ -116,15 +111,18 @@ export const Carousel = (props: Props) => {
                 document.body.style.overflowY = "auto";
             }
         }
+
         const Articles = articlesData.map((el, index) => {
             const pathData = [{
                 pathName: 'Home',
                 path: '/'
             },
             ]
-            return <Card translation={translation} maxtranslation={maxtranslation} key={el.id} to={`/article/${el.id}`} state={pathData}>
-                <ImgWithLoader src={el.coverImg_withText || el.coverImg_withOutText} defaultSrc={defaultImg} alt={'article_cover'}
-                               width={'100%'} height={'100%'} />
+            return <Card translation={translation} maxtranslation={maxTranslation} key={el.id} to={`/article/${el.id}`}
+                         state={pathData}>
+                <ImgWithLoader src={el.coverImg_withText || el.coverImg_withOutText}
+                               alt={'article_cover'}
+                               width={'100%'} height={'100%'}/>
             </Card>
         })
 
@@ -136,11 +134,11 @@ export const Carousel = (props: Props) => {
             </CarouselContainer>
             {(articlesData.length > 1 && !isMobile) && <Controls>
                 <ArrContainer onClick={handleLeftClick}
-                              unactive={translation === PAGEWIDTH}>
+                              unactive={translation === PAGE_WIDTH}>
                     <StyledActiveArrLeft/>
                 </ArrContainer>
                 <ArrContainer onClick={handleRightClick}
-                              unactive={maxtranslation === translation}>
+                              unactive={maxTranslation === translation}>
                     <StyledActiveArrRight/>
                 </ArrContainer>
             </Controls>
