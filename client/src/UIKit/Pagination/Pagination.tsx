@@ -26,7 +26,7 @@ export const Pagination = (props: Props) => {
                 previousLabel=""
                 marginPagesDisplayed={1}
                 activeClassName={'commonPagination__activePage'}
-
+                forcePage={props.currentPage}
             />
         </div>
     );

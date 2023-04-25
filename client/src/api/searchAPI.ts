@@ -8,8 +8,8 @@ const instance = axios.create({
 })
 
 const searchAPI = {
-    async searchArticles(query:string) {
-        return await instance.get(`/search/articles?q=${query}`)
+    async searchArticles(query:string, page:number) {
+        return await instance.get(`/search/articles?q=${query}&page=${page}`)
     }
 }
 

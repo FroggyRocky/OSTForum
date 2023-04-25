@@ -21,7 +21,7 @@ interface MobileProps extends PropsBase {
 }
 
 interface DesktopProps extends PropsBase {
-    mob?: false,
+
 }
 
 type Props = MobileProps | DesktopProps

@@ -13,6 +13,7 @@ import {useDebounce} from "../../../services/useDebounce";
 import {searchArticle} from "../../../redux/articles/articlesThunks";
 import {Loader} from "../../../UIKit/Loader/Loader";
 import {Pagination} from "../../../UIKit/Pagination/Pagination";
+import {TelegramBtn} from "../../../UIKit/TelegramBtn/TelegramBtn";
 
 type Props = {};
 
@@ -21,7 +22,7 @@ export function SearchPage(props: Props) {
     const totalResults = useAppSelector(state => state.articles.searchResult.total)
     const categories = useAppSelector(state => state.authConfigs.configs.categories)
     const searchValue = useAppSelector(state => state.articles.searchValue)
-    const isSearching =  useAppSelector(state => state.articles.isSearching)
+    const isSearching = useAppSelector(state => state.articles.isSearching)
     const [currentPage, setCurrentPage] = useState(0)
     const dispatch = useAppDispatch()
     useDebounce(handleDebounceCallback, 1000, [searchValue])
@@ -35,13 +36,16 @@ export function SearchPage(props: Props) {
             path: '/#articles__main'
         }
     ]
-    function handlePageChange(page:number) {
+
+    function handlePageChange(page: number) {
         setCurrentPage(page)
+        dispatch(searchArticle(searchValue, page + 1))
     }
+
     function handleDebounceCallback() {
-        handlePageChange(0)
         dispatch(searchArticle(searchValue))
     }
+
     const searchResultComponents = searchResults.map(el => {
         const cardCategories = () => {
             if (!el.categoryIds || el.categoryIds.length === 0) return;
@@ -59,21 +63,24 @@ export function SearchPage(props: Props) {
 
     function handleChange(e: any) {
         const value = e.target.value
+        setCurrentPage(0)
         dispatch(setSearchValue(value))
     }
 
     return <Layout>
         <StyledWrapper>
-                <div className={'searchPage'}>
-                    <StyledH1>Search Results on:</StyledH1>
-                    <div className={'searchPage__searchInput'}>
+            <div className={'searchPage'}>
+                <StyledH1>Search Results on:</StyledH1>
+                <div className={'searchPage__searchInput'}>
                     <SearchInput value={searchValue} handleChange={handleChange}/>
-                    </div>
-                    <div className={'searchPage__cards'}>
-                        {isSearching ? <div className='searchPage__loader'><Loader /></div> : searchResultComponents}
-                    </div>
                 </div>
-                <Pagination currentPage={currentPage} changePage={handlePageChange} limit={8} totalItems={totalResults}/>
+                <div className={'searchPage__cards'}>
+                    {isSearching ? <div className='searchPage__loader'><Loader/></div> : searchResultComponents}
+                </div>
+                <Pagination currentPage={currentPage} changePage={handlePageChange} limit={8}
+                            totalItems={totalResults}/>
+            </div>
         </StyledWrapper>
+
     </Layout>
 };

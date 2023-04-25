@@ -20,10 +20,10 @@ export const fetchPopularArticles = () => async (dispatch: AppDispatch) => {
     const res = await articlesAPI.getPopularArticles()
     dispatch(articleSlice.actions.setPopularArticles(res.data))
 }
-export const searchArticle = (query: string) => async (dispatch: AppDispatch) => {
+export const searchArticle = (query: string, page = 1) => async (dispatch: AppDispatch) => {
     dispatch(setSearchingState(true))
     if (query) {
-        const res = await searchAPI.searchArticles(query)
+        const res = await searchAPI.searchArticles(query, page)
         if (res.status === 200) {
             const data = {
                 total: res.data.total,

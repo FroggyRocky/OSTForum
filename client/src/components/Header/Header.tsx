@@ -26,7 +26,7 @@ export function Header(props: Props) {
         path: '/'
     },
     ]
-
+console.log()
     return <div className={'header'}>
         <main className={'header__content'}>
             <Link style={{zIndex: 150}} to='/'>
@@ -54,12 +54,11 @@ export function Header(props: Props) {
                         <FaTelegramPlane style={{margin: '0 1.5px 0 0'}} color={'white'}/>
                     </StyledRoundBtn>
                 </Link>
-                <div className={'header__search'}>
+                {!pathname.includes('search')  &&
+                    <div className={'header__search'}>
                     <SearchWidget/>
                 </div>
-                <div className={'header__search_mob'}>
-                    <SearchWidget mob={true}/>
-                </div>
+                }
                 <div className={'header__menuBurger'}>
                     <svg width="0" height="0">
                         <linearGradient id="blue-gradient" x1="100%" y1="100%" x2="0%" y2="0%">
