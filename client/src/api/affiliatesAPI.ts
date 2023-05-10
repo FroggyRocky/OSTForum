@@ -16,8 +16,8 @@ const withAuthInstance = axios.create({
     }
 })
 const affiliatesAPI = {
-    async getAffiliates() {
-        const affiliates = await instance.get<IAffiliate[]>('/get-affiliates').then(res => res.data)
+    async getAffiliates(page:number, keyId?:number) {
+        const affiliates = await instance.get<{affiliates:IAffiliate[], total:number}>(`/get-affiliates?key=${keyId}&page=${page}`).then(res => res.data)
         return affiliates
     },
     async createAffiliates(affiliate:ICreatedAffiliate) {

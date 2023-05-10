@@ -8,13 +8,12 @@ import {findCategoryObjById} from "../../../services/categoryFlags";
 import defaultCardCover from "../../../assets/defaultCardCover.png";
 import {ArticlesContainer} from "../Articles/articles.styles";
 import {SearchInput} from "../../../UIKit/Form/SearchInput/SearchInput";
-import {setSearchValue} from "../../../redux/articles/articlesSlice";
+import {setSearchValue, setSearchingState} from "../../../redux/articles/articlesSlice";
 import {useDebounce} from "../../../services/useDebounce";
 import {searchArticle} from "../../../redux/articles/articlesThunks";
 import {Loader} from "../../../UIKit/Loader/Loader";
 import {Pagination} from "../../../UIKit/Pagination/Pagination";
 import {TelegramBtn} from "../../../UIKit/TelegramBtn/TelegramBtn";
-
 type Props = {};
 
 export function SearchPage(props: Props) {
@@ -62,6 +61,7 @@ export function SearchPage(props: Props) {
     })
 
     function handleChange(e: any) {
+        dispatch(setSearchingState(true))
         const value = e.target.value
         setCurrentPage(0)
         dispatch(setSearchValue(value))
@@ -77,8 +77,8 @@ export function SearchPage(props: Props) {
                 <div className={'searchPage__cards'}>
                     {isSearching ? <div className='searchPage__loader'><Loader/></div> : searchResultComponents}
                 </div>
-                <Pagination currentPage={currentPage} changePage={handlePageChange} limit={8}
-                            totalItems={totalResults}/>
+                {!isSearching && <Pagination currentPage={currentPage} changePage={handlePageChange} limit={8}
+                            totalItems={totalResults}/> }
             </div>
         </StyledWrapper>
 

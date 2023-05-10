@@ -122,7 +122,7 @@ export const Article = () => {
             categoryIds: currentArticle.categoryIds
         }
         dispatch(setEditingArticle(editingData))
-        navigate(`/dashboard/articles/create?id=${currentArticle.id}`)
+        navigate(`/create/article?id=${currentArticle.id}`)
     }
 
     if (!currentArticle) return <PageLoader/>

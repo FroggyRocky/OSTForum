@@ -24,7 +24,6 @@ function App() {
     const dispatch = useAppDispatch()
     const isInitialized = useAppSelector(state => state.authConfigs.isInitialized)
 
-
     useEffect( () => {
         dispatch(auth())
     }, [])

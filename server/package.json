@@ -27,3 +27,10 @@
     "uuid": "^8.3.2"
   }
 }
+
+nodejs
+aws-sd
+express
+nodemon
+postgre
+sequelize

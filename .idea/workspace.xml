@@ -6,16 +6,22 @@
   <component name="ChangeListManager">
     <list default="true" id="c555e0dc-7b04-4b59-a972-97e78175a9d1" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/UIKit/Form/SearchInput/searchInput.scss" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/UIKit/Form/SearchInput/searchInput.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/UIKit/Pagination/Pagination.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/UIKit/Pagination/Pagination.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/api/searchAPI.ts" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/api/searchAPI.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/components/Header/Header.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/Header/Header.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TapLink/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/TapLink/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/App.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/UIKit/Cards/CardsWithKeys/cardWithRegistration.scss" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/UIKit/Cards/CardsWithKeys/cardWithRegistration.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/api/affiliatesAPI.ts" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/api/affiliatesAPI.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/components/Article/Article.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/Article/Article.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/components/Article/ArticleText.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/Article/ArticleText.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/src/components/Header/SearchWidget/SearchWidget.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/Header/SearchWidget/SearchWidget.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/components/Landing/Affiliates/Affiliates.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/Landing/Affiliates/Affiliates.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/components/Landing/Affiliates/affiliates.scss" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/Landing/Affiliates/affiliates.scss" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/src/components/Landing/SearchPage/SearchPage.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/Landing/SearchPage/SearchPage.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/src/components/Landing/SearchPage/searchPage.scss" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/Landing/SearchPage/searchPage.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/redux/affiliates/affiliatesSlice.ts" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/redux/affiliates/affiliatesSlice.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/redux/affiliates/affiliatesThunks.ts" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/redux/affiliates/affiliatesThunks.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/src/redux/articles/articlesThunks.ts" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/redux/articles/articlesThunks.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/redux/services/servicesThunks.ts" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/redux/services/servicesThunks.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/controllers/search.js" beforeDir="false" afterPath="$PROJECT_DIR$/server/controllers/search.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/controllers/affiliates.js" beforeDir="false" afterPath="$PROJECT_DIR$/server/controllers/affiliates.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/server/package.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -27,9 +33,9 @@
       <list>
         <option value="CSS File" />
         <option value="JavaScript File" />
-        <option value="TypeScript File" />
         <option value="TypeScript JSX File" />
         <option value="SCSS File" />
+        <option value="TypeScript File" />
       </list>
     </option>
   </component>
@@ -145,7 +151,12 @@
       <workItem from="1682247921082" duration="3014000" />
       <workItem from="1682332005397" duration="14701000" />
       <workItem from="1682372450399" duration="2489000" />
-      <workItem from="1682406920397" duration="12539000" />
+      <workItem from="1682406920397" duration="12916000" />
+      <workItem from="1682627713256" duration="1295000" />
+      <workItem from="1682761087831" duration="8360000" />
+      <workItem from="1682778464063" duration="18320000" />
+      <workItem from="1682844859974" duration="921000" />
+      <workItem from="1683711323956" duration="1405000" />
     </task>
     <servers />
   </component>

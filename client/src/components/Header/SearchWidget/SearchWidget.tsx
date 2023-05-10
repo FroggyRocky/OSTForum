@@ -10,6 +10,7 @@ import {searchArticle} from "../../../redux/articles/articlesThunks";
 import './searchWidget.scss'
 import {Loader} from "../../../UIKit/Loader/Loader";
 import {setSearchValue} from "../../../redux/articles/articlesSlice";
+import {setSearchingState} from "../../../redux/articles/articlesSlice";
 
 interface PropsBase {
     inputWidth?: string,
@@ -37,12 +38,14 @@ export const SearchWidget = (props: Props) => {
     useDebounce(() => dispatch(searchArticle(searchValue)), 1000, [searchValue])
 
     function handleChange(e: any) {
+        dispatch(setSearchingState(true))
         const value = e.target.value
         setLocalSearchValue(value)
         dispatch(setSearchValue(value))
         setSearchDropDownState(true)
         if (!value) {
             setSearchDropDownState(false)
+            dispatch(setSearchingState(false))
         }
     }
 

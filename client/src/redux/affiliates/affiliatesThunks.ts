@@ -1,14 +1,16 @@
-import {AppDispatch} from "../store";
+import {AppDispatch, RootState} from "../store";
 import {affiliatesAPI} from "../../api/affiliatesAPI";
-import {setAffiliates} from "./affiliatesSlice";
+import {setAffiliates, setCurrentFilterKey} from "./affiliatesSlice";
 import {ICreatedAffiliate} from "./affiliatesTypes";
-import {setArticleCreatedState, setArticleCreatingState} from "../articles/articlesSlice";
 
-export const getAffiliates = () => async (dispatch: AppDispatch) => {
-    const affiliates = await affiliatesAPI.getAffiliates()
-    dispatch(setAffiliates(affiliates))
+export const getAffiliates = (page= 1, keyId?:number) => async (dispatch: AppDispatch, getState:() => RootState) => {
+    const {affiliates, total} = await affiliatesAPI.getAffiliates(page,keyId)
+    dispatch(setAffiliates({affiliates, total}))
 }
-export const createAffiliate = (createdAffiliate:ICreatedAffiliate) =>  async (dispatch: AppDispatch) => {
+export const setFilterKeyThunk = (keyData:{id:number,name:string}) => async (dispatch: AppDispatch, getState:() => RootState) => {
+    dispatch(setCurrentFilterKey(keyData))
+}
+export const createAffiliate = (createdAffiliate:ICreatedAffiliate) =>  async (dispatch: AppDispatch, getState:() => RootState) => {
     const res = await affiliatesAPI.createAffiliates(createdAffiliate)
     if(res.status === 200) {
         dispatch(getAffiliates())
