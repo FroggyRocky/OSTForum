@@ -18,7 +18,7 @@ export function User( { links }:Props) {
         </header>
         <section className={'articlesList'}>
             {links && [...links].sort((a, b) => a.position - b.position).map(el => {
-                return <ArticleLinkCard id={el.articleId} key={el.id} title={el.article.header}/>
+                return <ArticleLinkCard id={el.articleId} key={el.id} title={el.article?.header}/>
             })}
         </section>
         <footer className={'socialLinks'}>
