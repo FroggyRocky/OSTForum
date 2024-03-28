@@ -1,4 +1,4 @@
-import {useAppDispatch, useAppSelector} from "../../../../../redux/storeHooks/storeHooks";
+import {useAppDispatch, useAppSelector} from "../../../../../redux/hooks/hooks";
 import {useEffect, useState} from "react";
 import {CardWithRegistration} from "../../../../../UIKit/Cards/CardsWithKeys/CardWithRegistration";
 import {CreateCardButton} from "../../../../../UIKit/Form/CreateCardForm/CreateCardButton/CreateCardButton";

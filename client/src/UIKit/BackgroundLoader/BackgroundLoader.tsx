@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import {PageLoader} from "../PageLoader/PageLoader";
+import {Loader} from "../Loader/Loader";
 
 const Wrapper = styled.div`
   background: rgba(0, 0, 0, 0.5);
@@ -17,6 +17,6 @@ type Props = {
 };
 export function BackgroundLoader (props: Props){
     return <Wrapper>
-        <PageLoader />
+        <Loader />
     </Wrapper>
 };

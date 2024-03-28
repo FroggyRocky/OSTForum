@@ -1,10 +1,11 @@
-import './loader.scss'
-type Props = {
+import './loader.css'
 
-};
-
-export function Loader(props: Props) {
-    return <div className='loader__container'>
-        <div className='loader__loader'></div>
+function Loader() {
+    return <div className='lds-container'>
+        <div className="lds-ripple">
+            <div></div>
+            <div></div>
+        </div>
     </div>
-};
+}
+export {Loader}

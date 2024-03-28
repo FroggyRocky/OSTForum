@@ -48,10 +48,6 @@ export const StyledH1 = styled.h1`
   -webkit-text-fill-color: transparent;
   background-clip: text;
   text-fill-color: transparent;
-  @media screen and (max-width:${mediaSizes.mobile}) {
-    font-size: 24px;
-    line-height: 28px;
-  }
 `
 
 type ImageStyledType = {

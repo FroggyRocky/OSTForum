@@ -8,7 +8,7 @@ import {useContext, useState} from "react";
 import {CreateArticlePageContext} from "../CreateArticle";
 import styled from "styled-components";
 import {CategoryDropDown} from "../../../../../UIKit/Form/CategoryDropDown/CategoryDropDown";
-import {useAppSelector} from "../../../../../redux/storeHooks/storeHooks";
+import {useAppSelector} from "../../../../../redux/hooks/hooks";
 import {useClickOutside} from "../../../../../services/useClickOutside";
 
 const Button = styled(EditorPanelButton).attrs(props => ({

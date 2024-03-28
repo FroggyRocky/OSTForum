@@ -1,4 +1,4 @@
-
+import defaultCover from '../../../assets/defaultCardCover.png'
 import {ImgWithLoader} from "../../ImgWithLoader/ImgWithLoader";
 import {IKey} from "../../../redux/auth/authConfigsTypes";
 import './cardWithStatistics.scss'
@@ -75,7 +75,7 @@ export function CardWithStatistics(props: Props) {
         }
     <a href={props.link} className={'cardWithStatistics'}>
         <div className={'cardWithStatistics__cover'}>
-            <ImgWithLoader alt={`cover_${props.header}`} src={props.cover} width={'240px'}
+            <ImgWithLoader alt={`cover_${props.header}`} defaultSrc={defaultCover} src={props.cover} width={'240px'}
                            height={'240px'}/>
         </div>
         <main className={'cardWithStatistics__content'}>

@@ -7,11 +7,11 @@ import {FaFileImage} from "react-icons/fa";
 import {BsFileEarmarkRichtextFill, BsFillCheckCircleFill} from "react-icons/bs";
 import {convertToHTML} from 'draft-convert';
 import {AtomicBlockUtils, ContentState, convertToRaw, EditorState, RichUtils} from "draft-js";
-import {useAppDispatch, useAppSelector} from "../../../../redux/storeHooks/storeHooks";
+import {useAppDispatch, useAppSelector} from "../../../../redux/hooks/hooks";
 import articlesAPI from "../../../../api/articlesAPI";
 import {AiOutlineClose} from "react-icons/ai";
 import {ModalWindow} from "../../../../UIKit/Modals/ModalWindow";
-import {setArticleCreatedState, setArticleCreatingState, setArticleCreationErr} from "../../../../redux/articles/articlesSlice";
+import {setArticleCreatedState, setArticleCreatingState, setCommonErr} from "../../../../redux/articles/articlesSlice";
 import {createArticle, updateArticle} from "../../../../redux/articles/articlesThunks";
 import {
     StyledAddArticleButton,
@@ -43,7 +43,7 @@ export function CreateArticle(props: Props) {
     );
     const isArticleCreated = useAppSelector(state => state.articles.isArticleCreated);
     const editingArticle = useAppSelector(state => state.articles.editingArticle);
-    const err = useAppSelector(state => state.articles.articleCreationErr);
+    const err = useAppSelector(state => state.articles.commonError);
     const dispatch = useAppDispatch();
     const [isAddLinkInputOpen, setAddLinkInputState] = useState(false)
     const fileWithTextInputRef = useRef() as React.MutableRefObject<HTMLInputElement>;
@@ -236,7 +236,8 @@ export function CreateArticle(props: Props) {
                 dispatch(createArticle(data))
             }
         } catch (e) {
-            dispatch(setArticleCreationErr(`Something went wrong, try again later ${e ? e : ''}`))
+            console.log(e);
+            dispatch(setCommonErr('Something went wrong, try again later'))
             dispatch(setArticleCreatingState(false))
         }
     }
@@ -295,7 +296,7 @@ export function CreateArticle(props: Props) {
     }
 
     function closeErrModal() {
-        dispatch(setArticleCreationErr(''))
+        dispatch(setCommonErr(''))
     }
 
     function imgDrop(e: any) {

@@ -2,7 +2,7 @@ import {NavLink, Route, Routes, useNavigate} from "react-router-dom";
 import {IUser} from "../../redux/user/userType";
 import styled from "styled-components";
 import {StyledFlex} from "../../UIKit/BasicStyledComponents/basicStyledComponents";
-import {useAppSelector} from "../../redux/storeHooks/storeHooks";
+import {useAppSelector} from "../../redux/hooks/hooks";
 import {Layout} from "../../UIKit/GeneralLayout/Layout";
 import {CreateArticle} from "./Create/CreateArticle/CreateArticle";
 import {AccountArticles} from "./AccountArticles/AccountArticles";

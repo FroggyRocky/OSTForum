@@ -1,4 +1,4 @@
-
+import defaultCover from '../../../assets/defaultCardCover.png'
 import {ImgWithLoader} from "../../ImgWithLoader/ImgWithLoader";
 import {IKey} from "../../../redux/auth/authConfigsTypes";
 import './cardWithLinkAndPrice.scss'
@@ -18,7 +18,7 @@ export function CardWithLinkAndPrice(props: Props) {
 
     return <div className={'cardWithLinkAndPrice'}>
         <div className={'cardWithLinkAndPrice__cover'}>
-            <ImgWithLoader alt={`cover_${props.header}`} src={props.cover} width={'240px'}
+            <ImgWithLoader alt={`cover_${props.header}`} defaultSrc={defaultCover} src={props.cover} width={'240px'}
                            height={'240px'}/>
         </div>
         <main className={'cardWithLinkAndPrice__content'}>

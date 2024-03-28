@@ -1,7 +1,7 @@
 import {useState} from "react";
 import {Avatar} from "../../UIKit/ProfileWidget/Avatar";
 import {Link, useLocation} from "react-router-dom";
-import {useAppSelector} from "../../redux/storeHooks/storeHooks";
+import {useAppSelector} from "../../redux/hooks/hooks";
 import {IUser} from "../../redux/user/userType";
 import {FaTelegramPlane} from "react-icons/fa";
 import {HiOutlineMenuAlt3} from "react-icons/hi";
@@ -9,7 +9,7 @@ import {StyledRoundBtn, StyledFlex} from "../../UIKit/BasicStyledComponents/basi
 import {ReactComponent as Logo} from '../../assets/logo.svg'
 import {MdOutlineClose} from "react-icons/md";
 import './header.scss'
-import {SearchWidget} from "./SearchWidget/SearchWidget";
+import {SearchWidget} from "../../UIKit/SearchWidget/SearchWidget";
 
 type Props = {}
 
@@ -26,7 +26,7 @@ export function Header(props: Props) {
         path: '/'
     },
     ]
-console.log()
+
     return <div className={'header'}>
         <main className={'header__content'}>
             <Link style={{zIndex: 150}} to='/'>
@@ -54,11 +54,12 @@ console.log()
                         <FaTelegramPlane style={{margin: '0 1.5px 0 0'}} color={'white'}/>
                     </StyledRoundBtn>
                 </Link>
-                {!pathname.includes('search')  &&
-                    <div className={'header__search'}>
+                <div className={'header__search'}>
                     <SearchWidget/>
                 </div>
-                }
+                <div className={'header__search_mob'}>
+                    <SearchWidget mob={true}/>
+                </div>
                 <div className={'header__menuBurger'}>
                     <svg width="0" height="0">
                         <linearGradient id="blue-gradient" x1="100%" y1="100%" x2="0%" y2="0%">
@@ -87,6 +88,7 @@ console.log()
                 }
             </section>
         </main>
+
         {isMobNavigationPanelOpen &&
             <div className={'header__menu_mob'}>
                 {isAuth &&

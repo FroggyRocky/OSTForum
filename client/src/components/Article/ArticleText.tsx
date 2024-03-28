@@ -10,7 +10,7 @@ const Container = styled.div`
 const Content = styled.div`
   padding: 30px;
   font-family: var(--gotham);
-  hyphens: auto;
+
   & > h1, h2, h3 {
     margin: 20px 0;
     @media (max-width: ${mediaSizes.mobile}) {

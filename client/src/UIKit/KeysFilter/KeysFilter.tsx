@@ -1,4 +1,4 @@
-import {useAppSelector} from "../../redux/storeHooks/storeHooks";
+import {useAppSelector} from "../../redux/hooks/hooks";
 import './keysFilter.scss';
 import {IKey} from "../../redux/auth/authConfigsTypes";
 import { BsChevronDown } from "react-icons/bs";

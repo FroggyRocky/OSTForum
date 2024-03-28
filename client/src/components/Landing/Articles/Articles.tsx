@@ -2,13 +2,13 @@ import {StyledContent} from "../../../UIKit/BasicStyledComponents/basicStyledCom
 import {Card} from './Card'
 import {Pagination} from "../../../UIKit/Pagination/Pagination";
 import {TelegramBtn} from "../../../UIKit/TelegramBtn/TelegramBtn";
-import {useAppDispatch, useAppSelector} from "../../../redux/storeHooks/storeHooks";
+import {useAppDispatch, useAppSelector} from "../../../redux/hooks/hooks";
 import {useState} from "react";
+import {IArticlesPreview} from "../../../redux/articles/articleTypes";
 import defaultCardCover from '../../../assets/defaultCardCover.png'
 import {ArticlesContainer, CategoriesContainer, Category} from './articles.styles'
 import {findCategoryObjById} from "../../../services/categoryFlags";
 import {fetchArticles} from "../../../redux/articles/articlesThunks";
-import {PageLoader} from "../../../UIKit/PageLoader/PageLoader";
 
 type Props = {
     articlesPageRef: any
@@ -19,10 +19,12 @@ export const Articles = (props: Props) => {
     const dispatch = useAppDispatch()
     const articlesData = useAppSelector(state => state.articles.articles)
     const totalNumOfArticles = useAppSelector(state => state.articles.totalCountOfArticles)
+    const articlesPerPageLimit = articlesData.length
     const categories = useAppSelector(state => state.authConfigs.configs.categories)
     const [currentPage, setCurrentPage] = useState(0)
-    const [selectedCategoryIds, setSelectedCategoryIds] = useState<Array<number> | []>([])
-    const [isArticlesLoading, setArticleLoadState] = useState(false)
+    const [selectedCategoryIds, setSelectedCategoryIds] = useState<Array<number>>([])
+    const endIndex = (currentPage + 1) * articlesPerPageLimit
+    const startIndex = endIndex - articlesPerPageLimit
     const historyPath = [
         {
             pathName: 'Home',
@@ -41,11 +43,12 @@ export const Articles = (props: Props) => {
     const categoryComponents = categories.map(el => {
         if (el.name !== 'facebook' && el.name !== 'instagram') {
             return <Category key={el.id} isSelected={isSelected(selectedCategoryIds, [el.id])}
-                             onClick={() => selectTopic([el.id])}>{el.name}</Category>
+                             onClick={() => setSelectedCategoryIds([el.id])}>{el.name}</Category>
         }
     })
 
-    const articleComponents = articlesData.map((el, index) => {
+    function createArticleComponents(articles: IArticlesPreview[]) {
+        return articles.map((el, index) => {
             const cardCategories = () => {
                 if(!el.categoryIds || el.categoryIds.length === 0) return;
                 return findCategoryObjById(el.categoryIds, categories)
@@ -59,6 +62,7 @@ export const Articles = (props: Props) => {
                          categories={cardCategories() || []}
                          comments={el.comments?.length || 0} createdAt={el.createdAt}/>
         })
+    }
 
     function findInstAndFbCategoryId() {
         const instAndFbCategoryIds: number[] = []
@@ -70,29 +74,21 @@ export const Articles = (props: Props) => {
         return instAndFbCategoryIds
     }
 
-    async function selectTopic(topicIds: number[]) {
-        setArticleLoadState(true)
+    function selectTopic(topicIds: number[]) {
         if (selectedCategoryIds.some(el => topicIds.indexOf(el) >= 0)) {
             setCurrentPage(0)
             setSelectedCategoryIds([])
-           await dispatch(fetchArticles(1, []))
         } else {
-            setCurrentPage(1)
+            setCurrentPage(0)
             setSelectedCategoryIds([...topicIds])
-           await dispatch(fetchArticles(1,[...topicIds]))
         }
-        setArticleLoadState(false)
     }
-    async function changePage(page:number) {
-        setArticleLoadState(true)
+    function changePage(page:number) {
         setCurrentPage(page);
-        await dispatch(fetchArticles(page + 1, selectedCategoryIds))
-        setArticleLoadState(false)
-        setTimeout(() => {
-            props.articlesPageRef.current.scrollIntoView({ behavior: "smooth", block: "start" })
-        }, 100)
+        dispatch()
+        props.articlesPageRef.current.scrollIntoView({ behavior: "smooth", block: "start" })
     }
-    return <>
+    return (
         <div style={{padding: '0px 0 60px 0'}}>
             <StyledContent>
                 <div ref={props.articlesPageRef}></div>
@@ -101,20 +97,16 @@ export const Articles = (props: Props) => {
                               onClick={() => selectTopic(findInstAndFbCategoryId())}>Facebook&Instagram</Category>
                     {categoryComponents}
                 </CategoriesContainer>
-                {isArticlesLoading ?  <div style={{padding:'30px 0'}}>
-                    <PageLoader />
-                </div> : <>
+
                 <ArticlesContainer id='articles__main'>
-                    {articleComponents}
+                    {articles()?.slice(startIndex, endIndex)}
                 </ArticlesContainer>
-                {articlesData.length !== 0 && <TelegramBtn/>}
-                </>
-                }
+                <TelegramBtn/>
                 {articlesData.length !== 0 &&
-                    <Pagination changePage={changePage} currentPage={currentPage} limit={8}
+                    <Pagination changePage={changePage} currentPage={currentPage} limit={articlesPerPageLimit}
                                 totalItems={totalNumOfArticles || 0}
                     />}
             </StyledContent>
         </div>
-        </>
+    );
 };

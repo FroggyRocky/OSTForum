@@ -6,9 +6,8 @@ isAuth:false as boolean,
     loginErr:'' as string,
     token:'' as string, // ????necessity???
     configs:{} as IConfigs,
-    isInitialized:false as boolean,
-    commonError:'' as string
- }
+    isInitialized:false as boolean
+}
 
 
 export const authConfigsSlice = createSlice({
@@ -27,11 +26,8 @@ export const authConfigsSlice = createSlice({
         },
         setInitializerState(state,action:PayloadAction<boolean>) {
             state.isInitialized = action.payload
-        },
-        setCommonErr(state,action:PayloadAction<string>) {
-            state.commonError = action.payload
         }
     }
 })
 
-export const {setAuthState, setCommonErr} = authConfigsSlice.actions
+export const {setAuthState} = authConfigsSlice.actions

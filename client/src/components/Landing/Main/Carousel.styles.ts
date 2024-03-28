@@ -82,7 +82,7 @@ ${({unactive}) => !unactive && css`
      background: #58649C;
      color: #58649C;
      position: absolute;
-     height: 4px;
+     height: 3.5px;
      width: 15px;
    }
  }
@@ -117,7 +117,7 @@ export const StyledActiveArrLeft = styled.div`
     background: #58649C;
     color: #58649C;
     position: absolute;
-    height: 3px;
+    height: 2px;
     width: 15px;
   }
   &:after {

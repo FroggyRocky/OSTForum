@@ -3,7 +3,7 @@ import {FiRefreshCcw} from "react-icons/fi";
 import {useNavigate} from "react-router-dom";
 import {Layout} from "./Layout/Layout";
 import './tapLinkEditor.scss'
-import {useAppDispatch, useAppSelector} from "../../../redux/storeHooks/storeHooks";
+import {useAppDispatch, useAppSelector} from "../../../redux/hooks/hooks";
 import {getTapLinks, synchronizeTapLinks, updateTapLinks} from "../../../redux/taplink/typeLinkThunks";
 import {useEffect} from "react";
 import {setTapLinks} from "../../../redux/taplink/tapLinkSlice";
@@ -79,7 +79,7 @@ return () => {
                                             MAX_NUMBER_OF_LINKS={MAX_NUMBER_OF_LINKS}
                                             moveLinkDownTheOrder={moveLinkDownTheOrder} index={el.position}
                                             position={el.position} admin={true} id={el.id} key={el.id}
-                                            title={el.article?.header}/>
+                                            title={el.article.header}/>
                 })}
             </section>
         </Layout>

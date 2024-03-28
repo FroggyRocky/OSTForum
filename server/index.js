@@ -15,7 +15,6 @@ const casesRouter = require('./routers/cases.router')
 const networkingRouter = require('./routers/networking.router')
 const servicesRouter = require('./routers/services.router')
 const vacanciesRouter = require('./routers/vacancies.router')
-const searchRouter = require('./routers/search.router')
 const cors = require('cors')
 const fileUpload = require('express-fileupload')
 const corsOptions = {
@@ -45,7 +44,6 @@ app.use('/api', vacanciesRouter)
 app.use('/api', casesRouter)
 app.use('/api', networkingRouter)
 app.use('/api', servicesRouter)
-app.use('/api', searchRouter)
 
   // db.sync({alter:true});
 // db.sync({force:true})

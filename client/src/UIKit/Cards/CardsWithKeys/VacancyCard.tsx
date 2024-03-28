@@ -1,4 +1,5 @@
 import {ImgWithLoader} from "../../ImgWithLoader/ImgWithLoader";
+import defaultCover from "../../../assets/defaultCardCover.png";
 import {IKey} from "../../../redux/auth/authConfigsTypes";
 import {calcDate} from "../../../services/calcDate";
 import {IVacancyData} from "../../../redux/vacancies/vacanciesTypes";
@@ -23,14 +24,14 @@ export function VacancyCard(props: Props) {
         <div className={'vacancyCard__card'}>
             <div className={'vacancyCard__card__firstRow'}>
         <div className={'vacancyCard__cover'}>
-            <ImgWithLoader alt={`cover_${props.header}`} src={props.cover} width={'240px'}
+            <ImgWithLoader alt={`cover_${props.header}`} defaultSrc={defaultCover} src={props.cover} width={'240px'}
                            height={'240px'}/>
         </div>
         <main className={'vacancyCard__content'}>
             <section className={'vacancyCard__mainData'}>
                 <p className={'vacancyCard__header'}>{props.header}</p>
                 <div className={'vacancyCard__cover_mob'}>
-                    <ImgWithLoader alt={`cover_${props.header}`} src={props.cover}
+                    <ImgWithLoader alt={`cover_${props.header}`} defaultSrc={defaultCover} src={props.cover}
                                    width={'240px'}
                                    height={'240px'}/>
                 </div>

@@ -7,10 +7,10 @@ import {ArticleText} from "./ArticleText";
 import {ArticleComments} from "./ArticleComments";
 import {TelegramBtn} from "../../UIKit/TelegramBtn/TelegramBtn";
 import {useEffect} from "react";
-import {useAppDispatch, useAppSelector} from "../../redux/storeHooks/storeHooks";
+import {useAppDispatch, useAppSelector} from "../../redux/hooks/hooks";
 import {fetchCurrentArticle} from "../../redux/articles/articlesThunks";
 import {IArticle, IEditingArticle} from "../../redux/articles/articleTypes";
-import {PageLoader} from "../../UIKit/PageLoader/PageLoader";
+import {Loader} from "../../UIKit/Loader/Loader";
 import {calcDate} from "../../services/calcDate";
 import {firstPageMediaSizes} from "../../UIKit/mediaSizes.styled";
 import {mediaSizes} from "../../UIKit/mediaSizes.styled";
@@ -122,10 +122,10 @@ export const Article = () => {
             categoryIds: currentArticle.categoryIds
         }
         dispatch(setEditingArticle(editingData))
-        navigate(`/create/article?id=${currentArticle.id}`)
+        navigate(`/dashboard/articles/create?id=${currentArticle.id}`)
     }
 
-    if (!currentArticle) return <PageLoader/>
+    if (!currentArticle) return <Loader/>
     return <Layout>
         <ArticleContainer>
             <StyledContent>

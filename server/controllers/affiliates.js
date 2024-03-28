@@ -1,24 +1,10 @@
 const db = require('../dbmodel')
-const Sequlize = require('sequelize')
+const Sequelize = require('sequelize')
 
 exports.getAffiliates = async (req, res) => {
     try {
-        const limit = 6
-        const offset = (+req.query.page - 1) * limit
-        const keyId = req.query.key
-        let where = {}
-        if(keyId) {
-            where.keyIds = {
-                [Sequlize.Op.overlap]: [keyId]
-            }
-        }
-        const total = await db.Affiliates.count({where:where})
-        const affiliates = await db.Affiliates.findAll({
-            where:where,
-            offset,
-            limit
-        })
-        res.status(200).send({affiliates, total})
+        const affiliates = await db.Affiliates.findAll()
+        res.status(200).send(affiliates)
     } catch (e) {
         console.log(e)
         res.sendStatus(500)
@@ -51,6 +37,8 @@ exports.deleteAffiliate = async (req, res) => {
 exports.updateAffiliate = async (req, res) => {
     try {
         const {id, data} = req.body;
+        const {header,link,score, keyIds, cover, description} = data
+        console.log(req.body)
         await db.Affiliates.update(data,
             {where: {id: id}})
 

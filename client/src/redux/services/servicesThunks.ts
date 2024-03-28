@@ -6,6 +6,7 @@ import {ICreatedAffiliate} from "../affiliates/affiliatesTypes";
 
 export const getServices = () => async (dispatch: AppDispatch) => {
     const services = await servicesAPI.getServices()
+    console.log(services)
     dispatch(setServices(services))
 }
 export const createService = (service:ICreatedService) =>  async (dispatch: AppDispatch) => {

@@ -15,7 +15,7 @@ import {IoTimeOutline} from 'react-icons/io5'
 import {calcDate} from "../../../services/calcDate";
 import {ICategory} from "../../../redux/auth/authConfigsTypes";
 import {ImgWithLoader} from "../../../UIKit/ImgWithLoader/ImgWithLoader";
-
+import defaultImg from '../../../assets/defaultCardCover.png'
 type Props = {
     id: number,
     coverImg_withText: string,
@@ -49,7 +49,7 @@ export const Card = (props: Props) => {
                     {setFlags()}
                 </CategoryContainer>
                 <CardImage>
-                    <ImgWithLoader src={props.coverImg_withText} width={'100%'} height={'100%'} alt={'article_head_image'}  />
+                    <ImgWithLoader src={props.coverImg_withText} defaultSrc={defaultImg} width={'100%'} height={'100%'} alt={'article_head_image'}  />
                 </CardImage>
             </CardImageContainer>
             <Info>

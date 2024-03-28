@@ -1,9 +1,9 @@
 import './networking.scss'
 import {CardWithRegistration} from "../../../UIKit/Cards/CardsWithKeys/CardWithRegistration";
-import {useAppSelector} from "../../../redux/storeHooks/storeHooks";
+import {useAppSelector} from "../../../redux/hooks/hooks";
 import {useEffect, useState} from "react";
 import {getNetworks} from "../../../redux/networking/networkingThunks";
-import {useAppDispatch} from "../../../redux/storeHooks/storeHooks";
+import {useAppDispatch} from "../../../redux/hooks/hooks";
 import {KeysFilter} from "../../../UIKit/KeysFilter/KeysFilter";
 import {PageWithCardsFilterLayout} from "../../../UIKit/PageWithCardsFilterLayout/PageWithCardsFilterLayout";
 

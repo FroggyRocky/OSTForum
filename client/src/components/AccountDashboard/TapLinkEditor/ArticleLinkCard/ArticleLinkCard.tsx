@@ -5,7 +5,7 @@ import {MdModeEditOutline} from "react-icons/md";
 import {BsCheckLg} from "react-icons/bs";
 import {useState} from "react";
 import {updateTapLinkArticle} from "../../../../redux/taplink/typeLinkThunks";
-import {useAppDispatch} from "../../../../redux/storeHooks/storeHooks";
+import {useAppDispatch} from "../../../../redux/hooks/hooks";
 
 type Props = {
     title: string

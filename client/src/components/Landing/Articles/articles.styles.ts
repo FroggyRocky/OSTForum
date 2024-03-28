@@ -24,7 +24,6 @@ export const Category = styled.span<{ isSelected: boolean }>`
   color: #272727;
   cursor: pointer;
   text-transform: capitalize;
-  user-select: none;
   @media (max-width: ${mediaSizes.mobile}) {
     padding-bottom: 20px;
     padding-right: 5px;

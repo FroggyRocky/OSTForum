@@ -1,6 +1,5 @@
 .affiliates {
   min-height: 100vh;
-
   &__chosenFilter {
     text-align: start;
     font-family: var(--gotham);
@@ -24,10 +23,5 @@
 
   &__card {
     margin-bottom: 50px;
-  }
-
-  &__loader {
-    padding: 50px 0;
-    margin: auto auto;
   }
 }

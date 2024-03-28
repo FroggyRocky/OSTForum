@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import {StyledWrapper, StyledContent} from "../../UIKit/BasicStyledComponents/basicStyledComponents";
 import {useState, useEffect} from "react";
-import {useAppDispatch, useAppSelector} from "../../redux/storeHooks/storeHooks";
+import {useAppDispatch, useAppSelector} from "../../redux/hooks/hooks";
 import {loginUser} from "../../redux/auth/authConfigsThunks";
 import {useNavigate} from "react-router-dom";
 import {Layout} from "../../UIKit/GeneralLayout/Layout";
